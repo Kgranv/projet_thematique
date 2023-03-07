@@ -6,6 +6,10 @@ timeMax = 2419200
 userData = 0
 
 def openUserData():
+    """
+    Ask for wich user data to use.
+    Check if it's usable. return an array if usable, return 0 if it's not usable
+    """
     userDataName = input("data to exploit : ")
     try:
         completePath = userDataPath+userDataName
@@ -19,41 +23,43 @@ def openUserData():
         print("Error ! unable to open : ",userDataName)
         return 0
 
-def genTable():
-    timeTable = np.arange(start=0,stop=timeMax+1,step=1)
-    slopeConc1Table = np.zeros(timeMax+1,dtype=float)
-    slopeConc2Table = np.zeros(timeMax+1,dtype=float)
-    conc1Table = np.zeros(timeMax+1,dtype=float)
-    conc2Table = np.zeros(timeMax+1,dtype=float)
-    return np.vstack([timeTable,slopeConc1Table,slopeConc2Table,conc1Table,conc2Table])
-
-def fillTable(userData,emptyTable):
-    for x in range(len(userData[0])):
-        if x != 0:
-            i=int(userData[0][x-1]+1)
-            slopeConc1 = (userData[1][x]-userData[1][x-1])/(userData[0][x]-userData[0][x-1])
-            slopeConc2 = (userData[2][x]-userData[2][x-1])/(userData[0][x]-userData[0][x-1])
-            while emptyTable[0][i] < userData[0][x]:
-                emptyTable[1][i]=slopeConc1
-                emptyTable[2][i]=slopeConc2
-                i+=1
-        emptyTable[1][int(userData[0][x])] = 0
-        emptyTable[2][int(userData[0][x])] = 0
-        emptyTable[3][int(userData[0][x])] = userData[1][x]
-        emptyTable[4][int(userData[0][x])] = userData[2][x]
-    for x in range(len(emptyTable[0])):
-        if emptyTable[1][x] != 0:
-            emptyTable[3][x] = emptyTable[1][x]+emptyTable[3][x-1]
-        if emptyTable[2][x] != 0:
-            emptyTable[4][x] = emptyTable[2][x]+emptyTable[4][x-1]
-    return emptyTable
+def createUsableTable(userData):
+    """
+    Create a table with intermediate point.
+    """
+    #calculate slope
+    slopeArrayConc1 = np.zeros(len(userData[0])-1)
+    slopeArrayConc2 = np.zeros(len(userData[0])-1)
+    for x in range(len(slopeArrayConc1)):
+        slopeArrayConc1[x] = (userData[1][x+1]-userData[1][x])/(userData[0][x+1]-userData[0][x])
+        slopeArrayConc2[x] = (userData[2][x+1]-userData[2][x])/(userData[0][x+1]-userData[0][x])
+    
+    #init first line
+    timeTable = np.array([userData[0][0]])
+    conc1Table = np.array([userData[1][0]])
+    conc2Table = np.array([userData[2][0]])
+    
+    #fill the point between userpoint
+    for x in range(1,len(userData[0])):
+        timeTable = np.append(timeTable,np.arange(userData[0][x-1],userData[0][x],1))
+        conc1Table = np.append(conc1Table,np.arange(userData[1][x-1],userData[1][x],slopeArrayConc1[x-1]))
+        conc2Table = np.append(conc2Table,np.arange(userData[2][x-1],userData[2][x],slopeArrayConc2[x-1]))
+    
+    #fill the end of the table
+    timeTable = np.append(np.array(timeTable[1:len(timeTable)]),np.arange(userData[0][len(userData[0])-1],timeMax+1,1,float))
+    fillerTable = np.zeros(timeMax-len(conc1Table)+2)
+    fillerTable.fill(userData[1][len(userData[0])-1])
+    conc1Table = np.append(np.array(conc1Table[1:len(conc1Table)]),fillerTable)
+    fillerTable.fill(userData[2][len(userData[0])-1])
+    conc2Table = np.append(np.array(conc2Table[1:len(conc2Table)]),fillerTable)
+    
+    return np.vstack([timeTable,conc1Table,conc2Table])
 
 userData = openUserData()
 
 if(type(userData)==np.ndarray):
-    emptyTable = genTable()
-    test = fillTable(userData,emptyTable)
-    print(test)
+    usableTable = createUsableTable(userData)
+    print(usableTable)
 
 else:
     print("Unable to prepare your data")
