@@ -1,16 +1,20 @@
 import numpy as np
 import pandas as pd
+from datetime import datetime
+from progress.bar import ChargingBar
 
 userDataPath = ".\\userData\\"
+dataPath = ".\\data\\"
 timeMax = 2419200
 userData = 0
+progressBar = ChargingBar("Conversion",max=100)
 
 def openUserData():
     """
     Ask for wich user data to use.
     Check if it's usable. return an array if usable, return 0 if it's not usable
     """
-    userDataName = input("data to exploit : ")
+    userDataName = input("data to convert : ")
     try:
         completePath = userDataPath+userDataName
         importedCSV = pd.read_csv(completePath,sep=",")
@@ -53,13 +57,38 @@ def createUsableTable(userData):
     fillerTable.fill(userData[2][len(userData[0])-1])
     conc2Table = np.append(np.array(conc2Table[1:len(conc2Table)]),fillerTable)
     
-    return np.vstack([timeTable,conc1Table,conc2Table])
+    return np.vstack([timeTable,conc1Table,conc2Table]).T
+
+def createCSV(dataTable):
+    """
+    Create a csv with all point usable for control the bio-chip
+    """
+    #generate the name of the file based on time
+    fileName = datetime.now()
+    fileName = fileName.strftime("%Y-%m-%d_%H%M%S")
+    fileExtension = ".csv"
+
+    #split array to keep track during inscription on the csv file
+    splittedData = np.array_split(dataTable,100)
+
+    try:
+        file = open(dataPath+fileName+fileExtension,"x")
+        file.close()
+        file = open(dataPath+fileName+fileExtension,"a")
+        for x in range(100):
+            np.savetxt(file,splittedData[x],fmt='%.2f',delimiter=",")
+            progressBar.next()
+        file.close()
+        progressBar.finish()
+        print("Conversion completed !")
+    except:
+        print("Unable to convert the data into a csv file.")
 
 userData = openUserData()
 
 if(type(userData)==np.ndarray):
     usableTable = createUsableTable(userData)
-    print(usableTable)
+    createCSV(usableTable)
 
 else:
     print("Unable to prepare your data")
