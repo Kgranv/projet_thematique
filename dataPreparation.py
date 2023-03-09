@@ -1,13 +1,26 @@
+import os
 import numpy as np
 import pandas as pd
 from datetime import datetime
-from progress.bar import ChargingBar
 
-userDataPath = ".\\userData\\"
-dataPath = ".\\data\\"
+userDataFolder = "userData"
+userDataPath = ".\\"+userDataFolder+"\\"
+dataFolder = "data"
+dataPath = ".\\"+dataFolder+"\\"
 timeMax = 2419200
 userData = 0
-progressBar = ChargingBar("Conversion",max=100)
+
+def checkFolder(folder):
+    """
+    Check if folder exist if not create it.
+    return true if exist, if not return false
+    """
+    if not os.path.isdir(folder):
+        os.makedirs(folder)
+        print("created folder : ",folder)
+        return False
+    else:
+        return True
 
 def openUserData():
     """
@@ -59,37 +72,31 @@ def createUsableTable(userData):
     
     return np.vstack([timeTable,conc1Table,conc2Table]).T
 
-def createCSV(dataTable):
+def createFtr(dataTable):
     """
-    Create a csv with all point usable for control the bio-chip
+    Create a ftr with all point usable for control the bio-chip
     """
+    checkFolder(dataFolder)
     #generate the name of the file based on time
     fileName = datetime.now()
     fileName = fileName.strftime("%Y-%m-%d_%H%M%S")
-    fileExtension = ".csv"
-
-    #split array to keep track during inscription on the csv file
-    splittedData = np.array_split(dataTable,100)
+    fileExtension = ".ftr"
+    file = dataPath+fileName+fileExtension
 
     try:
-        file = open(dataPath+fileName+fileExtension,"x")
-        file.close()
-        file = open(dataPath+fileName+fileExtension,"a")
-        for x in range(100):
-            np.savetxt(file,splittedData[x],fmt='%.2f',delimiter=",")
-            progressBar.next()
-        file.close()
-        progressBar.finish()
+        df = pd.DataFrame(dataTable,columns=["Time","Conc1","Conc2"])
+        df.to_feather(file)
         print("Conversion completed !")
     except:
         print("Unable to convert the data into a csv file.")
 
-userData = openUserData()
-
-if(type(userData)==np.ndarray):
-    usableTable = createUsableTable(userData)
-    createCSV(usableTable)
-
+if checkFolder(userDataFolder):
+    userData = openUserData()
+    if(type(userData)==np.ndarray):
+        usableTable = createUsableTable(userData)
+        createFtr(usableTable)
+    else:
+        print("Unable to prepare your data")
 else:
-    print("Unable to prepare your data")
+    print("userData folder was created. Place your csv file to convert inside and run again the program.")
 
