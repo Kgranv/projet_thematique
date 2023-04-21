@@ -10,6 +10,11 @@ dataPath = "./"+dataFolder+"/"
 timeMax = 2419200
 userData = 0
 
+def checkOs():
+    if os.name == "nt":
+        userDataPath = ".\\"+userDataFolder+"\\"
+        dataPath = ".\\"+dataFolder+"\\"
+
 def checkFolder(folder):
     """
     Check if folder exist if not create it.
@@ -90,6 +95,7 @@ def createFtr(dataTable):
     except:
         print("Unable to convert the data into a csv file.")
 
+checkOs()
 if checkFolder(userDataFolder):
     userData = openUserData()
     if(type(userData)==np.ndarray):
