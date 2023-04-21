@@ -1,5 +1,7 @@
 # Requirements :<br/>
 
+- OS :
+  - Raspberry Pi OS Lite (64-bit)
 - Python Libraries :
   - numpy 1.22.2
   - pandas 1.4.1
