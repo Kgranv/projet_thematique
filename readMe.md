@@ -12,8 +12,9 @@ piUser : projetMOON<br/>
 <br/>
 #Useful command :<br/>
 For windows :<br/>
-*Send file to raspberryPi :
-*scp dataToSend piUser@piName:/home/piUser/folderPath
-*Retrieve file from raspberryPi :
-*scp piUser@piName:/home/piUser/FilePath LocalFilePath
-if you are already in LocalFilePath, replace LocalFilePath by ".\\"<br/>
+
+- Send file to raspberryPi :
+- scp dataToSend piUser@piName:/home/piUser/folderPath
+- Retrieve file from raspberryPi :
+- scp piUser@piName:/home/piUser/FilePath LocalFilePath
+  if you are already in LocalFilePath, replace LocalFilePath by ".\\"<br/>
