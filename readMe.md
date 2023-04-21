@@ -16,8 +16,10 @@
 
 # Useful command :<br/>
 
-For windows :<br/>
+For windows with powershell :<br/>
 
+- Connect to raspberryPi with SSH
+  <code>ssh piUser@piName</code><br/>
 - Send file to raspberryPi :<br/>
   <code>scp dataToSend piUser@piName:/home/piUser/folderPath</code><br/>
 - Retrieve file from raspberryPi :<br/>
