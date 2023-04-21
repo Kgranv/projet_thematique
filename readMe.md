@@ -16,8 +16,8 @@
 
 For windows :<br/>
 
-- Send file to raspberryPi :
-  <code>scp dataToSend piUser@piName:/home/piUser/folderPath</code>
-- Retrieve file from raspberryPi :
-  <code>scp piUser@piName:/home/piUser/FilePath LocalFilePath</code>
+- Send file to raspberryPi :<br/>
+  <code>scp dataToSend piUser@piName:/home/piUser/folderPath</code><br/>
+- Retrieve file from raspberryPi :<br/>
+  <code>scp piUser@piName:/home/piUser/FilePath LocalFilePath</code><br/>
   if you are already in LocalFilePath, replace LocalFilePath by ".\\"<br/>
