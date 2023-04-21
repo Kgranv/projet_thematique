@@ -1,4 +1,0 @@
-Python Libraries :
-numpy 1.22.2
-pandas 1.4.1
-feather-format 0.4.1
