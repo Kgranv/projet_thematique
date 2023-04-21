@@ -1,16 +1,19 @@
-#Requirements :<br/>
-Python Libraries :<br/>
-numpy 1.22.2
-pandas 1.4.1
-feather-format 0.4.1
+# Requirements :<br/>
 
-#RaspberryPi info :<br/>
-RaspberryPi type : RaspberryPi-4<br/>
-<br/>
-RaspberryPi name : raspberrypi-zero-MOON<br/>
-piUser : projetMOON<br/>
-<br/>
-#Useful command :<br/>
+- Python Libraries :
+  - numpy 1.22.2
+  - pandas 1.4.1
+  - feather-format 0.4.1
+
+# RaspberryPi info :<br/>
+
+- RaspberryPi type : RaspberryPi-4
+  <br/>
+- RaspberryPi name : raspberrypi-zero-MOON
+- piUser : projetMOON
+
+# Useful command :<br/>
+
 For windows :<br/>
 
 - Send file to raspberryPi :
