@@ -4,9 +4,9 @@ import pandas as pd
 from datetime import datetime
 
 userDataFolder = "userData"
-userDataPath = ".\\"+userDataFolder+"\\"
+userDataPath = "./"+userDataFolder+"/"
 dataFolder = "data"
-dataPath = ".\\"+dataFolder+"\\"
+dataPath = "./"+dataFolder+"/"
 timeMax = 2419200
 userData = 0
 
