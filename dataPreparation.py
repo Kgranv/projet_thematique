@@ -11,6 +11,9 @@ timeMax = 2419200
 userData = 0
 
 def checkOs():
+    """
+    Check system OS if windows change path syntax
+    """
     if os.name == "nt":
         userDataPath = ".\\"+userDataFolder+"\\"
         dataPath = ".\\"+dataFolder+"\\"
@@ -104,5 +107,5 @@ if checkFolder(userDataFolder):
     else:
         print("Unable to prepare your data")
 else:
-    print("userData folder was created. Place your csv file to convert inside and run again the program.")
+    print(userDataFolder, " folder was created. Place your csv file to convert inside and run again the program.")
 
