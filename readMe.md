@@ -18,7 +18,7 @@
 
 For windows with powershell :<br/>
 
-- Connect to raspberryPi with SSH
+- Connect to raspberryPi with SSH :<br/>
   <code>ssh piUser@piName</code><br/>
 - Send file to raspberryPi :<br/>
   <code>scp dataToSend piUser@piName:/home/piUser/folderPath</code><br/>
