@@ -10,11 +10,19 @@
 \usepackage[table,xcdraw]{xcolor}
 \usepackage{float} % position des figures,table
 \usepackage[backend=biber,style=numeric,sorting=none]{biblatex} % bibliographie
+\usepackage{fancyhdr} % footer
+\usepackage{caption} % caption
 
+%Setup bibliographie
 \addbibresource{bibliographie.bib} % utilise bibliographie.bib pour la bibliographie
+
+%Setup figure
 \graphicspath{ {./figure/} } % relative path for figure
+
 \renewcommand\familydefault{\sfdefault} % set font for all document
+\captionsetup[table]{name=Tableau} % Rename table
 \renewcommand*\contentsname{Table des matières} % Rename table of contents
+\setlength\parindent{0pt} % remove indent in new line
 
 %Setup Titre, auteur et date
 \title{
@@ -22,6 +30,7 @@
     \centering\includegraphics[scale=0.5]{Logos\_Hepia.png}\\
     \centering\rule{17cm}{0.1mm}\vspace*{0.4in}\\
     \centering Projet thématique MOON}
+\renewcommand\Authands{ et } % replace "and" by "et" in author
 \author[1]{AYRINHAC Elisa}
 \author[2]{DROUIN Clément}
 \author[3]{JOUCLARD Charly}
@@ -30,10 +39,23 @@
 \affil[3]{HEPIA, MT2, charly.jouclard@hes-so.ch}
 \date{28 avril 2023}
 
+%Setup header, footer
+\pagestyle{fancy}
+\fancyhead{} % clear all header fields
+\renewcommand{\headrulewidth}{0pt} % no line in header area
+\fancyfoot{} % clear all footer fields
+\renewcommand{\footrulewidth}{1pt}
+\newcommand{\changefont}{\fontsize{9}{11}\selectfont}
+\newcommand{\TheAuthor}{AYRINHAC Elisa, DROUIN Clément, JOUCLARD Charly}
+\fancyfoot[C]{\changefont\TheAuthor}
+\fancyfoot[R]{\changefont\thepage}
+\fancyfoot[L]{\changefont Projet thématique MOON}
+
 \begin{document}
 
 %Entete
 \maketitle
+\thispagestyle{empty}
 \begin{center}
     \rule{\textwidth}{0.1mm}
 \end{center}
@@ -102,7 +124,7 @@ On peut voir avec la figure \ref{fig:bete_corne} que le système conçu va perme
         FC8                                                       & Respecter le budget                               \\ \hline
         FC9                                                       & Assurer un cycle de 28 jours                      \\ \hline
     \end{tabular}
-    \caption{Tableau des fonctions à assurer}
+    \caption{Fonctions à assurer}
 \end{table}
 \begin{figure}[H]
     \centering
