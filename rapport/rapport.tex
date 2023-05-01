@@ -5,12 +5,13 @@
 \usepackage[a4paper, margin=18mm]{geometry} % Let's you adjust the margins
 \usepackage[T1]{fontenc} % Font helvetica
 \usepackage[scaled]{helvet}
-\usepackage{authblk} %multiauthor
-\usepackage{multirow} %table
+\usepackage{authblk} % multiauthor
+\usepackage{multirow} % table
 \usepackage[table,xcdraw]{xcolor}
-\usepackage{float} %position des figures,table
+\usepackage{float} % position des figures,table
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex} % bibliographie
 
-
+\addbibresource{bibliographie.bib} % utilise bibliographie.bib pour la bibliographie
 \graphicspath{ {./figure/} } % relative path for figure
 \renewcommand\familydefault{\sfdefault} % set font for all document
 \renewcommand*\contentsname{Table des matières} % Rename table of contents
@@ -27,9 +28,10 @@
 \affil[1]{HEPIA, MT2, elisa.ayrinhac@hes-so.ch}
 \affil[2]{HEPIA, MT2, clement.drouin@hes-so.ch}
 \affil[3]{HEPIA, MT2, charly.jouclard@hes-so.ch}
-\date{01 mai 2023}
+\date{28 avril 2023}
 
 \begin{document}
+
 %Entete
 \maketitle
 \begin{center}
@@ -74,18 +76,77 @@ Toutefois même si cela reste compliqué à construire dans sa totalité, il est
 Ces machines permettent de crée une atmosphère apte à la reproduction cellulaire toutefois afin de contenir les cellules et leurs milieu nutritif il faut des instruments de culture.
 L'écouvillons : Il s'agit de petit tube munis d'un couvercle étanche en plastique dans lequel on place un peu de liquide du fait de leurs petite taille et de leurs facilités de conception ils peuvent être alignés afin de facilité la reproductivité toutefois il ne possède aucune capacité permettant de maintenir l'homéostasie de la cellule.
 La verrerie de chimie : On peut utiliser techniquement tout contenant biocompatible.
+\subsection{Aperçu du projet}
+\subsubsection{Besoins}
+On peut voir avec la figure \ref{fig:bete_corne} que le système conçu va permettre au biologiste d'étudier l'influence des hormones sur du tissus endométrial.
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{bete\_corne.png}}
+    \caption{Bête à corne}
+    \label{fig:bete_corne}
+\end{figure}
+\subsubsection{Fonctions}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|
+            >{\columncolor[HTML]{CBCEFB}}l |l|}
+        \hline
+        \multicolumn{1}{|c|}{\cellcolor[HTML]{CBCEFB}\textbf{N°}} & \textbf{Fonction}                                 \\ \hline
+        FP1                                                       & Maintenir les cellules en vie                     \\ \hline
+        FP2                                                       & Intégrer des concentrations spécifiques d'hormone \\ \hline
+        FC3                                                       & Observer les cellules au microscope               \\ \hline
+        FC4                                                       & Alimenter le système en énergie                   \\ \hline
+        FC5                                                       & Réaliser un système autonome                      \\ \hline
+        FC6                                                       & Résister au milieu imposer par les cellules       \\ \hline
+        FC7                                                       & Utiliser un matériau biocompatible                \\ \hline
+        FC8                                                       & Respecter le budget                               \\ \hline
+        FC9                                                       & Assurer un cycle de 28 jours                      \\ \hline
+    \end{tabular}
+    \caption{Tableau des fonctions à assurer}
+\end{table}
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{pieuvre.png}}
+    \caption{Diagramme pieuvre avec les fonctions associés}
+    \label{fig:pieuvre}
+\end{figure}
+\subsection{Cahier des charges}
+La première fonction à prendre en compte est la survie des cellules.
+Pour cela, notre système devra respecter les paramètres suivants :
+\begin{itemize}
+    \item une température de 37°C
+    \item un pH de 7
+    \item un renouvellement du milieu de culture de 1 ml par jours
+    \item atténué toute variation de milieu
+    \item la Biocompatibilité du milieu
+\end{itemize}
+Pour ce qui est du système fluidique, il permet l'apport du milieu de culture à la cellule et donc nécessite de répondre aux points suivants :
+\begin{itemize}
+    \item un système étanche
+    \item un écoulement laminaire
+    \item un système de purge
+    \item un système d'injection d'hormones
+    \item un mélangeur pour éviter des pics de concentration
+    \item une pompe pour un système dynamique
+\end{itemize}
+Enfin, le système dans sa globalité devra assurer :
+\begin{itemize}
+    \item une autonomie de 28 jours minimum
+    \item une zone transparente permettant l'observation des cellules
+\end{itemize}
 \subsection{Catalogue de solutions}
 \subsubsection{Gestion des nutriments, déchets et de la concentration des hormones}
 \begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|}
         \hline
-        \multicolumn{1}{|c|}{\textbf{Solution}} & \textbf{Avantages}                                                                                                     & \textbf{Inconvénients}                                                                                                             \\ \hline
-        Seringues auto-poussés                  & \begin{tabular}[c]{@{}l@{}}-Précis\\ -Facile d'utilisation\\ -Facilement programmable\\ -Réponse linéaire\end{tabular} & \begin{tabular}[c]{@{}l@{}}-Energie\\ -Limité en quantité\\ -Espace\end{tabular}                                                   \\ \hline
+        \multicolumn{1}{|c|}{\textbf{Solution}}        & \textbf{Avantages}                                                                                                     & \textbf{Inconvénients}                                                                                                             \\ \hline
+        Seringues auto-poussés                         & \begin{tabular}[c]{@{}l@{}}-Précis\\ -Facile d'utilisation\\ -Facilement programmable\\ -Réponse linéaire\end{tabular} & \begin{tabular}[c]{@{}l@{}}-Energie\\ -Limité en quantité\\ -Espace\end{tabular}                                                   \\ \hline
         \rowcolor[HTML]{CBCEFB}
-        Pompe péristaltiques                    & -Déjà présent au labo                                                                                                  & \begin{tabular}[c]{@{}l@{}}-Peu précis\\ -Energie\end{tabular}                                                                     \\ \hline
-        Système de goutte à goutte              & \begin{tabular}[c]{@{}l@{}}-Low-cost\\ -Economique en énergie\end{tabular}                                             & \begin{tabular}[c]{@{}l@{}}-Précision\\ -A pression atmosphérique\\ -Complexité d'asservissement\\ -Réponse chaotique\end{tabular} \\ \hline
+        Pompe péristaltiques\cite{pompe_peristaltique} & -Déjà présent au labo                                                                                                  & \begin{tabular}[c]{@{}l@{}}-Peu précis\\ -Energie\end{tabular}                                                                     \\ \hline
+        Système de goutte à goutte                     & \begin{tabular}[c]{@{}l@{}}-Low-cost\\ -Economique en énergie\end{tabular}                                             & \begin{tabular}[c]{@{}l@{}}-Précision\\ -A pression atmosphérique\\ -Complexité d'asservissement\\ -Réponse chaotique\end{tabular} \\ \hline
     \end{tabular}
+    \caption{Solutions pour la gestions des nutriments, déchets et des hormones}
 \end{table}
 \subsubsection{Contrôler l'environnement extérieur}
 \begin{table}[H]
@@ -97,6 +158,7 @@ La verrerie de chimie : On peut utiliser techniquement tout contenant biocompati
         Incubateur                              & \begin{tabular}[c]{@{}l@{}}-Constante externe stable\\ -A disposition\\ -Retour d'expérience\end{tabular} & \begin{tabular}[c]{@{}l@{}}-Placé dans l'incubateur\\ -Protéger l'électronique\end{tabular} \\ \hline
         Système autonome                        & -Pas de dépendance                                                                                        & \begin{tabular}[c]{@{}l@{}}-Compliqué à réaliser\\ -Energivore\\ -Coût\end{tabular}         \\ \hline
     \end{tabular}
+    \caption{Solutions pour gérer l'environnement extérieur}
 \end{table}
 \subsubsection{Cultiver les cellules}
 \begin{table}[H]
@@ -108,6 +170,7 @@ La verrerie de chimie : On peut utiliser techniquement tout contenant biocompati
         Bio-chip en PMMA                        & \begin{tabular}[c]{@{}l@{}}-Usinage\\ -Retour d'expérience\\ -Sur mesure\\ -Fluidique intégré\end{tabular} & \begin{tabular}[c]{@{}l@{}}-Assemblage par couche\\ -Long à fabriquer\end{tabular} \\ \hline
         Boîte de pétris                         & \begin{tabular}[c]{@{}l@{}}-Coût\\ -Stérilité\end{tabular}                                                 & -Pas de circulation de fluide                                                      \\ \hline
     \end{tabular}
+    \caption{Solutions pour le milieu de culture}
 \end{table}
 \subsubsection{Circulation du fluide}
 \begin{table}[H]
@@ -119,6 +182,7 @@ La verrerie de chimie : On peut utiliser techniquement tout contenant biocompati
         Pompe péristaltique                     & \begin{tabular}[c]{@{}l@{}}-Déjà présent au labo\\ -Facile d'utilisation\\ -Pas de contamination\end{tabular} & \begin{tabular}[c]{@{}l@{}}-Débit limité\\ -Energie\end{tabular} \\ \hline
         Gravité                                 & \begin{tabular}[c]{@{}l@{}}-Pas besoin de matériel spécifique\\ -Pas besoin d'alimentation\end{tabular}       & -Compliqué à mettre en oeuvre                                    \\ \hline
     \end{tabular}
+    \caption{Solutions pour injecter les différents fluides}
 \end{table}
 \subsubsection{Mélanger les fluides}
 \begin{table}[H]
@@ -131,6 +195,7 @@ La verrerie de chimie : On peut utiliser techniquement tout contenant biocompati
         Mélangeur hydrostatique "3D"            & \begin{tabular}[c]{@{}l@{}}-Economique\\ -Facilité d'intégration\\ -Compact\\ -Volume sur mesure\\ -Modélisable\end{tabular} & \begin{tabular}[c]{@{}l@{}}-A créer\\ -Perte de charge\\ -Usinage\end{tabular}                          \\ \hline
         Mélangeur magnétique                    & \begin{tabular}[c]{@{}l@{}}-Déjà présent au labo\\ -Facilement nettoyable\\ -Gestion de la puissance\end{tabular}            & \begin{tabular}[c]{@{}l@{}}-Espace\\ -Biocompatibilité\\ -Non modélisable\\ -Non pilotable\end{tabular} \\ \hline
     \end{tabular}
+    \caption{Solutions pour assurer l'homogénéité des liquides}
 \end{table}
 \subsubsection{Analyser les concentrations}
 \begin{table}[H]
@@ -142,6 +207,7 @@ La verrerie de chimie : On peut utiliser techniquement tout contenant biocompati
         Colorimètre externe                     & \begin{tabular}[c]{@{}l@{}}-Facilité d'intégration\\ -Précis\\ -Déjà présent au labo\end{tabular}                                   & \begin{tabular}[c]{@{}l@{}}-Aucune donnée interne\\ -Nécessite présence utilisateur\end{tabular} \\ \hline
         Colorimètre interne                     & \begin{tabular}[c]{@{}l@{}}-Retour en temps réel\\ -Gain de précision de l'asservissement\\ -Donnée interne au système\end{tabular} & \begin{tabular}[c]{@{}l@{}}-A créer\\ -Précision\end{tabular}                                    \\ \hline
     \end{tabular}
+    \caption{Solutions pour contrôler les concentrations}
 \end{table}
 \subsubsection{Contrôler le système (microcontrôleur)}
 \begin{table}[H]
@@ -153,6 +219,7 @@ La verrerie de chimie : On peut utiliser techniquement tout contenant biocompati
         \rowcolor[HTML]{CBCEFB}
         Raspberry Pi                            & \begin{tabular}[c]{@{}l@{}}-Retour en temps réel\\ -Contrôlable à distance\\ -Stockage interne\\ -Utilisation possible de Python\\ -40 pin\end{tabular} & -Faible disponibilité                                                                                                                            \\ \hline
     \end{tabular}
+    \caption{Solutions pour commander le système}
 \end{table}
 \subsubsection{Alimentation}
 \begin{table}[H]
@@ -164,9 +231,15 @@ La verrerie de chimie : On peut utiliser techniquement tout contenant biocompati
         Secteur                                 & -Disponibilité     & -Toujours branché                                                   \\ \hline
         Batteries                               & -Portable          & \begin{tabular}[c]{@{}l@{}}-Prix\\ -Recharge compliqué\end{tabular} \\ \hline
     \end{tabular}
+    \caption{Solutions pour alimenter le bio-chip}
 \end{table}
 \subsection{Schéma bloc du système}
-insert schéma block
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{schema\_block.png}}
+    \caption{Schéma bloc du système}
+    \label{fig:schema_block}
+\end{figure}
 \subsection{Déroulé du projet}
 insert diagramme de gant
 \subsection{Choix pour le projet}
@@ -204,7 +277,30 @@ On a configuré le Raspberry pi 4 pour qu'on puisse se connecter dessus à dista
 On peut s'y connecter facilement dessus à partir du moment que l'on se trouve sur le même réseau wifi.
 On peut lui transmettre des fichiers ainsi que récupérer des fichiers qui sont stockées dessus.
 \subsubsection{Préparation des données}
-
+Ce code permet de préparer les datas afin de pouvoir être utiliser par le logiciel qui contrôle le biochip.
+Il a été conçu pour que l'utilisateur rentre un minimum de donner afin de gagner du temps.
+Il permet de convertir un fichier csv que l'utilisateur aura créée au préalable avec les différents jalons de concentration en un fichier qui contient toutes les concentrations de l'expérience sur 28 jours.
+Sur la figure \ref{fig:dataPreparation} on peut voir une représentation des données rentrées par l'utilisateur et les données produites par le programme.
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{representation\_data\_gen.png}}
+    \caption{Données généré par le programme avec les données rentrées par l'utilisateur}
+    \label{fig:dataPreparation}
+\end{figure}
+On peut l'utiliser directement sur un ordinateur puis envoyer le fichier généré sur le Raspberry pi ou bien on peut envoyer le fichier csv sur le Raspberry pi puis le généré directement sur le Raspberry pi.
+Le fichier généré est un fichier de type ftr il n'est donc pas lisible directement ceci est fait afin de gagner en rapidité d'exécution et gagner du stockage.
+Si on utilisait un fichier csv équivalent il contiendrait tellement de donnés qu'il faudrait plusieurs secondes pour le généré et il prendrait 10 fois plus de stockage.
+Le fichier à préparer doit être présenter sous la forme :
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lll}
+        Time & Conc1 & Conc2 \\
+        0    & 1     & 1     \\
+        2    & 6     & 8     \\
+        10   & 2     & 1     \\
+        15   & 4     & 2
+    \end{tabular}
+\end{table}
 \newpage
 \section{Conclusion}
 
@@ -212,8 +308,6 @@ On peut lui transmettre des fichiers ainsi que récupérer des fichiers qui sont
 \section{Annexe}
 
 \newpage
-\section{Référence}
-
-
+\printbibliography
 
 \end{document}

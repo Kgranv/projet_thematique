@@ -4,3 +4,8 @@
 *.log
 *.gz
 *.toc
+*.bbl
+*.blg
+*.xml
+*.bcf
+rapport-blx.bib
