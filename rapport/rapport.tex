@@ -12,6 +12,7 @@
 \usepackage[backend=biber,style=numeric,sorting=none]{biblatex} % bibliographie
 \usepackage{fancyhdr} % footer
 \usepackage{caption} % caption
+\usepackage{multicol} % multicolonne
 
 %Setup bibliographie
 \addbibresource{bibliographie.bib} % utilise bibliographie.bib pour la bibliographie
@@ -98,6 +99,7 @@ Toutefois même si cela reste compliqué à construire dans sa totalité, il est
 Ces machines permettent de crée une atmosphère apte à la reproduction cellulaire toutefois afin de contenir les cellules et leurs milieu nutritif il faut des instruments de culture.
 L'écouvillons : Il s'agit de petit tube munis d'un couvercle étanche en plastique dans lequel on place un peu de liquide du fait de leurs petite taille et de leurs facilités de conception ils peuvent être alignés afin de facilité la reproductivité toutefois il ne possède aucune capacité permettant de maintenir l'homéostasie de la cellule.
 La verrerie de chimie : On peut utiliser techniquement tout contenant biocompatible.
+\newpage
 \subsection{Aperçu du projet}
 \subsubsection{Besoins}
 On peut voir avec la figure \ref{fig:bete_corne} que le système conçu va permettre au biologiste d'étudier l'influence des hormones sur du tissus endométrial.
@@ -277,9 +279,148 @@ L'ensemble du bio-chip sera alimenté par le secteur afin de limiter les coûts 
 \section{Conception mécanique}
 \subsection{Mélangeur hydrostatique}
 \subsubsection{Simulation fluidique}
+Dans cette partie nous allons parler de la simulation et de la modélisation d'un mélangeur statique permettant de rentre le mélange homogène avant de l'envoyer sur les cellules.
+Afin de déterminer la forme du mélangeur nous avons basé nos recherches sur la simulation fluide de créo.
+Dans l'industrie, les mélangeurs statiques sont des composant de fluidique en 3 dimensions conçue pour perturber l'écoulement et ainsi crée des turbulences.
+Cela a pour but de mélanger le fluide sans utiliser de composant actif tel qu'une pompe, un moteur, ou un mélangeur magnétique.
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{simulation1.png}}
+    \caption{Schéma montrant comment ce mélange un fluide}
+    \label{fig:simulation1}
+\end{figure}
+Une première étape de conception fus donc d'essayer de comprendre à quoi pourrais bien ressembler ce type de mélangeur en 2D.
+On sait de par la mécanique des fluides que la pression et la vitesse d'écoulement sont liée à la géométrie du milieu d'écoulement.
+Ainsi J'ai modélisé quatre différents mélangeurs afin d'observer le comportement du fluide lors d'une simulation.
+De plus le mode de fabrication le plus simple étant la découpe LASER il a fallu adapter la forme de ceux-ci afin qu'il soit réalisable en entier à la découpeuse LASER du campus.
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{CAO\_prototype\_melangeur.png}}
+    \caption{CAO du mélangeur avec chicanes}
+    \label{fig:CAO_prototype_melangeur}
+\end{figure}
+Comme on peut le voir dans la figure \ref{fig:CAO_prototype_melangeur} le premier mélangeur était juste composé d'un chemin direct auquel ont été ajouté des chicanes droites.
+Le flux de liquide assimiler a de l'eau entre par en dessous et sort par au-dessus, et les conditions de pression sont celle donnée dans la datasheet de la pompe étant donné que le mélangeur sera placer juste derrière la pompe.
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{simulation2.png}}
+    \caption{Simulation fluidique du mélangeur à chicanes}
+    \label{fig:simulation2}
+\end{figure}
+Grâce à la figure \ref{fig:simulation2} on peut voir que les chicanes n'apporte pas de plus value pour mélanger le fluide.
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{simulation3.png}}
+    \caption{Simulation fluidique avec 2 voies et chicanes}
+    \label{fig:simulation3}
+\end{figure}
+En divisant le flux en deux et en réduisant l'espace des chicanes ont remarque qu'il n'y a que peu d'effet.
+Toutefois la division du flux en deux apporte des turbulences lorsque les deux flux se recombinent ainsi que l'obstacle placer perpendiculairement au flux.
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{simulation4.png}}
+    \caption{Simulation fluidique avec accélération}
+    \label{fig:simulation4}
+\end{figure}
+Une autre version avait pour idée de détendre et de comprimé le flux afin de crée des turbulences, on voit (zone coloré) que la vitesse augmente mais reste toujours dans le sens du circuit.
+Il manque une forme pour casser ce flux.
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{simulation5.png}}
+    \caption{Simulation fluidique avec chicanes et obstacles}
+    \label{fig:simulation5}
+\end{figure}
+Lorsque l'on casse le flux et qu'on le dirige vers un obstacle cela crée des turbulences.
+Ce que l'on observe ici c'est une accélération du fluide couplé à des zone de dépression.
+Cela cause des turbulences derrière les obstacles placer au centre.
 \subsubsection{CAO du mélangeur}
+Nous avons donc choisi de partir sur un mélangeur composé de deux parties, l'une central permet de casser de flux et de le séparer en deux.
+La partie externe est mobilisé afin de crée des zones d'accélération et de décélération.
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{CAO\_melangeur\_couche2.png}}
+    \caption{Couche central du mélangeur}
+    \label{fig:CAO_melangeur_couche2}
+\end{figure}
+Notre conception est basée sur un principe de sandwich, une première épaisseur permettant l'étanchéité, le support et le guidage des autres couches.
+Une couche centrale munit d'un détrompeur composer d'un élément externe guider par deux goupilles extérieures, et un élément interne guidé par les goupilles intérieures.
+Et enfin une dernière couche permettant de fermer le tout, toujours guider par les deux goupilles externes.
+L'adhésion et l'étanchéité sera assuré par une couche adhésive déposer sur les plaques.
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{CAO\_melangeur.png}}
+    \caption{Mélangeur hydrostatique}
+    \label{fig:CAO_melangeur}
+\end{figure}
 \subsection{Zone de culture}
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{CAO\_cellule.png}}
+    \caption{bio-chip pour les cellules}
+    \label{fig:CAO_cellule}
+\end{figure}
+Pour le biochip contenant les cellules visibles sur la figure \ref{fig:CAO_cellule}, nous avons choisi d'utiliser l'assemblage en plusieurs couches de PMMA.
+Celui-ci contient 4 couches d'épaisseur différentes pour répondre à certaines contraintes.
+Nous utiliserons des goupilles, pour être sûr que les différents éléments soient bien alignés.
+\begin{multicols}{2}
+    \begin{figure}[H]
+        \centering
+        \resizebox{\linewidth}{!}{\includegraphics{CAO\_cellule\_couche1.png}}
+        \caption{CAO de la première couche}
+        \label{fig:CAO_cellule_couche1}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \resizebox{\linewidth}{!}{\includegraphics{CAO\_cellule\_couche2.png}}
+        \caption{CAO de la seconde couche}
+        \label{fig:CAO_cellule_couche2}
+    \end{figure}
+\end{multicols}
+La couche du dessous fait 0.3 mm d'épaisseur pour permettre l'observation des cellules au microscope.
+La 2e couche est prévu pour contenir les cellules mais sera supprimer car elle crée des angles droits qui risque d'endommager les cellules.
+\begin{multicols}{2}
+    \begin{figure}[H]
+        \centering
+        \resizebox{\linewidth}{!}{\includegraphics{CAO\_cellule\_couche3.png}}
+        \caption{CAO de la troisième couche}
+        \label{fig:CAO_cellule_couche3}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \resizebox{\linewidth}{!}{\includegraphics{CAO\_cellule\_couche4.png}}
+        \caption{CAO de la quatrième couche}
+        \label{fig:CAO_cellule_couche4}
+    \end{figure}
+\end{multicols}
+La 3e couche permet au fluide contenant les hormones et nutriment de circuler la où seront accroché les cellules.
+L'entrée du fluide est plus étroite que la sortie pour éviter des problèmes de surpression.
+Et enfin la dernière couche contient les trous pour chasser les connecteur Luer lock, permettant de relier le bio chip contenant les cellules au reste du système par l'intermédiaire de tuyaux.
+Les angles devront être arrondit pour éviter d'endommager les cellules.
 \subsection{Support des réservoirs}
+\begin{multicols}{2}
+    \begin{figure}[H]
+        \centering
+        \resizebox{\linewidth}{!}{\includegraphics{CAO\_reservoir1.png}}
+        \caption{CAO du porte réservoir version 1}
+        \label{fig:CAO_reservoir1}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \resizebox{\linewidth}{!}{\includegraphics{CAO\_reservoir2.png}}
+        \caption{CAO du porte réservoir version 2}
+        \label{fig:CAO_reservoir2}
+    \end{figure}
+\end{multicols}
+Désormais nous avons une idée très claire du rendu physique du projet, celui-ci sera composer d'un boitier auxquelles sera fixé les trois pompe, les quatre tube comprenant les hormones, le liquide de culture neuf, et usagé.
+Ce boitier sera lui aussi découper au LASER et au besoin renforcé par des pièces imprimé en 3D.
+Il ne contiendra pas l'électronique, celui-ci sera placer en dehors de l'incubateur et relier au système via un câble.
+Il est à noter qu'il manque les électrovannes, qui ont été modéliser et qui seront placer de l'autre côté des pompes.
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{CAO\_electrovanne.png}}
+    \caption{CAO des électrovannes}
+    \label{fig:CAO_electrovanne}
+\end{figure}
 
 \newpage
 \section{Conception électronique et programmation}
@@ -325,7 +466,8 @@ Le fichier à préparer doit être présenter sous la forme :
 \end{table}
 \newpage
 \section{Conclusion}
-
+Pour conclure on peut commencer la découpe du mélangeur et de la zone de culture afin de commencer les tests.
+Il faut commander les pièces électroniques pour commencer les tests électroniques.
 \newpage
 \section{Annexe}
 
