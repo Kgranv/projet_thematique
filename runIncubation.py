@@ -31,10 +31,12 @@ def setupGPIO():
     """
     Setup GPIO for control
     """
+    #Pompe
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(17, GPIO.OUT)
     GPIO.setup(27, GPIO.OUT)
     GPIO.setup(22, GPIO.OUT)
+    #Electrovanne
     GPIO.setup(5, GPIO.OUT)
     GPIO.setup(6, GPIO.OUT)
     GPIO.setup(13, GPIO.OUT)
