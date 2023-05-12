@@ -18,16 +18,44 @@ def checkFolder(folder):
     else:
         pass
 
-class pinGPIO:
+def setupPWM(pinMotor:list,pinVanne:list):
     """
-    Setup GPIO lib
+    Setup GPIO PWM with a frequency of 0.1Hz
+    """
+    frequencyPWM = 0.1
+    moteur = [GPIO.PWM(pinMotor[0],frequencyPWM),GPIO.PWM(pinMotor[1],frequencyPWM),GPIO.PWM(pinMotor[2],frequencyPWM)]
+    vanne = [GPIO.PWM(pinVanne[0],frequencyPWM),GPIO.PWM(pinVanne[1],frequencyPWM),GPIO.PWM(pinVanne[2],frequencyPWM)]
+    return moteur,vanne
+
+def setupGPIO():
+    """
+    Setup GPIO for control
     """
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(17, GPIO.OUT)
     GPIO.setup(27, GPIO.OUT)
     GPIO.setup(22, GPIO.OUT)
 
+def testPWM(isMotor:bool,index:int,dutyCycle:float):
+    """
+    DO NOT USE ! FOR DEBUG ONLY !
+    index : 0,1 or 2
+    dutyCycle : 0.0<dc<100.0
+    """
+    if isMotor:
+        motor[index].start(dutyCycle)
+        input('Press return to stop:')   # use raw_input for Python 2
+        motor[index].stop()
+    else:
+        vanne[index].start(dutyCycle)
+        input('Press return to stop:')   # use raw_input for Python 2
+        vanne[index].stop()
 
+def endProgram():
+    """
+    Clean all GPIO used for clean ending
+    """
+    GPIO.cleanup()
 '''
 servo_pin = 18  # équivalent de GPIO 18
 GPIO.setmode(GPIO.BCM)  # notation BCM
@@ -40,3 +68,9 @@ pwm.ChangeDutyCycle(float(rapport))
 
 checkFolder(dataFolder)
 setupGPIO()
+motor,vanne = setupPWM([17,27,22],[5,6,13])
+for i in range(0,3):
+    testPWM(True,i,50)
+for i in range(0,3):
+    testPWM(False,i,50)
+endProgram()
