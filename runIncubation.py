@@ -22,7 +22,7 @@ def setupPWM(pinMotor:list,pinVanne:list):
     """
     Setup GPIO PWM with a frequency of 0.1Hz
     """
-    frequencyPWM = 0.1
+    frequencyPWM = 10
     moteur = [GPIO.PWM(pinMotor[0],frequencyPWM),GPIO.PWM(pinMotor[1],frequencyPWM),GPIO.PWM(pinMotor[2],frequencyPWM)]
     vanne = [GPIO.PWM(pinVanne[0],frequencyPWM),GPIO.PWM(pinVanne[1],frequencyPWM),GPIO.PWM(pinVanne[2],frequencyPWM)]
     return moteur,vanne
@@ -35,6 +35,9 @@ def setupGPIO():
     GPIO.setup(17, GPIO.OUT)
     GPIO.setup(27, GPIO.OUT)
     GPIO.setup(22, GPIO.OUT)
+    GPIO.setup(5, GPIO.OUT)
+    GPIO.setup(6, GPIO.OUT)
+    GPIO.setup(13, GPIO.OUT)
 
 def testPWM(isMotor:bool,index:int,dutyCycle:float):
     """
