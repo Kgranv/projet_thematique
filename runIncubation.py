@@ -20,11 +20,11 @@ def checkFolder(folder):
 
 def setupPWM(pinMotor:list,pinVanne:list):
     """
-    Setup GPIO PWM with a frequency of 0.1Hz
+    Setup GPIO PWM with a frequency of 10Hz
     """
     frequencyPWM = 10
     moteur = [GPIO.PWM(pinMotor[0],frequencyPWM),GPIO.PWM(pinMotor[1],frequencyPWM),GPIO.PWM(pinMotor[2],frequencyPWM)]
-    vanne = [GPIO.PWM(pinVanne[0],frequencyPWM),GPIO.PWM(pinVanne[1],frequencyPWM),GPIO.PWM(pinVanne[2],frequencyPWM)]
+    vanne = [GPIO.output(pinVanne[0],GPIO.HIGH),GPIO.output(pinVanne[1],GPIO.HIGH),GPIO.output(pinVanne[2],GPIO.HIGH)]
     return moteur,vanne
 
 def setupGPIO():
