@@ -2,11 +2,11 @@ import asyncio
 import time
 import RPi.GPIO as GPIO
 
-def setupPWM(pinMotor:list,pinVanne:list):
+def setupPWM(pinMotor:list):
     """
     Setup GPIO PWM with a frequency of 0.1Hz
     """
-    frequencyPWM = 10
+    frequencyPWM = 100
     moteur = [GPIO.PWM(pinMotor[0],frequencyPWM),GPIO.PWM(pinMotor[1],frequencyPWM),GPIO.PWM(pinMotor[2],frequencyPWM)]
     return moteur
 
@@ -18,6 +18,12 @@ def setupGPIO():
     GPIO.setup(17, GPIO.OUT)
     GPIO.setup(27, GPIO.OUT)
     GPIO.setup(22, GPIO.OUT)
+
+def endProgram():
+    """
+    Clean all GPIO used for clean ending
+    """
+    GPIO.cleanup()
 
 async def runPompe(index,dutyCycle):
     print("Demarage pompe ",index)
@@ -34,12 +40,14 @@ async def main():
         print("Test avec une tension de ",tension[x]," V :")
         input('Presser entrer pour commencer ')
         for i in range(0,3):
-            test.append(asyncio.create_task(runPompe(motor[i],dc[x])))
+            test.append(asyncio.create_task(runPompe(i,dc[x])))
         await test[0]
         await test[1]
         await test[2]
         test = []
     print("Test terminée")
+    endProgram()
 
 setupGPIO()
 motor = setupPWM([17,27,22])
+asyncio.run(main())
