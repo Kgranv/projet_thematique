@@ -421,7 +421,19 @@ Il est à noter qu'il manque les électrovannes, qui ont été modéliser et qui
     \caption{CAO des électrovannes}
     \label{fig:CAO_electrovanne}
 \end{figure}
-
+\subsubsection{Le boitier découpable au LASER a $ CO_2 $}
+A des fin de cout et de rapidité, nous avons fait le choix de fabriquer notre boitier avec le 
+plus de partie découper au LASER. Pour cela nous avons modéliser chaque face du boitier et nous 
+les avons fait s'emboiter dans un assemblage.
+Pour des questions de maintient, nous avons conçu 8 petites équerres de maintient à visser
+et les plaques serons collées entre elles par de la colle à plexiglass.
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{CAO\_boitier\_decoupe\_LASER.png}}
+    \caption{CAO du boitier à découper au LASER}
+    \label{fig:CAO_boitier_decoupe_LASER}
+\end{figure}
+Nous avons aussi ajouter deux support à imprimer en 3D pour fixer le melangeur et la zone de culture.
 \newpage
 \section{Conception électronique et programmation}
 \subsection{Carte d'alimentation}
@@ -512,13 +524,61 @@ Le fichier à préparer doit être présenter sous la forme :
     \end{figure}
 \end{multicols}
 \subsubsection{Le mélangeur}
+Nous avons efectuer les premier tests du mélangeur en faisant circuler du liquide à l'intérieur
+a l'aide de seringues.
 \begin{figure}[H]
     \centering
     \resizebox{\linewidth}{!}{\includegraphics{fuite\_melangeur.PNG}}
     \caption{Photo test fluidique mélangeur}
     \label{fig:fuite_melangeurV1}
 \end{figure}
+Comme on peut observer sur la \label{fig:fuite_melangeur} le liquide s'infiltre dans l'intercouche ce qui cause une fuite 
+par un trou de fabrication. 
 \subsubsection{CAO mélangeur version 2}
+Le premier mélangeur fuyais, cela etait probablement du à une surpression qui causait
+l'infiltration du liquide dans l'intercouche. 
+Le temps nous manque, il nous faut un mélangeur fonctionnel même si il est moins performant que l'ancien.
+Nous avons donc conçu une version plus simple et plus robuste qu'il nous reste à tester.
+\begin{multicols}{2}
+    \begin{figure}[H]
+        \centering
+        \resizebox{\linewidth}{!}{\includegraphics{CAO\_melangeur\_V2\_couche1.png}}
+        \caption{Premiere couche du melangeur V2}
+        \label{fig: CAO_melangeur_V2_couche1}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \resizebox{\linewidth}{!}{\includegraphics{CAO\_melangeur\_V2\_couche2.png}}
+        \caption{Deuxième couche du mélangeur V2}
+        \label{fig:CAO_melangeur_V2_couche2}
+    \end{figure}
+\end{multicols}
+Nous avons garder l'idée de séparer puis de refusionner le flux, sauf que le chemin est bien plus simple.
+Les dimensions on été agrandi afin d'avoir 1cm de chaque coté ce qui est deux fois plus que l'ancien.
+\begin{multicols}{2}
+    \begin{figure}[H]
+        \centering
+        \resizebox{\linewidth}{!}{\includegraphics{CAO\_melangeur\_V2\_couche3.png}}
+        \caption{Dernière couche du melangeur V2}
+        \label{fig: CAO_melangeur_V2_couche3}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \resizebox{\linewidth}{!}{\includegraphics{CAO\_melangeur\_V2.png}}
+        \caption{L'assemblage du mélangeur V2}
+        \label{fig:CAO_melangeur_V2}
+    \end{figure}
+\end{multicols}
+Nous avons ainsi un nouveau mélangeur de 100 par 50 a placer dans le système. La piece permettant la fixation du mélangeur 
+au boitier a donc été ajusté.
+\subsubsection{CAO boitier version 2}
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{CAO\_boitier\_decoupe\_LASER\_V2.png}}
+    \caption{Boitier modifier pour accueillir le melangeur V2}
+    \label{fig:CAO_boitier_V2}
+\end{figure}
+Nous obtenons donc ce rendu, il reste alors a le découper et a l'assembler.
 \newpage
 \section{Conclusion}
 Pour conclure on peut commencer la découpe du mélangeur et de la zone de culture afin de commencer les tests.
