@@ -479,12 +479,27 @@ Le fichier à préparer doit être présenter sous la forme :
 \newpage
 \section{Prototype}
 \subsection{Assemblage des biochips}
-\begin{multicols}{2}
+Pour réaliser l’assemblage du mélangeur et du biochip qui contiendra les cellules,
+la première étapes a été de découper chaque éléments dans des plaques de PMMA. 
+Afin de facilité l’assemblage, seul la couche du milieu est recouverte de colle 
+sur ces deux faces. La deuxième étape consiste à assembler le tout. 
+Les goupilles du gabarit (voir figure \ref{fig:gabarit}) permettent l’alignement 
+des 3 différentes couches. Une fois les 3 couches superposer,
+ il faut s’assurer que celle-ci sont correctement collé entre elles.
+Pour cela, les trois couches sont pressé entre elles à l’aide d’un rouleau. 
+Enfin, les luer-lock sont emboiter dans le boichip avec de la colle époxy. 
+\begin{multicols}{3}
+    \begin{figure}[H]
+        \centering
+        \resizebox{\linewidth}{!}{\includegraphics{gabarit.JPG}}
+        \caption{Photo du gabarit et des biochips}
+        \label{fig:gabarit}
+    \end{figure}
     \begin{figure}[H]
         \centering
         \resizebox{\linewidth}{!}{\includegraphics{melangeur.jpg}}
         \caption{Photo de l'assembage du mélangeur}
-        \label{fig: melangeur}
+        \label{fig:melangeur}
     \end{figure}
     \begin{figure}[H]
         \centering
@@ -579,6 +594,9 @@ au boitier a donc été ajusté.
     \label{fig:CAO_boitier_V2}
 \end{figure}
 Nous obtenons donc ce rendu, il reste alors a le découper et a l'assembler.
+\subsubsection{Electronique version 2}
+On a du changer le circuit électronique car on a remarquée que le raspberry pi ne fournis pas assez de tension au mosfet.
+On a amplifier le signal grâce à un AOP pour pouvoir piloter les pompes.
 \newpage
 \section{Conclusion}
 Pour conclure on peut commencer la découpe du mélangeur et de la zone de culture afin de commencer les tests.
