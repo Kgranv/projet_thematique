@@ -63,12 +63,11 @@
 %Introduction
 \vspace{-1cm}
 \section*{Introduction}
-Le projet thématique viens se placer dans le cadre des études de bachelor en microtechnique option Bio-ingénierie.
-Cette année notre cliente est une biologiste travaillant sur l'endométriose, une maladie encore peu connue touchant 1 femme sur 10.
-Cette pathologie se caractérise par le développement de tissu semblable à l'endomètre hors de l'utérus.
-Ces tissus peuvent proliférer dans les organes voisins comme les ovaires, l'intestins, la vessie ou même les poumons.
-Les symptômes varient énormément entre les femmes mais ont retiens, le plus souvent, celui de la douleur extrême provoquer par la croissance de ces tissus.
-Le but de notre projet est de créer un bio-chip qui permettrait d'étudier les tissus de l'endomètre soumis à différentes concentration d'hormones.
+Le projet thématique vient se placer dans le cadre des études de bachelor en microtechnique, option Bio-ingénierie. Cette année, le projet porte sur l'endométriose, une maladie encore peu connue touchant 1 femme sur 10.\\
+Les objectifs du projet sont, d'une part, de mettre en application les connaissances acquises durant nos études, mais également de développer de nouvelles compétences comme la gestion de projet.
+D'autre part, ce projet contribue à développer la recherche sur l'endométriose et servira de support pour le \\
+"project MOON : endoMetriosis Organoids to vOice up woman paiN".\\
+Le but est donc de créer un bio-chip qui permettrait d'étudier les tissus de l'endomètre soumis à différentes concentrations d'hormones.
 \newpage
 %Table des matieres
 \tableofcontents
@@ -76,15 +75,11 @@ Le but de notre projet est de créer un bio-chip qui permettrait d'étudier les 
 %Debut rapport
 \section{Etudes préliminaire}
 \subsection{Biologie}
-Pour que l'expérience soit optimale, le client a besoin de suivre l'évolution d'un tissu d'endomètre sur la durée d'un cycle endométrial.
-Le système doit être compact et permettre l'observation des cellules en culture ainsi que la possibilité de collecter des cellules et du milieu de culture pour analyse.
-Afin mieux comprendre comment concevoir un appareil correspondant à la demande du client, une courte introduction biologique est nécessaire.
-L'endomètre est un épithélium qui compose une partie de l'appareil reproducteur féminin, il tapisse les parois de la cavité utérine et est composé de 3 couches :
-Le myomètre qui est la fondation de l'endomètre, la couche basale qui contient les glandes et les tissu conjonctifs et la couche fonctionnelle.
-Cette dernière couche est celle qui vois sa taille changer durant le cycle menstruel qui est réglé par 4 Hormones.
-L'hypothèse émise par la biologiste serais qu'il y a une influence du cycle hormonale sur l'apparition de l'endométriose.
-Il y a notamment deux hormones qui sont suspecter, l'estradiol et la progestérone.
-Nous allons donc devoir recrée les concentrations de ce cycle et les appliquer à des cellules in-vitro.
+Afin de mieux comprendre comment concevoir un appareil correspondant à la demande du client, une courte introduction biologique est nécessaire.\\
+L'endométriose se caractérise par le développement d'un tissu semblable à l'endomètre en dehors de l'utérus. Généralement, le tissu endométrial se développe dans les ovaires, et il peut former des kystes remplis de sang appelés endométriomes. Ces kystes peuvent varier en taille et provoquer des symptômes qui varient énormément entre les femmes, mais on retient le plus souvent celui de la douleur extrême.\\
+Cependant, il est également possible que des lésions similaires à des kystes endométriomes apparaissent sur les organes pelviens adjacents aux ovaires tels que les trompes de Fallope, les ligaments utéro-sacrés, la vessie, etc.\\ 
+L'endomètre est un épithélium qui compose une partie de l'appareil reproducteur féminin. Il tapisse les parois de la cavité utérine et est composé de 3 couches : le myomètre qui est la fondation de l'endomètre, la couche basale qui contient les glandes et les tissus conjonctifs, et la couche fonctionnelle.\\
+Cette dernière couche est celle qui voit sa taille changer durant le cycle menstruel, qui est régulé par 4 hormones.
 \subsection{Etat de l'art}
 Actuellement la culture cellulaire est un procédé connu et maitriser par l'Homme qui consiste à placer des cellules dans un milieu de culture afin de les faire proliférer.
 Cette méthode permet d'avoir des colonies de cellule pouvant aller jusqu'a formé des organoïdes.
@@ -434,6 +429,7 @@ et les plaques serons collées entre elles par de la colle à plexiglass.
     \label{fig:CAO_boitier_decoupe_LASER}
 \end{figure}
 Nous avons aussi ajouter deux support à imprimer en 3D pour fixer le melangeur et la zone de culture.
+\newpage
 \subsection{Assemblage des biochips}
 Pour réaliser l’assemblage du mélangeur et du biochip qui contiendra les cellules,
 la première étapes a été de découper chaque éléments dans des plaques de PMMA. 
@@ -479,6 +475,8 @@ Enfin, les luer-lock sont emboiter dans le boichip avec de la colle époxy.
         \label{fig:reste_cellules}
     \end{figure}
 \end{multicols}
+Après avoir injecté du fluide dans le biochip, celui-ci ne fuit pas. Cependant, le test a montré une mauvaise optimisation de l'espace. En effet, comme le montre la photo de la figure 4, le liquide reste bloqué à certains endroits. Pour optimiser la circulation du fluide, une nouvelle version de ce biochip a été modélisée.
+\newpage
 \subsubsection{Modelisation biochip cellules version 2}
 \begin{multicols}{2}
     \begin{figure}[H]
@@ -494,6 +492,8 @@ Enfin, les luer-lock sont emboiter dans le boichip avec de la colle époxy.
         \label{fig:milieu_cellulesV2}
     \end{figure}
 \end{multicols}
+Les entrées et sorties du fluide ont le même diamètre que les trous pour insérer les embouts luer-lock, afin d'éviter d'avoir une zone inutile autour de ces embouts.
+De plus, pour la zone plus large qui accueillera les cellules, les angles à 90° ont été remplacés par des angles à 45°. Cela devrait permettre au fluide de mieux circuler dans cette zone.
 \subsubsection{Le mélangeur}
 Nous avons efectuer les premier tests du mélangeur en faisant circuler du liquide à l'intérieur
 a l'aide de seringues.
