@@ -434,50 +434,6 @@ et les plaques serons collées entre elles par de la colle à plexiglass.
     \label{fig:CAO_boitier_decoupe_LASER}
 \end{figure}
 Nous avons aussi ajouter deux support à imprimer en 3D pour fixer le melangeur et la zone de culture.
-\newpage
-\section{Conception électronique et programmation}
-\subsection{Carte d'alimentation}
-L'alimentation de tous le biochip se fera via l'alimentation d'un Arduino de 60 W.
-Il arrive sur la carte d'alimentation via la connectique circulaire JAlim.
-U1 est un régulateur de tension à découpage de la marque TRACO, il permet de descendre la tension de 12V à 5V il sert à alimenter le Raspberry pi qui sera alimenter par ses pins GPIO.
-Les moteurs seront contrôlés par les mosfet M1, M2 et M3.
-Les moteurs seront branchés à la carte via des connecteurs circulaire afin que le système soit le plus flexible possible.
-Les diodes D1, D2 et D3 sont des diodes de roues libres.
-\subsection{Programmation}
-\subsubsection{GitHub}
-On a mis en place un GitHub pour se partager les codes de programmation, le "repo" contient aussi une ébauche du guide d'utilisateur.
-Le guide d'utilisateur contient actuellement uniquement les requirements pour le Raspberry pi ainsi que les commandes à utiliser.
-\subsubsection{Raspberry Pi}
-On a configuré le Raspberry pi 4 pour qu'on puisse se connecter dessus à distance à l'aide du protocole SSH.
-On peut s'y connecter facilement dessus à partir du moment que l'on se trouve sur le même réseau wifi.
-On peut lui transmettre des fichiers ainsi que récupérer des fichiers qui sont stockées dessus.
-\subsubsection{Préparation des données}
-Ce code permet de préparer les datas afin de pouvoir être utiliser par le logiciel qui contrôle le biochip.
-Il a été conçu pour que l'utilisateur rentre un minimum de donner afin de gagner du temps.
-Il permet de convertir un fichier csv que l'utilisateur aura créée au préalable avec les différents jalons de concentration en un fichier qui contient toutes les concentrations de l'expérience sur 28 jours.
-Sur la figure \ref{fig:dataPreparation} on peut voir une représentation des données rentrées par l'utilisateur et les données produites par le programme.
-\begin{figure}[H]
-    \centering
-    \resizebox{\linewidth}{!}{\includegraphics{representation\_data\_gen.png}}
-    \caption{Données généré par le programme avec les données rentrées par l'utilisateur}
-    \label{fig:dataPreparation}
-\end{figure}
-On peut l'utiliser directement sur un ordinateur puis envoyer le fichier généré sur le Raspberry pi ou bien on peut envoyer le fichier csv sur le Raspberry pi puis le généré directement sur le Raspberry pi.
-Le fichier généré est un fichier de type ftr il n'est donc pas lisible directement ceci est fait afin de gagner en rapidité d'exécution et gagner du stockage.
-Si on utilisait un fichier csv équivalent il contiendrait tellement de donnés qu'il faudrait plusieurs secondes pour le généré et il prendrait 10 fois plus de stockage.
-Le fichier à préparer doit être présenter sous la forme :
-\begin{table}[H]
-    \centering
-    \begin{tabular}{lll}
-        Time & Conc1 & Conc2 \\
-        0    & 1     & 1     \\
-        2    & 6     & 8     \\
-        10   & 2     & 1     \\
-        15   & 4     & 2
-    \end{tabular}
-\end{table}
-\newpage
-\section{Prototype}
 \subsection{Assemblage des biochips}
 Pour réaliser l’assemblage du mélangeur et du biochip qui contiendra les cellules,
 la première étapes a été de découper chaque éléments dans des plaques de PMMA. 
@@ -594,6 +550,48 @@ au boitier a donc été ajusté.
     \label{fig:CAO_boitier_V2}
 \end{figure}
 Nous obtenons donc ce rendu, il reste alors a le découper et a l'assembler.
+\newpage
+\section{Conception électronique et programmation}
+\subsection{Carte d'alimentation}
+L'alimentation de tous le biochip se fera via l'alimentation d'un Arduino de 60 W.
+Il arrive sur la carte d'alimentation via la connectique circulaire JAlim.
+U1 est un régulateur de tension à découpage de la marque TRACO, il permet de descendre la tension de 12V à 5V il sert à alimenter le Raspberry pi qui sera alimenter par ses pins GPIO.
+Les moteurs seront contrôlés par les mosfet M1, M2 et M3.
+Les moteurs seront branchés à la carte via des connecteurs circulaire afin que le système soit le plus flexible possible.
+Les diodes D1, D2 et D3 sont des diodes de roues libres.
+\subsection{Programmation}
+\subsubsection{GitHub}
+On a mis en place un GitHub pour se partager les codes de programmation, le "repo" contient aussi une ébauche du guide d'utilisateur.
+Le guide d'utilisateur contient actuellement uniquement les requirements pour le Raspberry pi ainsi que les commandes à utiliser.
+\subsubsection{Raspberry Pi}
+On a configuré le Raspberry pi 4 pour qu'on puisse se connecter dessus à distance à l'aide du protocole SSH.
+On peut s'y connecter facilement dessus à partir du moment que l'on se trouve sur le même réseau wifi.
+On peut lui transmettre des fichiers ainsi que récupérer des fichiers qui sont stockées dessus.
+\subsubsection{Préparation des données}
+Ce code permet de préparer les datas afin de pouvoir être utiliser par le logiciel qui contrôle le biochip.
+Il a été conçu pour que l'utilisateur rentre un minimum de donner afin de gagner du temps.
+Il permet de convertir un fichier csv que l'utilisateur aura créée au préalable avec les différents jalons de concentration en un fichier qui contient toutes les concentrations de l'expérience sur 28 jours.
+Sur la figure \ref{fig:dataPreparation} on peut voir une représentation des données rentrées par l'utilisateur et les données produites par le programme.
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{representation\_data\_gen.png}}
+    \caption{Données généré par le programme avec les données rentrées par l'utilisateur}
+    \label{fig:dataPreparation}
+\end{figure}
+On peut l'utiliser directement sur un ordinateur puis envoyer le fichier généré sur le Raspberry pi ou bien on peut envoyer le fichier csv sur le Raspberry pi puis le généré directement sur le Raspberry pi.
+Le fichier généré est un fichier de type ftr il n'est donc pas lisible directement ceci est fait afin de gagner en rapidité d'exécution et gagner du stockage.
+Si on utilisait un fichier csv équivalent il contiendrait tellement de donnés qu'il faudrait plusieurs secondes pour le généré et il prendrait 10 fois plus de stockage.
+Le fichier à préparer doit être présenter sous la forme :
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lll}
+        Time & Conc1 & Conc2 \\
+        0    & 1     & 1     \\
+        2    & 6     & 8     \\
+        10   & 2     & 1     \\
+        15   & 4     & 2
+    \end{tabular}
+\end{table}
 \subsubsection{Electronique version 2}
 On a du changer le circuit électronique car on a remarquée que le raspberry pi ne fournis pas assez de tension au mosfet.
 On a amplifier le signal grâce à un AOP pour pouvoir piloter les pompes.
