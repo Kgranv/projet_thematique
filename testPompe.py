@@ -28,13 +28,13 @@ def endProgram():
 async def runPompe(index,dutyCycle):
     print("Demarage pompe ",index)
     motor[index].start(dutyCycle)
-    await asyncio.sleep(60*2)
+    await asyncio.sleep(60)
     motor[index].stop()
     print("Fin test pompe ",index)
 
 async def main():
-    dc = [50.0,54.2,58.3,62.5,66.7,70.8,75.0,79.2,83.3,87.5,91.7,95.8,100]
-    tension = [6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0,10.5,11.0,11.5,12.0]
+    dc = [100]
+    tension = [12.0]
     test = []
     for x in range(0,len(dc)):
         print("Test avec une tension de ",tension[x]," V :")
@@ -46,6 +46,7 @@ async def main():
         await test[2]
         test = []
     print("Test terminée")
+    input('Presser entrer pour terminer ')
     endProgram()
 
 setupGPIO()
