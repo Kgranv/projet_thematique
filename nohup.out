@@ -1,0 +1,44 @@
+test
+test3
+fwef
+wfew
+Traceback (most recent call last):
+  File "/mnt/d/GitHub/projet_thematique/test.py", line 55, in <module>
+    logDataFrame = openFile()
+  File "/mnt/d/GitHub/projet_thematique/test.py", line 21, in openFile
+    return pd.read_csv(fullPath, sep=";", header=None, names=["Status", "Action", "Argument"])
+  File "/home/kgranv/anaconda3/lib/python3.9/site-packages/pandas/util/_decorators.py", line 311, in wrapper
+    return func(*args, **kwargs)
+  File "/home/kgranv/anaconda3/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 680, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/home/kgranv/anaconda3/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 581, in _read
+    return parser.read(nrows)
+  File "/home/kgranv/anaconda3/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 1265, in read
+    df = DataFrame(col_dict, columns=columns, index=index)
+  File "/home/kgranv/anaconda3/lib/python3.9/site-packages/pandas/core/frame.py", line 636, in __init__
+    mgr = dict_to_mgr(data, index, columns, dtype=dtype, copy=copy, typ=manager)
+  File "/home/kgranv/anaconda3/lib/python3.9/site-packages/pandas/core/internals/construction.py", line 445, in dict_to_mgr
+    arrays = Series(data, index=columns, dtype=object)
+  File "/home/kgranv/anaconda3/lib/python3.9/site-packages/pandas/core/series.py", line 417, in __init__
+    data, index = self._init_dict(data, index, dtype)
+  File "/home/kgranv/anaconda3/lib/python3.9/site-packages/pandas/core/series.py", line 506, in _init_dict
+    s = create_series_with_explicit_dtype(
+  File "/home/kgranv/anaconda3/lib/python3.9/site-packages/pandas/core/construction.py", line 856, in create_series_with_explicit_dtype
+    return Series(
+  File "/home/kgranv/anaconda3/lib/python3.9/site-packages/pandas/core/series.py", line 416, in __init__
+    elif is_dict_like(data):
+  File "/home/kgranv/anaconda3/lib/python3.9/site-packages/pandas/core/dtypes/inference.py", line 288, in is_dict_like
+    all(hasattr(obj, attr) for attr in dict_like_attrs)
+KeyboardInterrupt
+ewf
+normaly stop
+  Status Action Argument
+0   done  print  wololo1
+1   done  print  wololo2
+2   done  print     test
+3   done  print    test3
+4   done  print     fwef
+5    wef    NaN      NaN
+6   done  print     wfew
+7   done  print      ewf
+8   done   stop     fwef

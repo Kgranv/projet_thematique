@@ -1,24 +1,52 @@
-import asyncio
-import time
+import pandas as pd
+import os
+import sys
 
-async def runPompe(index,dutyCycle):
-    print("Demarage pompe ",index)
-    await asyncio.sleep(1*2)
-    print("Fin test pompe ",index)
+logPath = "./"
+logFile = "log.csv"
+logDataFrame = pd.DataFrame()
+isRunning = True
 
-async def main():
-    dc = [50.0,54.2,58.3,62.5,66.7,70.8,75.0,79.2,83.3,87.5,91.7,95.8,100]
-    tension = [6.0,6.5,7.0,7.5,8.0,8.5,9.0,9.5,10.0,10.5,11.0,11.5,12.0]
-    test = []
-    for x in range(0,len(dc)):
-        print("Test avec une tension de ",tension[x]," V :")
-        input('Presser entrer pour commencer ')
-        for i in range(0,3):
-            test.append(asyncio.create_task(runPompe(motor[i],dc[x])))
-        await test[0]
-        await test[1]
-        await test[2]
-        test = []
+def checkOs():
+    """
+    Check system OS if windows change path syntax
+    """
+    if os.name == "nt":
+        logPath = ".\\"
         
-motor = [1,2,3]
-asyncio.run(main())
+def openFile():
+    fullPath = logPath+logFile
+    return pd.read_csv(fullPath, sep=";", header=None, names=["Status", "Action", "Argument"])
+
+def addMissingRows(df1, df2):
+    if len(df1) < len(df2):
+        missing_rows = df2.iloc[len(df1):]
+        df1 = pd.concat([df1, missing_rows], ignore_index=True)
+    return df1
+
+def doAction():
+    global logDataFrame
+    global isRunning
+    pending_rows = logDataFrame.loc[logDataFrame["Status"] == "pending"]
+    
+    for index, row in pending_rows.iterrows():
+        logDataFrame.at[index, "Status"] = "done"
+        if row["Action"] == "print":
+            print(row["Argument"])
+        elif row["Action"] == "stop":
+            isRunning = False
+            print("normaly stop")
+            break
+    logDataFrame = addMissingRows(logDataFrame,openFile())
+    updateLogFile()
+
+def updateLogFile():
+    logDataFrame.to_csv(logPath+logFile,header=None,sep=";",index=False)    
+
+
+sys.stdout = sys.__stdout__
+checkOs()
+while isRunning:
+    logDataFrame = openFile()
+    doAction()
+print(logDataFrame)
