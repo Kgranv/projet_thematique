@@ -5,7 +5,7 @@ import time
 logPath = "./"
 logFile = "log.csv"
 logDataFrame = pd.DataFrame()
-listeSelection = "1. print\n2. stop"
+listeSelection = ["prélevement","observation","stop","annuler"]
 isWrongInput = True
 userInput = 0
 
@@ -28,16 +28,20 @@ def addRow(action):
 def updateLogFile():
     logDataFrame.to_csv(logPath+logFile,header=None,sep=";",index=False)
 
+def getInput():
+    print("Que voulez vous faire ? :")
+    for x in range(0,len(listeSelection)):
+        print(str(x+1)+". "+listeSelection[x])
+    return input()
+
 def checkInput():
     global userInput
     global isWrongInput
     try:
         userInput = int(userInput)
         isWrongInput = False
-        if userInput == 1:
-            actionToReturn = "print"
-        elif userInput == 2:
-            actionToReturn = "stop"
+        if userInput > 0 and userInput < len(listeSelection)+1:
+            actionToReturn = listeSelection[userInput-1]
         else:
             isWrongInput = True
             raise
@@ -51,12 +55,12 @@ checkOs()
 logDataFrame = openFile()
 
 while isWrongInput:
-    userInput = input("Que voulez vous faire ? :\n"+listeSelection+"\n")
+    userInput = getInput() 
     actionToDo = checkInput()
 
-argument = input("Arg\n")
-if actionToDo != "stop":
-    actionToDo = "print"
-
-addRow([actionToDo,argument])
+if actionToDo != "annuler":
+    argument = input("Arg\n")
+    if actionToDo != "stop":
+        actionToDo = "print"
+    addRow([actionToDo,argument])
 updateLogFile()
