@@ -8,6 +8,11 @@ logDataFrame = pd.DataFrame()
 listeSelection = ["prélevement","observation","stop","annuler"]
 isWrongInput = True
 userInput = 0
+isRunning = True
+
+file_path = "./output.log"
+new_line = ""
+last_line = ""
 
 def checkOs():
     """
@@ -50,17 +55,29 @@ def checkInput():
         print("Je n'ai pas compris votre commande.")
         isWrongInput = True
 
-
 checkOs()
 logDataFrame = openFile()
 
-while isWrongInput:
-    userInput = getInput() 
-    actionToDo = checkInput()
+while isRunning:
+    while isWrongInput:
+        userInput = getInput() 
+        actionToDo = checkInput()
 
-if actionToDo != "annuler":
-    argument = input("Arg\n")
-    if actionToDo != "stop":
-        actionToDo = "print"
-    addRow([actionToDo,argument])
-updateLogFile()
+    if actionToDo == "annuler":
+        isRunning = False
+    else:
+        argument = input("Arg\n")
+        if actionToDo != "stop":
+            actionToDo = "print"
+        addRow([actionToDo,argument])
+        isWrongInput = True
+    updateLogFile()
+
+    time.sleep(1)
+    with open(file_path, "r") as file:
+            lines = file.readlines()
+            if lines:
+                new_line = lines[-1].strip()
+    if new_line != last_line:
+        print("Dernière ligne du fichier : ", new_line)
+        last_line = new_line

@@ -1,6 +1,26 @@
 import pandas as pd
 import os
 import sys
+from subprocess import call
+
+class Tee(object):
+    def __init__(self, file_name):
+        self.file = open(file_name, "a")
+
+    def __enter__(self):
+        self.stdout = sys.stdout
+        sys.stdout = self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        sys.stdout = self.stdout
+        self.file.close()
+
+    def write(self, message):
+        self.file.write(message)
+        self.file.flush()
+        self.stdout.write(message)
+
+
 
 logPath = "./"
 logFile = "log.csv"
@@ -32,10 +52,12 @@ def doAction():
     for index, row in pending_rows.iterrows():
         logDataFrame.at[index, "Status"] = "done"
         if row["Action"] == "print":
-            print(row["Argument"])
+            with Tee("output.log"):
+                print(row["Argument"])
         elif row["Action"] == "stop":
             isRunning = False
-            print("normaly stop")
+            with Tee("output.log"):
+                print("normaly stop")
             break
     logDataFrame = addMissingRows(logDataFrame,openFile())
     updateLogFile()
@@ -49,4 +71,5 @@ checkOs()
 while isRunning:
     logDataFrame = openFile()
     doAction()
-print(logDataFrame)
+with Tee("output.log"):
+    print(logDataFrame)
