@@ -1,10 +1,9 @@
 import pandas as pd
 import os
 import sys
-from subprocess import call
 
 class Tee(object):
-    def __init__(self, file_name):
+    def __init__(self, file_name="output.log"):
         self.file = open(file_name, "a")
 
     def __enter__(self):
@@ -26,6 +25,7 @@ logPath = "./"
 logFile = "log.csv"
 logDataFrame = pd.DataFrame()
 isRunning = True
+listAction = ["prélevement","observation","stop","print"]
 
 def checkOs():
     """
@@ -51,14 +51,23 @@ def doAction():
     
     for index, row in pending_rows.iterrows():
         logDataFrame.at[index, "Status"] = "done"
-        if row["Action"] == "print":
-            with Tee("output.log"):
-                print(row["Argument"])
-        elif row["Action"] == "stop":
+        if row["Action"] == listAction[0]:
+            #do action for prélèvement
+            with Tee():
+                print("Vous pouvez maintenant faire un prélèvement")
+        elif row["Action"] == listAction[1]:
+            #do action for observation
+            with Tee():
+                print("Vous pouvez maintenant faire une observation")
+        elif row["Action"] == listAction[2]:
+            #do action for stop
             isRunning = False
-            with Tee("output.log"):
+            with Tee():
                 print("normaly stop")
             break
+        elif row["Action"] == listAction[len(listAction)-1]:
+            with Tee():
+                print(row["Argument"])
     logDataFrame = addMissingRows(logDataFrame,openFile())
     updateLogFile()
 
@@ -71,5 +80,3 @@ checkOs()
 while isRunning:
     logDataFrame = openFile()
     doAction()
-with Tee("output.log"):
-    print(logDataFrame)

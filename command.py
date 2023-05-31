@@ -2,10 +2,10 @@ import pandas as pd
 import os
 import time
 
-logPath = "./"
-logFile = "log.csv"
-logDataFrame = pd.DataFrame()
-listeSelection = ["prélevement","observation","stop","annuler"]
+commandPath = "./"
+commandFile = "command.csv"
+commandDataFrame = pd.DataFrame()
+listeSelection = ["prélevement","observation","stop","print","annuler"]
 isWrongInput = True
 userInput = 0
 isRunning = True
@@ -19,27 +19,34 @@ def checkOs():
     Check system OS if windows change path syntax
     """
     if os.name == "nt":
-        logPath = ".\\"
+        commandPath = ".\\"
+        file_path = ".\\output.log"
         
 def openFile():
-    fullPath = logPath+logFile
+    fullPath = commandPath+commandFile
     return pd.read_csv(fullPath, sep=";", header=None, names=["Status", "Action", "Argument"])
 
 def addRow(action):
-    global logDataFrame
+    global commandDataFrame
     rowToAdd = pd.DataFrame({"Status": ["pending"], "Action": [action[0]], "Argument": [action[1]]})
-    logDataFrame = pd.concat([logDataFrame, rowToAdd], ignore_index=True)
+    commandDataFrame = pd.concat([commandDataFrame, rowToAdd], ignore_index=True)
 
-def updateLogFile():
-    logDataFrame.to_csv(logPath+logFile,header=None,sep=";",index=False)
+def updatecommandFile():
+    commandDataFrame.to_csv(commandPath+commandFile,header=None,sep=";",index=False)
 
-def getInput():
+def getActionInput():
     print("Que voulez vous faire ? :")
     for x in range(0,len(listeSelection)):
         print(str(x+1)+". "+listeSelection[x])
     return input()
 
-def checkInput():
+def getArgInput(argumentType=0):
+    if argumentType == 0:
+        return input("Indiquer le volume prélevé en mL\n")
+    else:
+        return input("Entrer argument\n")
+
+def checkActionInput():
     global userInput
     global isWrongInput
     try:
@@ -54,30 +61,58 @@ def checkInput():
     except:
         print("Je n'ai pas compris votre commande.")
         isWrongInput = True
+    
+def checkArgInput(argumentType=0, argInput=0):
+    if argumentType == 0:
+        try:
+            argInput = int(argInput)
+            if argInput > 0:
+                return False, argInput
+            else:
+                raise
+        except:
+            print("Je n'ai pas compris votre commande.")
+            return True, 0
+    else:
+        return False, argInput
+
+def getLastLine():
+    with open(file_path, "r") as file:
+        lines = file.readlines()
+        if lines:
+            return lines[-1].strip()
+        else:
+            return ""
 
 checkOs()
-logDataFrame = openFile()
+commandDataFrame = openFile()
 
 while isRunning:
     while isWrongInput:
-        userInput = getInput() 
-        actionToDo = checkInput()
+        userInput = getActionInput() 
+        actionToDo = checkActionInput()
 
-    if actionToDo == "annuler":
+    if actionToDo == listeSelection[len(listeSelection)-1]:
         isRunning = False
+        break
     else:
-        argument = input("Arg\n")
-        if actionToDo != "stop":
-            actionToDo = "print"
+        if actionToDo == listeSelection[0]:
+            isWrongInput = True
+            while isWrongInput:
+                argument= getArgInput()
+                isWrongInput,argument = checkArgInput(argInput=argument)
+        elif actionToDo == listeSelection[3]:
+            argument = input("Argument\n")
+        else:
+            argument = "None"
         addRow([actionToDo,argument])
-        isWrongInput = True
-    updateLogFile()
+    
+    updatecommandFile()
+    isWrongInput = True
 
     time.sleep(1)
-    with open(file_path, "r") as file:
-            lines = file.readlines()
-            if lines:
-                new_line = lines[-1].strip()
+
+    new_line = getLastLine()
     if new_line != last_line:
         print("Dernière ligne du fichier : ", new_line)
         last_line = new_line
