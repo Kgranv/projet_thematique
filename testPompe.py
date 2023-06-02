@@ -2,6 +2,13 @@ import asyncio
 import time
 import RPi.GPIO as GPIO
 
+
+electrovanne = [5,6,13]
+testPompe = []
+testElectroVanne = []
+isRunning = True
+nextMenu = 1
+
 def setupPWM(pinMotor:list):
     """
     Setup GPIO PWM with a frequency of 0.1Hz
@@ -29,40 +36,41 @@ def endProgram():
     """
     Clean all GPIO used for clean ending
     """
+    global motor
+    global electrovanne
     for i in range(0,3):
         motor[i].stop()
-        GPIO.output[electrovanne[i],GPIO.LOW]
+        GPIO.output(electrovanne[i],GPIO.LOW)
 
 def checkInput(userInput,menu=0):
     try:
         userInput = int(userInput)
-        match menu:
-            case 0:
-                #menu0
-                if userInput>0 and userInput<5:
-                    return False,userInput
-                else:
-                    raise
-            case 1:
-                #index
-                if userInput>-1 and userInput<3:
-                    return False,userInput
-                else:
-                    raise
-            case 2:
-                #dc
-                if userInput>=0 and userInput<=100:
-                    return False,userInput
-                else:
-                    raise
-            case 3:
-                #timeRun
-                if userInput>0 and userInput<=120:
-                    return False,userInput
-                else:
-                    raise
-            case _:
+        if menu == 0:
+            #menu0
+            if userInput>0 and userInput<5:
+                return False,userInput
+            else:
                 raise
+        elif menu == 1:
+            #index
+            if userInput>-1 and userInput<3:
+                return False,userInput
+            else:
+                raise
+        elif menu == 2:
+            #dc
+            if userInput>=0 and userInput<=100:
+                return False,userInput
+            else:
+                raise
+        elif menu == 3:
+            #timeRun
+            if userInput>0 and userInput<=120:
+                return False,userInput
+            else:
+                raise
+        else:
+            raise
     except:
         print("Je n'ai pas compris votre commande")
         return True
@@ -75,9 +83,10 @@ def getInput(menu=0):
     return userInput
     
 async def menu0():
+    global nextMenu
     print("Que voulez vous tester ? :")
     print("1. Tout\n2. Moteur\n3. Electrovanne\n4. Fin du test")
-    return getInput(0)
+    nextMenu = getInput(0)
     
 
 async def menu1():
@@ -105,6 +114,7 @@ async def menu3():
     taskTestElectrovanne = asyncio.create_task(runPompe(index,timeRun))
 
 async def runPompe(index,dutyCycle=100,timeRun=10):
+    global motor
     print("Demarage pompe ",index," pendant ",timeRun," seconde")
     motor[index].start(dutyCycle)
     await asyncio.sleep(timeRun)
@@ -112,13 +122,16 @@ async def runPompe(index,dutyCycle=100,timeRun=10):
     print("Fin test pompe ",index)
 
 async def runElectrovanne(index,timeRun=10):
+    global electrovanne
     print("Activation electrovanne ",index," pendant ",timeRun," seconde")
     GPIO.output(electrovanne[index], GPIO.HIGH)
-    await asyncio.slepp(timeRun)
+    await asyncio.sleep(timeRun)
     GPIO.output(electrovanne[index], GPIO.LOW)
     print("Désactivation electrovanne ",index)
 
-async def testAll(dutyCycle=100, timeRun=60):
+async def testAll(dutyCycle=100, timeRun=20):
+    global testPompe
+    global testElectroVanne
     print("Test avec une tension de ",round(12*(dutyCycle/100),1)," V :")
     input('Presser entrer pour commencer ')
     for i in range(0,3):
@@ -136,23 +149,28 @@ async def testAll(dutyCycle=100, timeRun=60):
     input('Presser entrer pour terminer ')
 
 async def main():
+    global motor
+    global electrovanne
+    """
     while isRunning:
-        nextMenu = asyncio.run(menu0())
-        match nextMenu:
-            case 1:
-                asyncio.run(menu1())
-            case 2:
-                asyncio.run(menu2())
-            case 3:
-                asyncio.run(menu3())
-            case 4:
-                break
+        truc = asyncio.create_task(menu0())
+        await truc
+        if nextMenu == 1:
+            asyncio.create_task(menu1())
+        elif nextMenu == 2:
+            asyncio.create_task(menu2())
+        elif nextMenu == 3:
+            asyncio.create_task(menu3())
+        elif nextMenu == 4:
+            break
+        else:
+            raise
+    
+    """
+    truc = asyncio.create_task(testAll())
+    await truc
     endProgram()
 
 setupGPIO()
 motor = setupPWM([17,27,22])
-electrovanne = [5,6,13]
-testPompe = []
-testElectroVanne = []
-isRunning = True
 asyncio.run(main())
