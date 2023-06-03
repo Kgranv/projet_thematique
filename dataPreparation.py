@@ -14,6 +14,9 @@ def checkOs():
     """
     Check system OS if windows change path syntax
     """
+    global userDataPath
+    global dataPath
+    global dataFolder
     if os.name == "nt":
         userDataPath = ".\\"+userDataFolder+"\\"
         dataPath = ".\\"+dataFolder+"\\"
@@ -35,6 +38,8 @@ def openUserData():
     Ask for wich user data to use.
     Check if it's usable. return an array if usable, return 0 if it's not usable
     """
+    global userDataPath
+    global userDataName
     userDataName = input("data to convert : ")
     try:
         completePath = userDataPath+userDataName
@@ -52,6 +57,7 @@ def createUsableTable(userData):
     """
     Create a table with intermediate point.
     """
+    global timeMax
     #calculate slope
     slopeArrayConc1 = np.zeros(len(userData[0])-1)
     slopeArrayConc2 = np.zeros(len(userData[0])-1)
@@ -84,19 +90,21 @@ def createFtr(dataTable):
     """
     Create a ftr with all point usable for control the bio-chip
     """
+    global dataFolder
+    global dataPath
     checkFolder(dataFolder)
     #generate the name of the file based on time
     fileName = datetime.now()
     fileName = fileName.strftime("%Y-%m-%d_%H%M%S")
     fileExtension = ".ftr"
     file = dataPath+fileName+fileExtension
-
     try:
         df = pd.DataFrame(dataTable,columns=["Time","Conc1","Conc2"])
         df.to_feather(file)
         print("Conversion completed !")
     except:
         print("Unable to convert the data into a csv file.")
+
 
 checkOs()
 if checkFolder(userDataFolder):
