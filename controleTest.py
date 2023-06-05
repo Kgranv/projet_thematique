@@ -1,11 +1,9 @@
-import pandas as pd
 import os
-import time
 
 outputFile = "./output.log"
 controlFile = "./controle.csv"
 isRunning = True
-menuSelection = {"1":"Prelevement","2":"Observation","3":"Stop","4":"Annuler"}
+menuSelection = {"1":"Prelevement","2":"Observation","3":"Reprendre_cycle","4":"Stop","5":"Annuler"}
 last_line = ""
 
 def checkOs():
@@ -35,7 +33,7 @@ def checkInput(userInput,menu=0):
     if menu == 0:
         try:
             userInput = int(userInput)
-            if userInput >= 1 or userInput <=4:
+            if userInput >= 1 or userInput <=5:
                 return False,userInput
             else:
                 raise
@@ -79,7 +77,7 @@ def menu0():
     global isRunning
     printMenu()
     userInput = getInput()
-    if userInput >=1 and userInput <=3:
+    if userInput >=1 and userInput <=4:
         if userInput == 1:
             print("Indiquer le volume que vous allez prélever en mL :")
             argumentInput = getInput(userInput)

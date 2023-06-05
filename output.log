@@ -6617,3 +6617,29 @@ Test
 ('Prelevement', '1')
 ('Stop', 'None')
 ('Observation', 'None')
+('Prelevement', '5')
+('Observation', 'None')
+('Observation', 'None')
+('Stop', 'None')
+('Prelevement', '2')
+action :  Prelevement  argument :  2
+action :  Prelevement  argument :  2
+action :  Prelevement  argument :  2
+action :  Observation  argument :  None
+action :  Prelevement  argument :  2
+action :  Stop  argument :  None
+action :  Prelevement  argument :  2
+action :  Stop  argument :  None
+action :  Prelevement  argument :  5
+action :  Stop  argument :  None
+action :  Stop  argument :  None
+action :  Prelevement  argument :  5
+action :  Stop  argument :  None
+action :  Prelevement  argument :  5
+action :  Prelevement  argument :  3
+action :  Observation  argument :  None
+action :  Reprendre_cycle  argument :  None
+action :  Prelevement  argument :  5
+action :  Observation  argument :  None
+action :  Reprendre_cycle  argument :  None
+action :  Stop  argument :  None
