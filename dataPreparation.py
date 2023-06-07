@@ -58,33 +58,15 @@ def createUsableTable(userData):
     Create a table with intermediate point.
     """
     global timeMax
-    #calculate slope
-    slopeArrayConc1 = np.zeros(len(userData[0])-1)
-    slopeArrayConc2 = np.zeros(len(userData[0])-1)
-    for x in range(len(slopeArrayConc1)):
-        slopeArrayConc1[x] = (userData[1][x+1]-userData[1][x])/(userData[0][x+1]-userData[0][x])
-        slopeArrayConc2[x] = (userData[2][x+1]-userData[2][x])/(userData[0][x+1]-userData[0][x])
-    
-    #init first line
-    timeTable = np.array([userData[0][0]])
-    conc1Table = np.array([userData[1][0]])
-    conc2Table = np.array([userData[2][0]])
-    
-    #fill the point between userpoint
-    for x in range(1,len(userData[0])):
-        timeTable = np.append(timeTable,np.arange(userData[0][x-1],userData[0][x],1))
-        conc1Table = np.append(conc1Table,np.arange(userData[1][x-1],userData[1][x],slopeArrayConc1[x-1]))
-        conc2Table = np.append(conc2Table,np.arange(userData[2][x-1],userData[2][x],slopeArrayConc2[x-1]))
-    
-    #fill the end of the table
-    timeTable = np.append(np.array(timeTable[1:len(timeTable)]),np.arange(userData[0][len(userData[0])-1],timeMax+1,1,float))
-    fillerTable = np.zeros(timeMax-len(conc1Table)+2)
-    fillerTable.fill(userData[1][len(userData[0])-1])
-    conc1Table = np.append(np.array(conc1Table[1:len(conc1Table)]),fillerTable)
-    fillerTable.fill(userData[2][len(userData[0])-1])
-    conc2Table = np.append(np.array(conc2Table[1:len(conc2Table)]),fillerTable)
-    
-    return np.vstack([timeTable,conc1Table,conc2Table]).T
+
+    # interpolate values
+    timeTable = np.arange(userData[0][0], userData[0][-1]+1)
+    conc1Table = np.interp(timeTable, userData[0], userData[1])
+    conc2Table = np.interp(timeTable, userData[0], userData[2])
+    timeTable = timeTable.astype(np.int64)
+    conc1Table = np.around(conc1Table,3)
+    conc2Table = np.around(conc2Table,3)
+    return np.vstack([timeTable, conc1Table, conc2Table]).T
 
 def createFtr(dataTable):
     """
@@ -100,6 +82,7 @@ def createFtr(dataTable):
     file = dataPath+fileName+fileExtension
     try:
         df = pd.DataFrame(dataTable,columns=["Time","Conc1","Conc2"])
+        df["Time"]=df["Time"].astype("int")
         df.to_feather(file)
         print("Conversion completed !")
     except:

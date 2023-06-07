@@ -7,6 +7,8 @@ from datetime import datetime
 outputFileName = "output.log"
 outputFilePath = "./"+outputFileName
 controleFile = "./controle.csv"
+concentrationFile = ""
+concentrationFilePath = "./Data/"
 updateConcentration = False
 timeBetweenChange = 1
 isSuspended = False
@@ -38,9 +40,25 @@ def checkOs():
     global outputFileName
     global outputFilePath
     global controleFile
+    global concentrationFilePath
     if os.name == "nt":
         outputFilePath = ".\\"+outputFileName
         controleFile = ".\\controle.csv"
+        concentrationFilePath = ".\\Data\\"
+
+def getArg():
+    global concentrationFilePath
+    global concentrationFile
+    if len(sys.argv) != 1:
+        return False
+    else:
+        try:
+            #concentrationFile = pd.read_feather(concentrationFilePath+sys.argv[0])
+            concentrationFile = "test"
+            return True
+        except:
+            return False
+        
 
 def removeLine():
     """
@@ -77,6 +95,7 @@ def doAction(actionToDo, argument):
     global volumeTotal
 
     if actionToDo == "Prelevement":
+        isSuspended = True
         volumeTotal = volumeTotal-int(argument)
     elif actionToDo == "Observation":
         isSuspended = True
@@ -104,18 +123,25 @@ def changeConcentration():
     if isStop:
         pass
     else:
-        scheduleConcentration = threading.Timer(timeBetweenChange * 10, changeConcentration).start()
+        scheduleConcentration = threading.Timer(timeBetweenChange * 10, changeConcentration)
+        scheduleConcentration.start()
 
 checkOs()
-changeConcentration()
-while not isStop:
-    if getFirstLine() != "":
-        actionToDo, argument = prepareAction(getFirstLine())
-        with Tee():
-            print("action : ",actionToDo," argument : ", argument )
-        doAction(actionToDo, argument)
-        removeLine()
+if getArg():
+    changeConcentration()
+    while not isStop:
+        if getFirstLine() != "":
+            actionToDo, argument = prepareAction(getFirstLine())
+            with Tee():
+                print("action : ",actionToDo," argument : ", argument )
+            doAction(actionToDo, argument)
+            removeLine()
 
-if scheduleConcentration is not None and scheduleConcentration.is_alive():
-    scheduleConcentration.cancel()
-print("completely stop")
+    if scheduleConcentration is not None and scheduleConcentration.is_alive():
+        scheduleConcentration.cancel()
+        print("Wololo")
+    with Tee():
+        print("completely stop")
+else:
+    with Tee():
+        print("Unable to open concentration file")

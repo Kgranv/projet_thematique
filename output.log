@@ -6643,3 +6643,17 @@ action :  Prelevement  argument :  5
 action :  Observation  argument :  None
 action :  Reprendre_cycle  argument :  None
 action :  Stop  argument :  None
+Unable to open concentration file
+action :  Stop  argument :  None
+completely stop
+action :  Stop  argument :  None
+completely stop
+action :  Stop  argument :  None
+completely stop
+action :  Stop  argument :  None
+completely stop
+action :  Stop  argument :  None
+action :  Stop  argument :  None
+completely stop
+action :  Stop  argument :  None
+completely stop
