@@ -162,3 +162,55 @@ for j in range(len(concentration_impose["nut"])-1):
 print("le volume total de nutiment est en ml :",(sum(volume_add_nut)+volume_depart))
 print("le volume total de h1 est en ml :",(sum(volume_add_h1)))
 print("le volume total de h2 est en ml :",(sum(volume_add_h2)))
+
+
+
+concentration_c1_mtn = 0.2 # c'est la concentration actuel sur le circuit 
+concentration_c2_mtn = 0.5 
+concentration_c1_apres = 0.2 #c'est la nouvelle concentration que l'on veut
+concentration_c2_apres = 0.7
+volume_circuit = 100 # le volume en ml sur le circuit donc sans le volume de la cellule
+
+
+def purge(concentration_c1_mtn,concentration_c2_mtn, concentration_c1_apres, concentration_c2_apres, volume_circuit ):
+    concentration_nut_mtn=1-(concentration_c1_mtn-concentration_c2_mtn)
+    concentration_nut_apres=1-(concentration_c1_apres-concentration_c2_apres)
+    volume_min = 5 # le volume mini a avoir sur le circuit
+    purge=False
+    volume_purge=0.0
+    if (concentration_nut_apres <=concentration_nut_mtn):
+       purge=False
+       volume_purge=0.0 
+    elif (concentration_nut_apres > concentration_nut_mtn):
+        volume_mtn_nut = concentration_nut_mtn*volume_circuit
+        volume_mtn_c1 = concentration_c1_mtn*volume_circuit
+        volume_mtn_c2 = concentration_c2_mtn*volume_circuit
+        
+        volume_apres_nut = concentration_c1_apres*volume_min
+        volume_apres_c1 = concentration_c2_apres*volume_min
+        volume_apres_c2 = concentration_nut_apres*volume_min
+        
+        volume_pour_purge=0
+        
+        volume_reste_purge_nut = volume_mtn_nut-(volume_pour_purge*concentration_nut_mtn)
+        volume_reste_purge_c1 = volume_mtn_c1-(volume_pour_purge*concentration_c1_mtn)
+        volume_reste_purge_c2 = volume_mtn_c2-(volume_pour_purge*concentration_c2_mtn)
+        volume_tot_reste_purge = volume_circuit-volume_pour_purge
+        
+        
+        while (volume_reste_purge_nut>volume_apres_nut or volume_reste_purge_c1>volume_apres_c1 or volume_reste_purge_c2>volume_apres_c2):
+            volume_reste_purge_nut = volume_mtn_nut-(volume_pour_purge*concentration_nut_mtn)
+            volume_reste_purge_c1 = volume_mtn_c1-(volume_pour_purge*concentration_c1_mtn)
+            volume_reste_purge_c2 = volume_mtn_c2-(volume_pour_purge*concentration_c2_mtn)
+            volume_tot_reste_purge = volume_circuit-volume_pour_purge
+        
+        if (volume_tot_reste_purge<volume_min):
+            volume_pour_purge=volume_circuit-volume_min
+        
+        purge=True
+        volume_purge=volume_pour_purge
+            
+    return purge, volume_purge
+            
+        
+    
