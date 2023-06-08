@@ -11,15 +11,17 @@ PROBLEME :
 
 DIRE a l'utilisateur : 
     - le 1er jour est de toute facon a 100% nutriment 
-    - il doit donc mettre 10ml dans le reservoir
+    - il doit indiquer le volume qu'il met au départ
 """
 
 
-concentration_c1_mtn = 0.05 # c'est la concentration actuel sur le circuit 
-concentration_c2_mtn = 0.1
+concentration_c1_mtn = 0.0 # c'est la concentration actuel sur le circuit 
+concentration_c2_mtn = 0.0
+
 concentration_c1_apres = 0.05 #c'est la nouvelle concentration que l'on veut
 concentration_c2_apres = 0.0
-volume_circuit = 39.3 # le volume en ml sur le circuit avec le volume de la cellule
+
+volume_circuit = 10 # le volume en ml sur le circuit avec le volume de la cellule
 
 
 def purge(concentration_c1_mtn,concentration_c2_mtn, concentration_c1_apres, concentration_c2_apres, volume_circuit ):
@@ -59,12 +61,15 @@ def purge(concentration_c1_mtn,concentration_c2_mtn, concentration_c1_apres, con
         
         if (volume_tot_reste_purge<volume_min):
             volume_pour_purge=volume_circuit-volume_min
-            print("aiii")
+            
         
         purge=True
-        volume_purge=volume_pour_purge
+        volume_purge=round(volume_pour_purge,2)
             
     return purge, volume_purge
+
+
+
 
 def ajout(concentration_c1_mtn,concentration_c2_mtn, concentration_c1_apres, concentration_c2_apres, volume_circuit, volume_purge):
     concentration_nut_mtn=1-concentration_c1_mtn-concentration_c2_mtn
@@ -92,10 +97,9 @@ def ajout(concentration_c1_mtn,concentration_c2_mtn, concentration_c1_apres, con
         volume_reste_purge_c2 = volume_mtn_c2-(volume_pour_purge*concentration_c2_mtn)
         
         
-        add_nut = round(volume_apres_nut-volume_reste_purge_nut,2)
-        add_c1 = round(volume_apres_c1-volume_reste_purge_c1,2)
-        add_c2 = round(volume_apres_c2-volume_reste_purge_c2,2)
-        volume_pour_purge = round(volume_pour_purge,2)
+        add_nut = volume_apres_nut-volume_reste_purge_nut
+        add_c1 = volume_apres_c1-volume_reste_purge_c1
+        add_c2 = volume_apres_c2-volume_reste_purge_c2
         
         #si une concentration arrive a 0 : purge le max et rajoute le max?
         if (volume_apres_nut==0 or volume_apres_c1==0 or volume_apres_c2==0):
@@ -104,9 +108,16 @@ def ajout(concentration_c1_mtn,concentration_c2_mtn, concentration_c1_apres, con
             volume_apres_c1 = concentration_c1_apres*volume
             volume_apres_c2 = concentration_c2_apres*volume
             
-            add_nut = round(volume_apres_nut-volume_reste_purge_nut,2)
-            add_c1 = round(volume_apres_c1-volume_reste_purge_c1,2)
-            add_c2 = round(volume_apres_c2-volume_reste_purge_c2,2)
+            add_nut = volume_apres_nut-volume_reste_purge_nut
+            add_c1 = volume_apres_c1-volume_reste_purge_c1
+            add_c2 = volume_apres_c2-volume_reste_purge_c2
+            if (volume_apres_nut==0):
+                add_nut=0
+            if (volume_apres_c1==0):
+                add_c1=0
+            if (volume_apres_c2==0):
+                add_c2=0
+            
         else : 
             while (add_nut<0 or add_c1<0 or add_c2<0):
                 volume+=1
@@ -114,17 +125,16 @@ def ajout(concentration_c1_mtn,concentration_c2_mtn, concentration_c1_apres, con
                 volume_apres_c1 = concentration_c1_apres*volume
                 volume_apres_c2 = concentration_c2_apres*volume
                 
-                add_nut = round(volume_apres_nut-volume_reste_purge_nut,2)
-                add_c1 = round(volume_apres_c1-volume_reste_purge_c1,2)
-                add_c2 = round(volume_apres_c2-volume_reste_purge_c2,2)
-            
-            
-        print("vol",volume)
-        volume_pour_purge = round(volume_pour_purge,2)
+                add_nut = volume_apres_nut-volume_reste_purge_nut
+                add_c1 = volume_apres_c1-volume_reste_purge_c1
+                add_c2 = volume_apres_c2-volume_reste_purge_c2
     
-    add=[add_nut,add_c1,add_c2]
+    add=[round(add_nut,2),round(add_c1,2),round(add_c2,2)]
     
     return add # nutriment, c1, c2
+
+
+
 
 p,v = purge(concentration_c1_mtn, concentration_c2_mtn, concentration_c1_apres, concentration_c2_apres, volume_circuit)
 print(p)
