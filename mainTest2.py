@@ -30,10 +30,10 @@ class Electrovanne():
     def __init__(self,id):
         self.id
 
-    def open(self):
+    def on(self):
         print("Ouverture")
 
-    def close(self):
+    def off(self):
         print("Fermeture")
 
 class Tee(object):
@@ -65,9 +65,12 @@ startTime = 0
 scheduleConcentration = None
 
 debitPompe = [1.0549,1.3314,1.3197]
-listePompe = [Pompe(debitPompe[0],"flow"),Pompe(debitPompe[1],"conc1"),Pompe(debitPompe[2],"conc2")]
-listeVanne = [Electrovanne("purge"),Electrovanne("cells1"),Electrovanne("cells2")]
+listePompe = [Pompe(debitPompe[0],"conc1"),Pompe(debitPompe[1],"conc2"),Pompe(debitPompe[2],"flow")]
+listeVanne = [Electrovanne("purge"),Electrovanne("cells"),Electrovanne("nut")]
 
+lastNutConc = 0
+lastConc1 = 0
+lastConc2 = 0
 
 def checkOs():
     """
@@ -85,8 +88,12 @@ def checkOs():
 def getArg():
     global concentrationFilePath
     global concentrationFile
-    print(sys.argv)
-    if len(sys.argv) == 2:
+
+    if len(sys.argv) == 1:
+        with Tee():
+            print("Please indicate which data you would use.")
+    
+    elif len(sys.argv) == 2:
         try:
             concentrationFile = pd.read_feather(concentrationFilePath+sys.argv[1])
             return True
@@ -94,19 +101,32 @@ def getArg():
             with Tee():
                 print("Unable to open concentration file")
             return False
+    
     elif len(sys.argv) == 3:
-        try:
-            concentrationFile = pd.read_feather(concentrationFilePath+sys.argv[1])
-            print("=========Debug mode=========")
-            print(type(concentrationFile["Time"].iloc[86400]))
-            return False
-        except:
+        if sys.argv[2] == "Debug":
+            try:
+                concentrationFile = pd.read_feather(concentrationFilePath+sys.argv[1])
+                with Tee():
+                    print("=========Debug mode=========")
+                    print(type(concentrationFile["Time"].iloc[86400]))
+                return False
+            except:
+                with Tee():
+                    print("Unable to open concentration file")
+                return False
+        elif sys.argv[2] == "Demo":
+            try:
+                concentrationFile = pd.read_feather(concentrationFilePath+sys.argv[1])
+                return True
+            except:
+                with Tee():
+                    print("Unable to open concentration file")
+                return False
+        else:
             with Tee():
-                print("Unable to open concentration file")
+                print("I don't understand")
             return False
-    elif len(sys.argv) == 1:
-        with Tee():
-            print("Please indicate which data you would use.")
+    
     else:
         with Tee():
             print("Too many argument. I take only 1 argument.")
@@ -149,10 +169,19 @@ def doAction(actionToDo, argument):
     if actionToDo == "Prelevement":
         isSuspended = True
         volumeTotal = volumeTotal-int(argument)
+        for vanne in listeVanne:
+            if vanne.id=="cells":
+                vanne.off()
     elif actionToDo == "Observation":
         isSuspended = True
+        for vanne in listeVanne:
+            if vanne.id=="cells":
+                vanne.off()
     elif actionToDo == "Reprendre_cycle":
         isSuspended = False
+        for vanne in listeVanne:
+            if vanne.id=="cells":
+                vanne.on()
     elif  actionToDo == "Stop":
         isStop = True
 
@@ -167,16 +196,118 @@ def getConc():
 
 def startPurge(purgeTime):
     for vanne in listeVanne:
-        if vanne.id=="purge":
-            vanne.open()
-        else:
-            vanne.close()
+        vanne.on()
+
     time.sleep(purgeTime)
+
     for vanne in listeVanne:
-        if vanne.id=="purge":
-            vanne.close()
-        else:
-            vanne.open()
+        vanne.off()
+
+def purge(concentration_c1_mtn,concentration_c2_mtn, concentration_c1_apres, concentration_c2_apres, volume_circuit ):
+    concentration_nut_mtn=1-concentration_c1_mtn-concentration_c2_mtn
+    concentration_nut_apres=1-concentration_c1_apres-concentration_c2_apres
+    volume_min = 3 # le volume mini a avoir sur le circuit
+    purge=False
+    volume_purge=0.0
+    if (concentration_nut_apres <=concentration_nut_mtn):
+       purge=False
+       volume_purge=0.0 
+    elif (concentration_nut_apres > concentration_nut_mtn):
+        volume_mtn_nut = concentration_nut_mtn*volume_circuit
+        volume_mtn_c1 = concentration_c1_mtn*volume_circuit
+        volume_mtn_c2 = concentration_c2_mtn*volume_circuit
+        
+        volume_apres_nut = concentration_c1_apres*volume_min
+        volume_apres_c1 = concentration_c2_apres*volume_min
+        volume_apres_c2 = concentration_nut_apres*volume_min
+        
+        volume_pour_purge=0
+        
+        volume_reste_purge_nut = volume_mtn_nut-(volume_pour_purge*concentration_nut_mtn)
+        volume_reste_purge_c1 = volume_mtn_c1-(volume_pour_purge*concentration_c1_mtn)
+        volume_reste_purge_c2 = volume_mtn_c2-(volume_pour_purge*concentration_c2_mtn)
+        volume_tot_reste_purge = volume_circuit-volume_pour_purge
+        
+        
+        while (volume_reste_purge_nut>volume_apres_nut or volume_reste_purge_c1>volume_apres_c1 or volume_reste_purge_c2>volume_apres_c2):
+            
+            volume_reste_purge_nut = volume_mtn_nut-(volume_pour_purge*concentration_nut_mtn)
+            volume_reste_purge_c1 = volume_mtn_c1-(volume_pour_purge*concentration_c1_mtn)
+            volume_reste_purge_c2 = volume_mtn_c2-(volume_pour_purge*concentration_c2_mtn)
+            volume_tot_reste_purge = volume_circuit-volume_pour_purge
+            volume_pour_purge=volume_pour_purge+1
+            
+        
+        if (volume_tot_reste_purge<volume_min):
+            volume_pour_purge=volume_circuit-volume_min
+            
+        
+        purge=True
+        volume_purge=round(volume_pour_purge,2)
+            
+    return purge, volume_purge
+
+def ajout(concentration_c1_mtn,concentration_c2_mtn, concentration_c1_apres, concentration_c2_apres, volume_circuit, volume_purge):
+    concentration_nut_mtn=1-concentration_c1_mtn-concentration_c2_mtn
+    concentration_nut_apres=1-concentration_c1_apres-concentration_c2_apres
+    volume=3
+    volume_max=50
+    add=[]
+    if (volume_purge==0):
+        add_nut=0
+        add_c1 = ((-concentration_nut_apres*concentration_c1_mtn*volume_circuit)+(concentration_nut_mtn*concentration_c1_apres*volume_circuit)+(concentration_c1_apres*add_nut))/concentration_nut_apres
+        add_c2 = -(((concentration_c1_apres-1)*((concentration_nut_mtn*volume_circuit)+add_nut))/concentration_nut_apres)+(concentration_c1_mtn-1)*(volume_circuit-add_nut)
+    elif (volume_purge!=0):
+        volume_mtn_nut = concentration_nut_mtn*volume_circuit
+        volume_mtn_c1 = concentration_c1_mtn*volume_circuit
+        volume_mtn_c2 = concentration_c2_mtn*volume_circuit
+        
+        volume_apres_nut = concentration_nut_apres*volume
+        volume_apres_c1 = concentration_c1_apres*volume
+        volume_apres_c2 = concentration_c2_apres*volume
+        
+        volume_pour_purge=volume_purge
+        
+        volume_reste_purge_nut = volume_mtn_nut-(volume_pour_purge*concentration_nut_mtn)
+        volume_reste_purge_c1 = volume_mtn_c1-(volume_pour_purge*concentration_c1_mtn)
+        volume_reste_purge_c2 = volume_mtn_c2-(volume_pour_purge*concentration_c2_mtn)
+        
+        
+        add_nut = volume_apres_nut-volume_reste_purge_nut
+        add_c1 = volume_apres_c1-volume_reste_purge_c1
+        add_c2 = volume_apres_c2-volume_reste_purge_c2
+        
+        #si une concentration arrive a 0 : purge le max et rajoute le max?
+        if (volume_apres_nut==0 or volume_apres_c1==0 or volume_apres_c2==0):
+            volume = volume_max
+            volume_apres_nut = concentration_nut_apres*volume
+            volume_apres_c1 = concentration_c1_apres*volume
+            volume_apres_c2 = concentration_c2_apres*volume
+            
+            add_nut = volume_apres_nut-volume_reste_purge_nut
+            add_c1 = volume_apres_c1-volume_reste_purge_c1
+            add_c2 = volume_apres_c2-volume_reste_purge_c2
+            if (volume_apres_nut==0):
+                add_nut=0
+            if (volume_apres_c1==0):
+                add_c1=0
+            if (volume_apres_c2==0):
+                add_c2=0
+            
+        else : 
+            while (add_nut<0 or add_c1<0 or add_c2<0):
+                volume+=1
+                volume_apres_nut = concentration_nut_apres*volume
+                volume_apres_c1 = concentration_c1_apres*volume
+                volume_apres_c2 = concentration_c2_apres*volume
+                
+                add_nut = volume_apres_nut-volume_reste_purge_nut
+                add_c1 = volume_apres_c1-volume_reste_purge_c1
+                add_c2 = volume_apres_c2-volume_reste_purge_c2
+    
+    add=[round(add_nut,2),round(add_c1,2),round(add_c2,2)]
+    
+    return add # nutriment, c1, c2
 
 def changeConcentration():
     global timeBetweenChange
@@ -184,34 +315,56 @@ def changeConcentration():
     global isStop
     global scheduleConcentration
     global listePompe
+    global lastNutConc
+    global lastConc1
+    global lastConc2
+    global volumeTotal
 
     if isSuspended:
         if scheduleConcentration is not None and scheduleConcentration.is_alive():
             scheduleConcentration.cancel()
     else:
         nutConc,conc1,conc2 = getConc()
-        #Appel code calcul injection
 
-        purge = False
-        injectConc1 = 2
-        injectConc2 = 1
-        timePurge = 0
-        if purge:
+        isPurge, volumePurge = purge(lastConc1,lastConc2,conc1,conc2,volumeTotal)
+        volInjection = ajout(lastConc1,lastConc2,conc1,conc2,volumeTotal,volumePurge)
+
+        lastNutConc =nutConc
+        lastConc1 =conc1
+        lastConc2 =conc2
+
+        for pump in listePompe:
+            if pump.id == "flow":
+                timePurge = volumePurge/pump.debit
+                timeNut = volInjection[0]/pump.debit
+
+        if isPurge:
             startPurge(timePurge)
         
         for vanne in listeVanne:
-            if vanne.id == "cells1" or vanne.id=="cells2":
-                vanne.close()
+            if vanne.id == "purge" or vanne.id=="cells":
+                vanne.off()
+            else:
+                vanne.on()
+
+        time.sleep(timeNut)
+
+        for vanne in listeVanne:
+            vanne.off()
 
         for pump in listePompe:
             if pump.id == "conc1":
-                pump.injection(injectConc1)
+                pump.injection(volInjection[1])
             if pump.id == "conc2":
-                pump.injection(injectConc2)
+                pump.injection(volInjection[2])
+
+        time.sleep(30)
 
         for vanne in listeVanne:
-            if vanne.id == "cells1" or vanne.id=="cells2":
-                vanne.open()
+            if vanne.id == "cells":
+                vanne.on()
+            else:
+                vanne.off()
 
     if isStop:
         pass
@@ -233,7 +386,6 @@ if getArg():
 
     if scheduleConcentration is not None and scheduleConcentration.is_alive():
         scheduleConcentration.cancel()
-        print("Wololo")
     with Tee():
         print("completely stop")
 else:
