@@ -137,10 +137,10 @@ def ajout(concentration_c1_mtn,concentration_c2_mtn, concentration_c1_apres, con
 
 
 p,v = purge(concentration_c1_mtn, concentration_c2_mtn, concentration_c1_apres, concentration_c2_apres, volume_circuit)
-print(p)
-print(v)
+print("Doit faire une purge : ",p)
+print("Volume a purger : ",v)
 tableau = ajout(concentration_c1_mtn, concentration_c2_mtn, concentration_c1_apres, concentration_c2_apres, volume_circuit, v)
-print(tableau)
+print("Volume a injecter : ",tableau)
             
         
     

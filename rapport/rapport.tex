@@ -63,11 +63,36 @@
 %Introduction
 \vspace{-1cm}
 \section*{Introduction}
-Le projet thématique vient se placer dans le cadre des études de bachelor en microtechnique, option Bio-ingénierie. Cette année, le projet porte sur l'endométriose, une maladie encore peu connue touchant 1 femme sur 10.\\
-Les objectifs du projet sont, d'une part, de mettre en application les connaissances acquises durant nos études, mais également de développer de nouvelles compétences comme la gestion de projet.
-D'autre part, ce projet contribue à développer la recherche sur l'endométriose et servira de support pour le \\
+Ce rapport detail le projet thématique de deuxième année de bachelor 
+microtechnique de HEPIA option Bio-ingénierie.
+Notre cliente, Mme Loussert-Fonta Céline est une biologiste travaillant 
+sur l'endométriose, une maladie encore 
+peu connue mais trés commune, touchant environ 1 femme sur 10.\\
+Cette pathologie se caractérise par le développement de tissu semblable 
+à l'endomètre hors de l'utérus.
+Ces tissus peuvent proliférer dans les organes voisins comme les ovaires, 
+l'intestins, la vessie ou même 
+les poumons.
+Les symptômes varient énormément entre les femmes mais ont retiens, le 
+plus souvent, celui de la douleur 
+extrême provoquer par la croissance de ces tissus.\\
+Les objectifs du projet sont, d'une part, de mettre en application les 
+connaissances acquises durant nos études, mais également de développer de 
+nouvelles compétences comme la gestion de projet.
+D'autre part, ce projet contribue à développer la recherche sur 
+l'endométriose et servira de support pour le \\
 "project MOON : endoMetriosis Organoids to vOice up woman paiN".\\
-Le but est donc de créer un bio-chip qui permettrait d'étudier les tissus de l'endomètre soumis à différentes concentrations d'hormones.
+Le but de notre projet est de créer un bio-chip qui permettrait d'étudier 
+les tissus de l'endomètre in-vitro 
+durant un cycle utérien. Cela signifie, imaginer, concevoir, fabriquer, 
+et tester un dispositif capable de recrée 
+les condition d'un utérus (Température, humidité, concentration d'hormone, etc... ) 
+\vspace{1cm}
+\maketitle
+\thispagestyle{empty}
+\begin{center}
+    \rule{\textwidth}{0.1mm}
+\end{center}
 \newpage
 %Table des matieres
 \tableofcontents
@@ -75,25 +100,52 @@ Le but est donc de créer un bio-chip qui permettrait d'étudier les tissus de l
 %Debut rapport
 \section{Etudes préliminaire}
 \subsection{Biologie}
-Afin de mieux comprendre comment concevoir un appareil correspondant à la demande du client, une courte introduction biologique est nécessaire.\\
-L'endométriose se caractérise par le développement d'un tissu semblable à l'endomètre en dehors de l'utérus. Généralement, le tissu endométrial se développe dans les ovaires, et il peut former des kystes remplis de sang appelés endométriomes. Ces kystes peuvent varier en taille et provoquer des symptômes qui varient énormément entre les femmes, mais on retient le plus souvent celui de la douleur extrême.\\
-Cependant, il est également possible que des lésions similaires à des kystes endométriomes apparaissent sur les organes pelviens adjacents aux ovaires tels que les trompes de Fallope, les ligaments utéro-sacrés, la vessie, etc.\\
-L'endomètre est un épithélium qui compose une partie de l'appareil reproducteur féminin. Il tapisse les parois de la cavité utérine et est composé de 3 couches : le myomètre qui est la fondation de l'endomètre, la couche basale qui contient les glandes et les tissus conjonctifs, et la couche fonctionnelle.\\
-Cette dernière couche est celle qui voit sa taille changer durant le cycle menstruel, qui est régulée par 4 hormones.
+\subsubsection{Contexte}
+Pour que l'expérience soit optimale, le client à besoin de suivre l'évolution d'un tissu d'endomètre sur la 
+durée d'un cycle endométrial.
+Le système doit être compact et permettre l'observation des cellules en culture ainsi que la possibilité de 
+collecter des cellules et du milieu de culture pour analyse.
+Afin mieux comprendre comment concevoir un appareil correspondant à la demande du client, une courte 
+introduction biologique est nécessaire.
+\subsubsection{L'endomètre}
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{Schema\_endomètre.jpg}}
+    \caption{L'endomètre au seins du corps de la femme}
+    \label{fig:Schema_endomètre}
+\end{figure}
+L'endomètre est un épithélium qui compose une partie de l'appareil reproducteur féminin, il tapisse les 
+parois de la cavité utérine et est composé de 3 couches :
+Le myomètre qui est la fondation de l'endomètre, 
+\newline - la couche basale qui contient les glandes et les tissu 
+conjonctifs
+la couche fonctionnelle.
+Cette dernière couche est celle qui vois sa taille changer durant le cycle menstruel.
+\subsubsection{Le cycle menstruel}
+"Le cycle menstruel est l'ensemble des phénomènes physiologiques, 
+survenant le plus souvent de façon périodique, qui préparent l'organisme de la femme à une éventuelle fécondation.
+La connaissance du cycle menstruel est importante pour aborder l'étude des troubles de la menstruation, 
+dans l'exploration de l'infertilité et dans la mise en œuvre des techniques de procréation médicalement assistées."
+\cite{Cycle_menstruel}\\
+L'hypothèse émise par la biologiste serais qu'il y a une influence du cycle hormonale sur l'apparition de 
+l'endométriose.
+Il y a notamment deux hormones qui sont suspecter, l'estradiol et la progestérone.
+Nous allons donc devoir recrée les concentrations de ce cycle et les appliquer à des 
+cellules in-vitro.
 \subsection{Etat de l'art}
-Actuellement la culture cellulaire est un procédé connu et maitrisé par l'Homme qui consiste à placer des cellules dans un milieu de culture afin de les faire proliférer.
-Cette méthode permet d'avoir des colonies de cellule pouvant aller jusqu'à former des organoïdes.
+Actuellement la culture cellulaire est un procédé connu et maitriser par l'Homme qui consiste à placer des cellules dans un milieu de culture afin de les faire proliférer.
+Cette méthode permet d'avoir des colonies de cellule pouvant aller jusqu'a formé des organoïdes.
 Organoïdes pouvant être utilisés à des fins de recherche sur l'organe miniaturisé.
 La méthode d'incubation consiste à placer dans un incubateur une colonie de cellules contenue dans un milieu nutritif.
 Pour maintenir de bonnes conditions on place ces échantillons dans l'enceinte d'un incubateur qui permet d'isoler les cellules du milieu extérieur tout en maintenant les constantes de températures, d'humidité et de CO2 de façon optimal.
-Les incubateurs professionnels sont des machines de précision, asservies qui permettent de régler précisément toutes les conditions de leurs enceintes, cela permet de chercher l'expression de certain phénotype au sein des colonies.
-Ils sont aussi dotés de sécurités notamment en matière de ventilation afin de protéger les cellules et le biologiste. Toutefois cette précision rend le matériel cher.
+Les incubateurs professionnels sont des machines de précision, asservis qui permettent de réglée précisément toutes les conditions de leurs enceinte, cela permet de chercher l'expression de certain phénotype au seins des colonies.
+Ils sont aussi dotés de sécurité notamment en termes de ventilation afin de protège les cellules et le biologiste. Toutefois cette précision rend le matériel chère.
 Il faut compter entre 5000CHF et 15000 CHF pour un incubateur professionnel.
-L'incubateur fait maison est moins précis mais permet une personnalisation complète en matière de condition de culture.
+L'incubateur fait maison sont moins précis mais permette une personnalisation complète en termes de condition de culture.
 Toutefois même si cela reste compliqué à construire dans sa totalité, il est assez simple de stabiliser la température et l'humidité.
-Ces machines permettent de créer une atmosphère apte à la reproduction cellulaire toutefois afin de contenir les cellules et leur milieu nutritif il faut des instruments de culture.
-L'écouvillon : Il s'agit de petits tubes munis d'un couvercle étanche en plastique dans lequel on place un peu de liquide du fait de leurs petite taille et de leurs facilités de conception ils peuvent être alignés afin de faciliter la reproductivité toutefois il ne possède aucune capacité permettant de maintenir l'homéostasie de la cellule.
-La verrerie de chimie : On peut utilisé techniquement tout contenant biocompatible.
+Ces machines permettent de crée une atmosphère apte à la reproduction cellulaire toutefois afin de contenir les cellules et leurs milieu nutritif il faut des instruments de culture.
+L'écouvillons : Il s'agit de petit tube munis d'un couvercle étanche en plastique dans lequel on place un peu de liquide du fait de leurs petite taille et de leurs facilités de conception ils peuvent être alignés afin de facilité la reproductivité toutefois il ne possède aucune capacité permettant de maintenir l'homéostasie de la cellule.
+La verrerie de chimie : On peut utiliser techniquement tout contenant biocompatible.
 \newpage
 \subsection{Aperçu du projet}
 \subsubsection{Besoins}
