@@ -10,25 +10,35 @@ controleFile = "./controle.csv"
 concentrationFile = ""
 concentrationFilePath = "./Data/"
 
+
 class Pompe():
     debit = 0
     id = ""
+    pinNumber = 0
     
-    def __init__(self,newDebit,newId):
+    def __init__(self,newDebit,newId, newPin):
         self.debit = newDebit
         self.id = newId
+        self.pinNumber = newPin
 
     def injection(self,quantity):
-        print(self.timeToRun(quantity))
+
+        #TURN ON PUMP
+
+        time.sleep(self.timeToRun(quantity))
+
+        #TURN OFF PUMP
 
     def timeToRun(self,quantity):
         return int((quantity/self.debit)*60)
 
 class Electrovanne():
     id = ""
+    pinNumber = 0
 
-    def __init__(self,id):
-        self.id
+    def __init__(self,id,newPin):
+        self.id = id
+        self.pinNumber = newPin
 
     def on(self):
         print("Ouverture")
@@ -53,20 +63,22 @@ class Tee(object):
         self.file.flush()
         self.stdout.write(message)
 
-
 updateConcentration = False
 isSuspended = False
 isStop = False
 
-timeBetweenChange = 1
-volumeTotal = 20
+timeBetweenChange = 30
+timeFactor = 1 #FOR DEMO ONLY
+volumeTotal = 20.0
 startTime = 0
 
 scheduleConcentration = None
 
+pinPompe = [17,27,22]
+pinVanne = [5,6,13]
 debitPompe = [1.0549,1.3314,1.3197]
-listePompe = [Pompe(debitPompe[0],"conc1"),Pompe(debitPompe[1],"conc2"),Pompe(debitPompe[2],"flow")]
-listeVanne = [Electrovanne("purge"),Electrovanne("cells"),Electrovanne("nut")]
+listePompe = [Pompe(debitPompe[0],"conc1",pinPompe[0]),Pompe(debitPompe[1],"conc2",pinPompe[1]),Pompe(debitPompe[2],"flow",pinPompe[2])]
+listeVanne = [Electrovanne("purge",pinVanne[0]),Electrovanne("cells",pinVanne[1]),Electrovanne("nut",pinVanne[2])]
 
 lastNutConc = 0
 lastConc1 = 0
@@ -86,8 +98,13 @@ def checkOs():
         concentrationFilePath = ".\\Data\\"
 
 def getArg():
+    """
+    Get argument when you start the script
+    """
     global concentrationFilePath
     global concentrationFile
+    global timeBetweenChange
+    global timeFactor
 
     if len(sys.argv) == 1:
         with Tee():
@@ -96,6 +113,8 @@ def getArg():
     elif len(sys.argv) == 2:
         try:
             concentrationFile = pd.read_feather(concentrationFilePath+sys.argv[1])
+            with Tee():
+                print(getTime()+"|"+"Start sequence with file "+sys.argv[1])
             return True
         except:
             with Tee():
@@ -103,20 +122,25 @@ def getArg():
             return False
     
     elif len(sys.argv) == 3:
-        if sys.argv[2] == "Debug":
+        #For debug only
+        if sys.argv[2] == "debug":
             try:
-                concentrationFile = pd.read_feather(concentrationFilePath+sys.argv[1])
                 with Tee():
                     print("=========Debug mode=========")
-                    print(type(concentrationFile["Time"].iloc[86400]))
+                    print(getTime())
                 return False
             except:
                 with Tee():
                     print("Unable to open concentration file")
                 return False
-        elif sys.argv[2] == "Demo":
+        elif sys.argv[2] == "demo":
+            #For demo only
             try:
                 concentrationFile = pd.read_feather(concentrationFilePath+sys.argv[1])
+                timeBetweenChange = 5
+                timeFactor = 1440
+                with Tee():
+                    print(getTime()+"|""Start sequence with file "+sys.argv[1]+" for demo")
                 return True
             except:
                 with Tee():
@@ -129,8 +153,33 @@ def getArg():
     
     else:
         with Tee():
-            print("Too many argument. I take only 1 argument.")
+            print("Too many argument. I take only 1 argument. 2 For debug only.")
         return False
+    
+def getTime():
+    actualDate = time.localtime()
+    if actualDate.tm_mday < 10:
+        day = "0"+str(actualDate.tm_mday)
+    else:
+        day = str(actualDate.tm_mday)
+
+    if actualDate.tm_mon < 10:
+        month = "0"+str(actualDate.tm_mon)
+    else:
+        month = str(actualDate.tm_mon)
+
+    if actualDate.tm_hour < 10:
+        hour = "0"+str(actualDate.tm_hour)
+    else:
+        hour = str(actualDate.tm_hour)
+
+    if actualDate.tm_min < 10:
+        minute = "0"+str(actualDate.tm_min)
+    else:
+        minute = str(actualDate.tm_min)
+
+    dateToReturn = day+"."+month+"."+str(actualDate.tm_year)+" : "+hour+"h"+minute+"min"
+    return dateToReturn
 
 def removeLine():
     """
@@ -156,49 +205,77 @@ def getFirstLine():
         return line[:len(line)-1]
 
 def prepareAction(line):
+    """
+    Prepare action to do
+    """
     commaIndex = line.find(";")
     actionToDo = line[:commaIndex]
     argument = line[commaIndex+1:]
     return actionToDo, argument
 
 def doAction(actionToDo, argument):
+    """
+    Do action. List of action : Prelevement, Observation, Reprendre cycle, Stop
+    """
     global isSuspended
     global isStop
     global volumeTotal
 
-    if actionToDo == "Prelevement":
+    #Prelevement : Isolate Cells, Remove x ml from circuit, Pause cycle
+    if actionToDo == "Sample":
         isSuspended = True
         volumeTotal = volumeTotal-int(argument)
         for vanne in listeVanne:
             if vanne.id=="cells":
                 vanne.off()
+        with Tee():
+                print(getTime()+"|"+"You can take your sample")
+    #Observation : Isolate Cells, Pause cycle
     elif actionToDo == "Observation":
         isSuspended = True
         for vanne in listeVanne:
             if vanne.id=="cells":
                 vanne.off()
-    elif actionToDo == "Reprendre_cycle":
+        with Tee():
+                print(getTime()+"|"+"You can do your observation")
+    #Reprendre cycle : Open cells, restart cycle
+    elif actionToDo == "Resume_cycle":
         isSuspended = False
         for vanne in listeVanne:
             if vanne.id=="cells":
                 vanne.on()
+        with Tee():
+                print(getTime()+"|"+"Restarting cycle")
+    #Stop script
     elif  actionToDo == "Stop":
         isStop = True
 
 def getConc():
+    """
+    Get concentratoion from ftr file
+    """
     global startTime
-    timeInSecond = int(time.monotonic()-startTime)
-    print("Temps écoulé en seconde : ",timeInSecond)
+    global timeFactor
+    timeInSecond = int((time.monotonic()-startTime)*timeFactor)
     conc1 = concentrationFile["Conc1"].iloc[timeInSecond]
     conc2 = concentrationFile["Conc2"].iloc[timeInSecond]
     nutConc = 100.0-conc1-conc2
     return nutConc,conc1,conc2
 
 def startPurge(purgeTime):
+    """
+    Purge the system
+    """
     for vanne in listeVanne:
         vanne.on()
 
+    with Tee():
+        print(getTime()+"|"+"Starting purge")
+
     time.sleep(purgeTime)
+
+    with Tee():
+        print(getTime()+"|"+"Purge finished")
 
     for vanne in listeVanne:
         vanne.off()
@@ -324,7 +401,12 @@ def changeConcentration():
         if scheduleConcentration is not None and scheduleConcentration.is_alive():
             scheduleConcentration.cancel()
     else:
+        with Tee():
+            print(getTime()+"|"+"Starting new concentration cycle, actual volume : "+str(round(volumeTotal,1))+" ml")
         nutConc,conc1,conc2 = getConc()
+        
+        with Tee():
+            print(getTime()+"|"+"Target concentration : nutriment : "+str(nutConc)+", Hormone 1 : "+str(conc1)+", Hormone 2 : "+str(conc2))
 
         isPurge, volumePurge = purge(lastConc1,lastConc2,conc1,conc2,volumeTotal)
         volInjection = ajout(lastConc1,lastConc2,conc1,conc2,volumeTotal,volumePurge)
@@ -339,8 +421,14 @@ def changeConcentration():
                 timeNut = volInjection[0]/pump.debit
 
         if isPurge:
+            with Tee():
+                print(getTime()+"|"+"Purge needed : "+str(volumePurge)+" ml")
             startPurge(timePurge)
+            volumeTotal = volumeTotal-volumePurge
         
+        with Tee():
+            print(getTime()+"|"+"Injection nutriment : "+str(volInjection[0])+" ml")
+
         for vanne in listeVanne:
             if vanne.id == "purge" or vanne.id=="cells":
                 vanne.off()
@@ -348,16 +436,21 @@ def changeConcentration():
                 vanne.on()
 
         time.sleep(timeNut)
+        volumeTotal = volumeTotal+volInjection[0]
+
 
         for vanne in listeVanne:
             vanne.off()
+
+        with Tee():
+            print(getTime()+"|"+"Injection hormmones : Hormone 1 :"+str(volInjection[1])+" ml, Hormone 2 : "+str(volInjection[2])+" ml")
 
         for pump in listePompe:
             if pump.id == "conc1":
                 pump.injection(volInjection[1])
             if pump.id == "conc2":
                 pump.injection(volInjection[2])
-
+        volumeTotal = volumeTotal+volInjection[1]+volInjection[2]
         time.sleep(30)
 
         for vanne in listeVanne:
@@ -365,11 +458,13 @@ def changeConcentration():
                 vanne.on()
             else:
                 vanne.off()
+        with Tee():
+            print(getTime()+"|"+"New concentration achieved, New volume : "+str(round(volumeTotal,1))+" ml")
 
     if isStop:
         pass
     else:
-        scheduleConcentration = threading.Timer(timeBetweenChange * 10, changeConcentration)
+        scheduleConcentration = threading.Timer(timeBetweenChange * 60, changeConcentration)
         scheduleConcentration.start()
 
 checkOs()
@@ -380,13 +475,13 @@ if getArg():
         if getFirstLine() != "":
             actionToDo, argument = prepareAction(getFirstLine())
             with Tee():
-                print("action : ",actionToDo," argument : ", argument )
+                print(getTime()+"|"+"action : "+str(actionToDo))
             doAction(actionToDo, argument)
             removeLine()
 
     if scheduleConcentration is not None and scheduleConcentration.is_alive():
         scheduleConcentration.cancel()
     with Tee():
-        print("completely stop")
+        print(getTime()+"|"+"Experience stop")
 else:
     pass

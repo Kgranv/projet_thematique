@@ -1,9 +1,10 @@
 import os
+import time
 
 outputFile = "./output.log"
 controlFile = "./controle.csv"
 isRunning = True
-menuSelection = {"1":"Prelevement","2":"Observation","3":"Reprendre_cycle","4":"Stop","5":"Annuler"}
+menuSelection = {"1":"Sample","2":"Observation","3":"Resume_cycle","4":"Log","5":"Stop","6":"Cancel"}
 last_line = ""
 
 def checkOs():
@@ -38,7 +39,7 @@ def checkInput(userInput,menu=0):
             else:
                 raise
         except:
-            print("Je n'ai pas compris votre commande")
+            print("I don't understand your input")
             return True
     elif menu == 1:
         try:
@@ -48,7 +49,7 @@ def checkInput(userInput,menu=0):
             else:
                 raise
         except:
-            print("Veuillez rentrer un nombre")
+            print("Please enter a number")
             return True
 
 def getInput(menu=0):
@@ -60,7 +61,8 @@ def getInput(menu=0):
 
 def printMenu():
     global menuSelection
-    print("Que voulez vous faire ? :")
+    print("=========================")
+    print("What do you want to do ? :")
     for index in menuSelection:
         print(index,". ",menuSelection[index])
 
@@ -75,12 +77,16 @@ def getLastLine():
     
 def menu0():
     global isRunning
+
     printMenu()
     userInput = getInput()
-    if userInput >=1 and userInput <=4:
+    if userInput >=1 and userInput <=5:
         if userInput == 1:
-            print("Indiquer le volume que vous allez prélever en mL :")
+            print("Indicate the volume you are going to sample in mL :")
             argumentInput = getInput(userInput)
+        elif userInput == 4:
+            print("======Last line of the log ======")
+            return
         else:
             argumentInput = "None"
         writeControle(prepareData(userInput,argumentInput))
@@ -90,7 +96,6 @@ def menu0():
 checkOs()
 while isRunning:
     menu0()
-    new_line = getLastLine()
-    if new_line != last_line:
-        print(new_line)
-        last_line = new_line
+    if isRunning:
+        time.sleep(0.5)
+        print(getLastLine())

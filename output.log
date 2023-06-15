@@ -1,2 +1,40 @@
-action :  Stop  argument :  None
-completely stop
+15.06.2023 : 19h29min|Start sequence with file 2023-06-07_143957.ftr for demo|
+15.06.2023 : 19h29min|Starting new concentration cycle, actual volume : 20.0ml
+15.06.2023 : 19h29min|Target concentration : nutriment : 100.0, Hormone 1 : 0.0, Hormone 2 : 0.0
+15.06.2023 : 19h29min|Injection nutriment : 0 ml
+15.06.2023 : 19h29min|Injection hormmones : Hormone 1 :0.0 ml, Hormone 2 : 0.0 ml
+15.06.2023 : 19h30min|New concentration achieved, New volume : 20.0 ml
+15.06.2023 : 19h35min|Starting new concentration cycle, actual volume : 20.0ml
+15.06.2023 : 19h35min|Target concentration : nutriment : 95.0, Hormone 1 : 5.0, Hormone 2 : 0.0
+15.06.2023 : 19h35min|Injection nutriment : 0 ml
+15.06.2023 : 19h35min|Injection hormmones : Hormone 1 :-25.0 ml, Hormone 2 : 0.0 ml
+15.06.2023 : 19h36min|action : Stop
+15.06.2023 : 19h36min|Experience stop
+15.06.2023 : 20h20min|Start sequence with file 2023-06-07_143957.ftr
+15.06.2023 : 20h20min|Starting new concentration cycle, actual volume : 20.0 ml
+15.06.2023 : 20h20min|Target concentration : nutriment : 100.0, Hormone 1 : 0.0, Hormone 2 : 0.0
+15.06.2023 : 20h20min|Injection nutriment : 0 ml
+15.06.2023 : 20h20min|Injection hormmones : Hormone 1 :0.0 ml, Hormone 2 : 0.0 ml
+15.06.2023 : 20h21min|New concentration achieved, New volume : 20.0 ml
+15.06.2023 : 20h21min|action : Sample
+15.06.2023 : 20h21min|You can take your sample
+15.06.2023 : 20h22min|action : Resume_cycle
+15.06.2023 : 20h22min|Restarting cycle
+15.06.2023 : 20h22min|action : Observation
+15.06.2023 : 20h22min|You can do your observation
+15.06.2023 : 20h22min|action : Resume_cycle
+15.06.2023 : 20h22min|Restarting cycle
+15.06.2023 : 20h22min|action : Stop
+15.06.2023 : 20h22min|Experience stop
+15.06.2023 : 20h23min|Start sequence with file 2023-06-07_143957.ftr
+15.06.2023 : 20h23min|Starting new concentration cycle, actual volume : 20.0 ml
+15.06.2023 : 20h23min|Target concentration : nutriment : 100.0, Hormone 1 : 0.0, Hormone 2 : 0.0
+15.06.2023 : 20h23min|Injection nutriment : 0 ml
+15.06.2023 : 20h23min|Injection hormmones : Hormone 1 :0.0 ml, Hormone 2 : 0.0 ml
+15.06.2023 : 20h23min|New concentration achieved, New volume : 20.0 ml
+15.06.2023 : 20h24min|action : Sample
+15.06.2023 : 20h24min|You can take your sample
+15.06.2023 : 20h24min|action : Resume_cycle
+15.06.2023 : 20h24min|Restarting cycle
+15.06.2023 : 20h24min|action : Stop
+15.06.2023 : 20h24min|Experience stop
