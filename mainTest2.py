@@ -259,7 +259,10 @@ def getConc():
     timeInSecond = int((time.monotonic()-startTime)*timeFactor)
     conc1 = concentrationFile["Conc1"].iloc[timeInSecond]
     conc2 = concentrationFile["Conc2"].iloc[timeInSecond]
-    nutConc = 100.0-conc1-conc2
+    nutConc = 100.0 - conc1 - conc2
+    nutConc = nutConc / 100
+    conc1 = conc1 / 100
+    conc2 = conc2 / 100
     return nutConc,conc1,conc2
 
 def startPurge(purgeTime):

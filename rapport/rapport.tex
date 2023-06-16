@@ -63,19 +63,18 @@
 %Introduction
 \vspace{-1cm}
 \section*{Introduction}
-Ce rapport detail le projet thématique de deuxième année de bachelor 
+Ce rapport detail le projet thématique de deuxième année de bachelier 
 microtechnique de HEPIA option Bio-ingénierie.
-Notre cliente, Mme Loussert-Fonta Céline est une biologiste travaillant 
+Cette année notre cliente, Mme Loussert-Fonta Céline est une biologiste travaillante 
 sur l'endométriose, une maladie encore 
-peu connue mais trés commune, touchant environ 1 femme sur 10.\\
-Cette pathologie se caractérise par le développement de tissu semblable 
+peu connue mais très commune, touchant environ 1 femme sur 10.\\
+Cette pathologie se caractérise par le développement du tissu semblable 
 à l'endomètre hors de l'utérus.
-Ces tissus peuvent proliférer dans les organes voisins comme les ovaires, 
-l'intestins, la vessie ou même 
-les poumons.
-Les symptômes varient énormément entre les femmes mais ont retiens, le 
+Ces tissus peuvent proliférer dans les organes voisins comme les ovaires; 
+l'intestin, la vessie ou même les poumons.
+Les symptômes varient énormément entre les femmes mais ont retenu, le 
 plus souvent, celui de la douleur 
-extrême provoquer par la croissance de ces tissus.\\
+extrême provoqué par la croissance de ces tissus.\\
 Les objectifs du projet sont, d'une part, de mettre en application les 
 connaissances acquises durant nos études, mais également de développer de 
 nouvelles compétences comme la gestion de projet.
@@ -83,10 +82,9 @@ D'autre part, ce projet contribue à développer la recherche sur
 l'endométriose et servira de support pour le \\
 "project MOON : endoMetriosis Organoids to vOice up woman paiN".\\
 Le but de notre projet est de créer un bio-chip qui permettrait d'étudier 
-les tissus de l'endomètre in-vitro 
-durant un cycle utérien. Cela signifie, imaginer, concevoir, fabriquer, 
-et tester un dispositif capable de recrée 
-les condition d'un utérus (Température, humidité, concentration d'hormone, etc... ) 
+les tissus de l'endomètre in vitro durant un cycle utérin. Cela signifie, imaginer, concevoir, fabriquer; 
+et tester un dispositif capable se recrée 
+les conditions d'un utérus (Température, humidité, concentration d'hormones, etc...)
 \vspace{1cm}
 \maketitle
 \thispagestyle{empty}
@@ -101,7 +99,7 @@ les condition d'un utérus (Température, humidité, concentration d'hormone, et
 \section{Etudes préliminaire}
 \subsection{Biologie}
 \subsubsection{Contexte}
-Pour que l'expérience soit optimale, le client à besoin de suivre l'évolution d'un tissu d'endomètre sur la 
+Pour que l'expérience soit optimale, le client a besoin de suivre l'évolution d'un tissu d'endomètre sur la 
 durée d'un cycle endométrial.
 Le système doit être compact et permettre l'observation des cellules en culture ainsi que la possibilité de 
 collecter des cellules et du milieu de culture pour analyse.
@@ -111,27 +109,51 @@ introduction biologique est nécessaire.
 \begin{figure}[H]
     \centering
     \resizebox{\linewidth}{!}{\includegraphics{Schema\_endomètre.jpg}}
-    \caption{L'endomètre au seins du corps de la femme}
+    \caption{Localisation de l'endomètre dans l'utérus}
     \label{fig:Schema_endomètre}
 \end{figure}
 L'endomètre est un épithélium qui compose une partie de l'appareil reproducteur féminin, il tapisse les 
 parois de la cavité utérine et est composé de 3 couches :
-Le myomètre qui est la fondation de l'endomètre, 
-\newline - la couche basale qui contient les glandes et les tissu 
-conjonctifs
-la couche fonctionnelle.
+\begin{itemize}
+    \item Le myomètre qui est la fondation de l'endomètre.
+    \item la couche basale qui contient les glandes et les tissu conjonctifs.
+    \item la couche fonctionnelle.
+\end{itemize}
 Cette dernière couche est celle qui vois sa taille changer durant le cycle menstruel.
 \subsubsection{Le cycle menstruel}
 "Le cycle menstruel est l'ensemble des phénomènes physiologiques, 
-survenant le plus souvent de façon périodique, qui préparent l'organisme de la femme à une éventuelle fécondation.
+survenant le plus souvent de façon périodique, qui préparent l'organisme de la femme à une éventuelle 
+fécondation.
 La connaissance du cycle menstruel est importante pour aborder l'étude des troubles de la menstruation, 
-dans l'exploration de l'infertilité et dans la mise en œuvre des techniques de procréation médicalement assistées."
+dans l'exploration de l'infertilité et dans la mise en œuvre des techniques de procréation médicalement
+ assistées."
 \cite{Cycle_menstruel}\\
-L'hypothèse émise par la biologiste serais qu'il y a une influence du cycle hormonale sur l'apparition de 
-l'endométriose.
-Il y a notamment deux hormones qui sont suspecter, l'estradiol et la progestérone.
-Nous allons donc devoir recrée les concentrations de ce cycle et les appliquer à des 
-cellules in-vitro.
+L'hypothèse émise par la biologiste serait qu'il y a corrélation en le cycle hormonal et l'apparition 
+de kystes dus à l'endométriose.
+Durant le cycle utérin, le taux d'hormonal de la femme varie selon les jours. Cela permet 
+au corps de réguler la période de croissance de l'endomètre, puis de déclencher l'ovation et enfin 
+S'il n'y a pas eu fécondation, de déclencher les menstruations.
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{cycle\_menstruel.png}}
+    \caption{Graphique montrant le cycle menstruel avec ces variation hormonal et ce que 
+    cela implique}
+    \label{fig:Cycle menstruel}
+\end{figure}
+Comme vu dans la figure 2, les 4 hormones présentent dans le cycle sont :
+\begin{itemize}
+    \item La progestérone.
+    \item Les estrogéne, notamment l'estradiol.
+    \item La LH pour luteinizing hormone.
+    \item La FSH pour follicle stimulating hormone.
+\end{itemize}
+Nous avons pour consigne de reproduire les cycles de concentration de l'estradiol et de la progestérone. Car ce sont 
+les hormones suspectées dans l'apparition de l'endométriose.
+Nous allons donc devoir recrée les conditions d'homéostasie des cellules ainsi que les conditions de concentration 
+de ce cycle et les appliquer à des cellules in vitro.
+Afin de répondre au mieux à cette problématique nous allons faire un état de l'art de la culture cellulaire ainsi que des
+technologie présente au campus biotech qui pourrait nous aider dans notre projet.
+\newpage
 \subsection{Etat de l'art}
 Actuellement la culture cellulaire est un procédé connu et maitriser par l'Homme qui consiste à placer des cellules dans un milieu de culture afin de les faire proliférer.
 Cette méthode permet d'avoir des colonies de cellule pouvant aller jusqu'a formé des organoïdes.
