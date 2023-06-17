@@ -3,13 +3,14 @@ import os
 import sys
 import threading
 import time
+import RPi.GPIO as GPIO
 
 outputFileName = "output.log"
 outputFilePath = "./"+outputFileName
 controleFile = "./controle.csv"
 concentrationFile = ""
-concentrationFilePath = "./Data/"
-
+concentrationFilePath = "./data/"
+GPIO.setmode(GPIO.BCM)
 
 class Pompe():
     debit = 0
@@ -24,13 +25,18 @@ class Pompe():
     def injection(self,quantity):
 
         #TURN ON PUMP
-
+        GPIO.output(self.pinNumber,GPIO.HIGH)
         time.sleep(self.timeToRun(quantity))
-
+        GPIO.output(self.pinNumber,GPIO.LOW)
         #TURN OFF PUMP
 
     def timeToRun(self,quantity):
         return int((quantity/self.debit)*60)
+    
+    def on(self):
+        GPIO.output(self.pinNumber,GPIO.HIGH)
+    def off(self):
+        GPIO.output(self.pinNumber,GPIO.LOW)
 
 class Electrovanne():
     id = ""
@@ -41,10 +47,10 @@ class Electrovanne():
         self.pinNumber = newPin
 
     def on(self):
-        print("Ouverture")
+        GPIO.output(self.pinNumber,GPIO.HIGH)
 
     def off(self):
-        print("Fermeture")
+        GPIO.output(self.pinNumber,GPIO.LOW)
 
 class Tee(object):
     def __init__(self, file_name=outputFileName):
@@ -69,7 +75,7 @@ isStop = False
 
 timeBetweenChange = 30
 timeFactor = 1 #FOR DEMO ONLY
-volumeTotal = 20.0
+volumeTotal = 10.0
 startTime = 0
 
 scheduleConcentration = None
@@ -409,7 +415,7 @@ def changeConcentration():
         nutConc,conc1,conc2 = getConc()
         
         with Tee():
-            print(getTime()+"|"+"Target concentration : nutriment : "+str(nutConc)+", Hormone 1 : "+str(conc1)+", Hormone 2 : "+str(conc2))
+            print(getTime()+"|"+"Target concentration : nutriment : "+str(nutConc*100)+", Hormone 1 : "+str(conc1*100)+", Hormone 2 : "+str(conc2*100))
 
         isPurge, volumePurge = purge(lastConc1,lastConc2,conc1,conc2,volumeTotal)
         volInjection = ajout(lastConc1,lastConc2,conc1,conc2,volumeTotal,volumePurge)
@@ -470,8 +476,27 @@ def changeConcentration():
         scheduleConcentration = threading.Timer(timeBetweenChange * 60, changeConcentration)
         scheduleConcentration.start()
 
+def setupGPIO():
+    """
+    Setup GPIO for control
+    """
+    #Moteur
+    GPIO.setup(17, GPIO.OUT, initial=GPIO.LOW)
+    GPIO.setup(27, GPIO.OUT, initial=GPIO.LOW)
+    GPIO.setup(22, GPIO.OUT, initial=GPIO.LOW)
+    
+    #Electrovanne
+    GPIO.setup(5, GPIO.OUT, initial=GPIO.LOW)
+    GPIO.setup(6, GPIO.OUT, initial=GPIO.LOW)
+    GPIO.setup(13, GPIO.OUT, initial=GPIO.LOW)
+
 checkOs()
 if getArg():
+    for pump in listePompe:
+        if pump.id == "flow":
+            pump.on
+        else:
+            pass
     startTime = time.monotonic()
     changeConcentration()
     while not isStop:
@@ -485,6 +510,10 @@ if getArg():
     if scheduleConcentration is not None and scheduleConcentration.is_alive():
         scheduleConcentration.cancel()
     with Tee():
+        for pump in listePompe:
+            pump.off
+        for vanne in listeVanne:
+            vanne.off
         print(getTime()+"|"+"Experience stop")
 else:
     pass
