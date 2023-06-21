@@ -10,7 +10,7 @@ outputFilePath = "./"+outputFileName
 controleFile = "./controle.csv"
 concentrationFile = ""
 concentrationFilePath = "./data/"
-GPIO.setmode(GPIO.BCM)
+
 
 class Pompe():
     debit = 0
@@ -74,7 +74,6 @@ isSuspended = False
 isStop = False
 
 timeBetweenChange = 30
-timeFactor = 1 #FOR DEMO ONLY
 volumeTotal = 10.0
 startTime = 0
 
@@ -110,7 +109,6 @@ def getArg():
     global concentrationFilePath
     global concentrationFile
     global timeBetweenChange
-    global timeFactor
 
     if len(sys.argv) == 1:
         with Tee():
@@ -144,7 +142,6 @@ def getArg():
             try:
                 concentrationFile = pd.read_feather(concentrationFilePath+sys.argv[1])
                 timeBetweenChange = 5
-                timeFactor = 1440
                 with Tee():
                     print(getTime()+"|""Start sequence with file "+sys.argv[1]+" for demo")
                 return True
@@ -261,8 +258,7 @@ def getConc():
     Get concentratoion from ftr file
     """
     global startTime
-    global timeFactor
-    timeInSecond = int((time.monotonic()-startTime)*timeFactor)
+    timeInSecond = int((time.monotonic()-startTime))
     conc1 = concentrationFile["Conc1"].iloc[timeInSecond]
     conc2 = concentrationFile["Conc2"].iloc[timeInSecond]
     nutConc = 100.0 - conc1 - conc2
@@ -338,7 +334,7 @@ def ajout(concentration_c1_mtn,concentration_c2_mtn, concentration_c1_apres, con
     concentration_nut_apres=1-concentration_c1_apres-concentration_c2_apres
     volume=3
     volume_max=50
-    add=[]
+    add=[0.0,0.0,0.0]
     if (volume_purge==0):
         add_nut=0
         add_c1 = ((-concentration_nut_apres*concentration_c1_mtn*volume_circuit)+(concentration_nut_mtn*concentration_c1_apres*volume_circuit)+(concentration_c1_apres*add_nut))/concentration_nut_apres
@@ -480,6 +476,8 @@ def setupGPIO():
     """
     Setup GPIO for control
     """
+    GPIO.setmode(GPIO.BCM)
+
     #Moteur
     GPIO.setup(17, GPIO.OUT, initial=GPIO.LOW)
     GPIO.setup(27, GPIO.OUT, initial=GPIO.LOW)
@@ -492,9 +490,10 @@ def setupGPIO():
 
 checkOs()
 if getArg():
+    setupGPIO()
     for pump in listePompe:
         if pump.id == "flow":
-            pump.on
+            pump.on()
         else:
             pass
     startTime = time.monotonic()
@@ -511,9 +510,9 @@ if getArg():
         scheduleConcentration.cancel()
     with Tee():
         for pump in listePompe:
-            pump.off
+            pump.off()
         for vanne in listeVanne:
-            vanne.off
+            vanne.off()
         print(getTime()+"|"+"Experience stop")
 else:
     pass
