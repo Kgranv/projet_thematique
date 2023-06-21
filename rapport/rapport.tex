@@ -147,12 +147,13 @@ Comme vu dans la figure 2, les 4 hormones présentent dans le cycle sont :
     \item La LH pour luteinizing hormone.
     \item La FSH pour follicle stimulating hormone.
 \end{itemize}
-Nous avons pour consigne de reproduire les cycles de concentration de l'estradiol et de la progestérone. Car ce sont 
-les hormones suspectées dans l'apparition de l'endométriose.
-Nous allons donc devoir recrée les conditions d'homéostasie des cellules ainsi que les conditions de concentration 
-de ce cycle et les appliquer à des cellules in vitro.
-Afin de répondre au mieux à cette problématique nous allons faire un état de l'art de la culture cellulaire ainsi que des
-technologie présente au campus biotech qui pourrait nous aider dans notre projet.
+La consigne est de reproduire les cycles de concentration de l'estradiol et de la progestérone. 
+Car ce sont les hormones suspectées dans l'apparition de l'endométriose.Cela signifie 
+recrée les conditions d'homéostasie des cellules ainsi que les conditions de 
+concentration de ce cycle et les appliquer à des cellules in vitro.
+Afin de répondre au mieux à cette problématique un état de l'art de la culture 
+cellulaire sera établie ainsi qu'un inventaires des téchnologies présentent au campus biotech qui 
+pourraient être utile dans notre projet.
 \newpage
 \subsection{Etat de l'art}
 
@@ -167,7 +168,7 @@ Pour maintenir de bonnes conditions on place ces échantillons dans l'enceinte d
 en maintenant les constantes de températures, d'humidité et de CO2 de façon optimal.
 Les incubateurs professionnels sont des machines de précision, asservis qui permettent de réglée précisément toutes les conditions de leurs enceinte, cela permet de chercher l'expression de certain phénotype au seins des colonies.
 Ils sont aussi dotés de sécurité notamment en termes de ventilation afin de protège les cellules et le biologiste. Toutefois cette précision rend le matériel chère.
-Il faut compter entre 5 000CHF et 15 000 CHF pour un incubateur professionnel.
+Il faut compter entre 5 000 CHF et 15 000 CHF pour un incubateur professionnel.
 L'incubateur fait maison sont moins précis mais permette une personnalisation complète en termes de condition de culture.
 Toutefois même si cela reste compliqué à construire dans sa totalité, il est assez simple de stabiliser la température et l'humidité.
 Ces machines permettent de crée une atmosphère apte à la reproduction cellulaire toutefois il nous faut quelque chose qui contient les cellules et leurs milieu nutritif.
@@ -181,7 +182,7 @@ Actuellement les zone de culture sont
     \item Les boites de pétris.
     \item Les écouvillons.
     \item La verrerie de chimie.
-    \item Dans les labo d'HEPIA a la FCBG, des biochip en PMMA, un polymere biocompatible.
+    \item Dans les labo d'HEPIA à la FCBG des biochip en PMMA, un polymere biocompatible.
 \end{itemize}
 Cette liste n'est pas exaustive, tout comptenant fait d'un matériau biocompatible peut en théorie 
 accueillir des cellules.
@@ -195,7 +196,8 @@ Elle se compose de tout les élément comptenant du fluide, tel que :
     \item les tuyaux. 
     \item les vannes.
 \end{itemize}
-
+Les tuyaux utilisés à la FCBG sont de qualités médicales, c'est-à-dire qui sont biocompatibles. Ils ne diffusent pas
+dans le milieu de culture, et ils ne sont pas sensibles aux méthodes de stérilisation.
 \newpage
 \subsection{Aperçu du projet}
 \subsubsection{Besoins}
@@ -364,62 +366,76 @@ Enfin, le système dans sa globalité devra assurer :
 \subsection{Déroulé du projet}
 insert diagramme de gant
 \subsection{Choix pour le projet}
-Nous estimons que pour réaliser la culture de cellule de l'endomètre, tout en respectant le cahier des charges, il faut concevoir notre propre bio-chip. Pour ce faire on va utiliser différents outils disponibles dans le laboratoire afin de diminuer les coûts. Certaines pièces devront être fabriqués afin de répondre à nos besoins comme le boitier de notre bio-chip.
-Pour accueillir nos cellules nos utiliserons un boitier en PMMA que nous fabriquerons sur place grâce à la découpe laser qui se trouve dans le campus.
-Pour la régulation de l'environnement on utilisera un incubateur présent dans le laboratoire car cela diminuera le cout de fabrication.
-Nous utiliserons un Raspberry pi pour contrôler notre bio-chip car il dispose de beaucoup plus d'avantage que l'Arduino UNO et il nous permettra de contrôler notre bio-chip à distance.
-Pour l'apport d'hormones et de nutriment on utilisera des pousses seringues qui sont disponible dans le laboratoire.
-Pour faire circuler le fluide dans notre boitier on prendra des pompes péristaltiques qui sont fournis.
-L'ensemble du bio-chip sera alimenté par le secteur afin de limiter les coûts de fabrication et éviter de devoir développer un système avec une batterie
+Afin de réaliser la culture de cellule de l'endomètre, tout en respectant le cahier 
+des charges, la conception d'un bio-chip sur-mesure devient une . Pour ce faire on va utiliser différents 
+outils disponibles dans le laboratoire afin de diminuer les coûts. Certaines pièces devront être
+fabriqués afin de répondre au besoins comme le boitier du bio-chip.
+Pour accueillir les cellules un boitier en PMMA sera conçu et usiner sur 
+place grâce à la découpe laser qui se trouve dans le campus.
+Pour la régulation de l'environnement l'utilisation d'un incubateur présent dans le laboratoire sera 
+utilisés pour accueillir les cellules afin de diminuer le cout de fabrication.
+Pour la partie commande, l'utilisation d'un micro ordinateur type Raspberry pi permettra de contrôler 
+les constante du bio-chip. Pouvant controler celui-ci a distance et etant plus puissance, le raspberry a 
+de multiple avantage face a l'arduino UNO.
+Pour un apport d'hormones et de nutriment precis les pousses seringues qui sont disponible 
+dans le laboratoire, vont être incorporer au système, toutefois l'éventualité d'utilisés des pompes a la 
+place n'es pas écarter.
+Les pompes fournis par HEPIA pour le projet permetrons de crée un flux au seins du biochip.
+L'ensemble du bio-chip sera alimenté par le secteur afin de limiter les coûts de fabrication et éviter 
+de devoir développer un système avec une batterie.
 
 \newpage
 \section{Conception mécanique}
 \subsection{Mélangeur hydrostatique}
 \subsubsection{Simulation fluidique}
-Dans cette partie nous allons parler de la simulation et de la modélisation d'un mélangeur statique permettant de rentre le mélange homogène avant de l'envoyer sur les cellules.
-Afin de déterminer la forme du mélangeur nous avons basé nos recherches sur la simulation fluide de créo.
-Dans l'industrie, les mélangeurs statiques sont des composant de fluidique en 3 dimensions conçue pour perturber l'écoulement et ainsi crée des turbulences.
-Cela a pour but de mélanger le fluide sans utiliser de composant actif tel qu'une pompe, un moteur, ou un mélangeur magnétique.
+Dans cette partie porte sur la simulation et de la modélisation d'un mélangeur statique 
+permettant de rentre le mélange homogène avant de l'envoyer sur les cellules.
+Afin de déterminer la forme du mélangeur une courte recherches a été faite sur la simulation fluide de créo.
+Dans l'industrie, les mélangeurs statiques sont des composant de fluidique en 3 dimensions conçue pour 
+perturber l'écoulement et ainsi crée des turbulences.
+Cela a pour but de mélanger le fluide sans utiliser de composant actif tel qu'une pompe, un moteur, 
+ou un mélangeur magnétique.
 \begin{figure}[H]
     \centering
     \resizebox{\linewidth}{!}{\includegraphics{simulation1.png}}
     \caption{Schéma montrant comment ce mélange un fluide}
     \label{fig:simulation1}
 \end{figure}
-Une première étape de conception fus donc d'essayer de comprendre à quoi pourrais bien ressembler ce type de mélangeur en 2D.
-On sait de par la mécanique des fluides que la pression et la vitesse d'écoulement sont liée à la géométrie du milieu d'écoulement.
-Ainsi J'ai modélisé quatre différents mélangeurs afin d'observer le comportement du fluide lors d'une simulation.
-De plus le mode de fabrication le plus simple étant la découpe LASER il a fallu adapter la forme de ceux-ci afin qu'il soit réalisable en entier à la découpeuse LASER du campus.
+Une première étape de conception fus donc d'essayer de comprendre à quoi pourrais bien ressembler ce 
+type de mélangeur en 2D.
+On sait de par la mécanique des fluides que la pression et la vitesse d'écoulement sont liée à la 
+géométrie du milieu d'écoulement. Ainsi pour melanger les fluides il faut "perturber" le flux afin de faire
+varier la vitesse de manière hétérogène.
+Ainsi différents mélangeurs ont été modélisés afin d'observer le comportement du fluide lors 
+d'une simulation.
+De plus le mode de fabrication le plus simple étant la découpe LASER il a fallu adapter la forme 
+de ceux-ci afin qu'il soit réalisable en entier à la découpeuse LASER du campus.
 \begin{figure}[H]
     \centering
     \resizebox{\linewidth}{!}{\includegraphics{CAO\_prototype\_melangeur.png}}
     \caption{CAO du mélangeur avec chicanes}
     \label{fig:CAO_prototype_melangeur}
 \end{figure}
-Comme on peut le voir dans la figure \ref{fig:CAO_prototype_melangeur} le premier mélangeur était juste composé d'un chemin direct auquel ont été ajouté des chicanes droites.
-Le flux de liquide assimiler a de l'eau entre par en dessous et sort par au-dessus, et les conditions de pression sont celle donnée dans la datasheet de la pompe étant donné que le mélangeur sera placer juste derrière la pompe.
+Comme on peut le voir dans la figure \ref{fig:CAO_prototype_melangeur} le premier mélangeur était 
+juste composé d'un chemin direct auquel ont été ajouté des chicanes droites.
+Le flux de liquide assimiler a de l'eau entre par en dessous et sort par au-dessus, 
+et les conditions de pression sont celle donnée dans la datasheet de la pompe étant donné 
+que le mélangeur sera placer juste derrière la pompe.
 \begin{figure}[H]
     \centering
     \resizebox{\linewidth}{!}{\includegraphics{simulation2.png}}
     \caption{Simulation fluidique du mélangeur à chicanes}
     \label{fig:simulation2}
 \end{figure}
-Grâce à la figure \ref{fig:simulation2} on peut voir que les chicanes n'apporte pas de plus value pour mélanger le fluide.
-\begin{figure}[H]
-    \centering
-    \resizebox{\linewidth}{!}{\includegraphics{simulation3.png}}
-    \caption{Simulation fluidique avec 2 voies et chicanes}
-    \label{fig:simulation3}
-\end{figure}
-En divisant le flux en deux et en réduisant l'espace des chicanes ont remarque qu'il n'y a que peu d'effet.
-Toutefois la division du flux en deux apporte des turbulences lorsque les deux flux se recombinent ainsi que l'obstacle placer perpendiculairement au flux.
-\begin{figure}[H]
-    \centering
-    \resizebox{\linewidth}{!}{\includegraphics{simulation4.png}}
-    \caption{Simulation fluidique avec accélération}
-    \label{fig:simulation4}
-\end{figure}
-Une autre version avait pour idée de détendre et de comprimé le flux afin de crée des turbulences, on voit (zone coloré) que la vitesse augmente mais reste toujours dans le sens du circuit.
+Grâce à la figure \ref{fig:simulation2} on peut voir que les chicanes n'apporte pas
+ de plus value pour mélanger le fluide.
+En divisant le flux en deux et en réduisant l'espace des chicanes ont remarque qu'il
+ n'y a que peu d'effet.
+Toutefois la division du flux en deux apporte des turbulences lorsque les deux flux
+ se recombinent ainsi que l'obstacle placer perpendiculairement au flux.
+Une autre version avait pour idée de détendre et de comprimé le flux afin de crée des
+ turbulences, on voit (zone coloré) que la vitesse augmente mais reste toujours dans
+  le sens du circuit.
 Il manque une forme pour casser ce flux.
 \begin{figure}[H]
     \centering
@@ -431,7 +447,8 @@ Lorsque l'on casse le flux et qu'on le dirige vers un obstacle cela crée des tu
 Ce que l'on observe ici c'est une accélération du fluide couplé à des zone de dépression.
 Cela cause des turbulences derrière les obstacles placer au centre.
 \subsubsection{CAO du mélangeur}
-Nous avons donc choisi de partir sur un mélangeur composé de deux parties, l'une central permet de casser de flux et de le séparer en deux.
+Nous avons donc choisi de partir sur un mélangeur composé de deux parties, l'une central 
+permet de casser de flux et de le séparer en deux.
 La partie externe est mobilisé afin de crée des zones d'accélération et de décélération.
 \begin{figure}[H]
     \centering
@@ -732,6 +749,8 @@ Normalement il faudrait environ 30 minutes pour pouvoir tester les débits de to
 Le code qui permet de contrôler les pompes sera le même que celui dans le programme principal.
 Cela va nous permettre de gagner du temps lors du développement de celui-ci.
 \newpage
+\section{Maquette final}
+\subsection{Conception}
 %\section{Conclusion}
 %Pour conclure on peut commencer la découpe du mélangeur et de la zone de culture afin de commencer les tests.
 %Nous devons terminer le montage électrique et tester les pompes.
