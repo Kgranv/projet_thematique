@@ -402,6 +402,12 @@ def changeConcentration():
     global lastConc2
     global volumeTotal
 
+    if isStop:
+        pass
+    else:
+        scheduleConcentration = threading.Timer(timeBetweenChange * 60, changeConcentration)
+        scheduleConcentration.start()
+
     if isSuspended:
         if scheduleConcentration is not None and scheduleConcentration.is_alive():
             scheduleConcentration.cancel()
@@ -466,11 +472,7 @@ def changeConcentration():
         with Tee():
             print(getTime()+"|"+"New concentration achieved, New volume : "+str(round(volumeTotal,1))+" ml")
 
-    if isStop:
-        pass
-    else:
-        scheduleConcentration = threading.Timer(timeBetweenChange * 60, changeConcentration)
-        scheduleConcentration.start()
+
 
 def setupGPIO():
     """
