@@ -67,25 +67,25 @@
 \section*{Introduction}
 Ce rapport detail le projet thématique de deuxième année de bachelor
 microtechnique de HEPIA option Bio-ingénierie.
-Cette année notre cliente, Mme Loussert-Fonta Céline est une biologiste travaillante 
-sur l'endométriose, une maladie encore 
+Cette année notre cliente, Mme Loussert-Fonta Céline est une biologiste travaillante
+sur l'endométriose, une maladie encore
 peu connue mais très commune, touchant environ 1 femme sur 10.\\
-Cette pathologie se caractérise par le développement du tissu semblable 
+Cette pathologie se caractérise par le développement du tissu semblable
 à l'endomètre hors de l'utérus.
-Ces tissus peuvent proliférer dans les organes voisins comme les ovaires; 
+Ces tissus peuvent proliférer dans les organes voisins comme les ovaires;
 l'intestin, la vessie ou même les poumons.
-Les symptômes varient énormément entre les femmes mais ont retenu, le 
-plus souvent, celui de la douleur 
+Les symptômes varient énormément entre les femmes mais ont retenu, le
+plus souvent, celui de la douleur
 extrême provoqué par la croissance de ces tissus.\\
-Les objectifs du projet sont, d'une part, de mettre en application les 
-connaissances acquises durant nos études, mais également de développer de 
+Les objectifs du projet sont, d'une part, de mettre en application les
+connaissances acquises durant nos études, mais également de développer de
 nouvelles compétences comme la gestion de projet.
-D'autre part, ce projet contribue à développer la recherche sur 
+D'autre part, ce projet contribue à développer la recherche sur
 l'endométriose et servira de support pour le \\
 "project MOON : endoMetriosis Organoids to vOice up woman paiN".\\
-Le but de notre projet est de créer un bio-chip qui permettrait d'étudier 
-les tissus de l'endomètre in vitro durant un cycle utérin. Cela signifie, imaginer, concevoir, fabriquer, 
-et tester un dispositif capable se recrée 
+Le but de notre projet est de créer un bio-chip qui permettrait d'étudier
+les tissus de l'endomètre in vitro durant un cycle utérin. Cela signifie, imaginer, concevoir, fabriquer,
+et tester un dispositif capable se recrée
 les conditions d'un utérus (Température, humidité, concentration d'hormones, etc...)
 \vspace{1cm}
 \maketitle
@@ -101,11 +101,11 @@ les conditions d'un utérus (Température, humidité, concentration d'hormones, 
 \section{Etudes préliminaire}
 \subsection{Biologie}
 \subsubsection{Contexte}
-Pour que l'expérience soit optimale, le client a besoin de suivre l'évolution d'un tissu d'endomètre sur la 
+Pour que l'expérience soit optimale, le client a besoin de suivre l'évolution d'un tissu d'endomètre sur la
 durée d'un cycle endométrial.
-Le système doit être compact et permettre l'observation des cellules en culture ainsi que la possibilité de 
+Le système doit être compact et permettre l'observation des cellules en culture ainsi que la possibilité de
 collecter des cellules et du milieu de culture pour analyse.
-Afin mieux comprendre comment concevoir un appareil correspondant à la demande du client, une courte 
+Afin mieux comprendre comment concevoir un appareil correspondant à la demande du client, une courte
 introduction biologique est nécessaire.
 \subsubsection{L'endomètre}
 \begin{figure}[H]
@@ -114,7 +114,7 @@ introduction biologique est nécessaire.
     \caption{Localisation de l'endomètre dans l'utérus}
     \label{fig:Schema_endomètre}
 \end{figure}
-L'endomètre est un épithélium qui compose une partie de l'appareil reproducteur féminin, il tapisse les 
+L'endomètre est un épithélium qui compose une partie de l'appareil reproducteur féminin, il tapisse les
 parois de la cavité utérine et est composé de 3 couches :
 \begin{itemize}
     \item Le myomètre qui est la fondation de l'endomètre.
@@ -123,23 +123,23 @@ parois de la cavité utérine et est composé de 3 couches :
 \end{itemize}
 Cette dernière couche est celle qui vois sa taille changer durant le cycle menstruel.
 \subsubsection{Le cycle menstruel}
-"Le cycle menstruel est l'ensemble des phénomènes physiologiques, 
-survenant le plus souvent de façon périodique, qui préparent l'organisme de la femme à une éventuelle 
+"Le cycle menstruel est l'ensemble des phénomènes physiologiques,
+survenant le plus souvent de façon périodique, qui préparent l'organisme de la femme à une éventuelle
 fécondation.
-La connaissance du cycle menstruel est importante pour aborder l'étude des troubles de la menstruation, 
+La connaissance du cycle menstruel est importante pour aborder l'étude des troubles de la menstruation,
 dans l'exploration de l'infertilité et dans la mise en œuvre des techniques de procréation médicalement
- assistées."
+assistées."
 \cite{Cycle_menstruel}\\
-L'hypothèse émise par la biologiste serait qu'il y a corrélation en le cycle hormonal et l'apparition 
+L'hypothèse émise par la biologiste serait qu'il y a corrélation en le cycle hormonal et l'apparition
 de kystes dus à l'endométriose.
-Durant le cycle utérin, le taux d'hormonal de la femme varie selon les jours. Cela permet 
-au corps de réguler la période de croissance de l'endomètre, puis de déclencher l'ovation et enfin 
+Durant le cycle utérin, le taux d'hormonal de la femme varie selon les jours. Cela permet
+au corps de réguler la période de croissance de l'endomètre, puis de déclencher l'ovation et enfin
 S'il n'y a pas eu fécondation, de déclencher les menstruations.
 \begin{figure}[H]
     \centering
     \resizebox{0.5\linewidth}{!}{\includegraphics{cycle\_menstruel.png}}
-    \caption{Graphique montrant le cycle menstruel avec ces variation hormonal et ce que 
-    cela implique}
+    \caption{Graphique montrant le cycle menstruel avec ces variation hormonal et ce que
+        cela implique}
     \label{fig:Cycle menstruel}
 \end{figure}
 Comme vu dans la figure 2, les 4 hormones présentent dans le cycle sont :
@@ -149,24 +149,24 @@ Comme vu dans la figure 2, les 4 hormones présentent dans le cycle sont :
     \item La LH pour luteinizing hormone.
     \item La FSH pour follicle stimulating hormone.
 \end{itemize}
-La consigne est de reproduire les cycles de concentration de l'estradiol et de la progestérone. 
-Car ce sont les hormones suspectées dans l'apparition de l'endométriose. Cela signifie 
-recrée les conditions d'homéostasie des cellules ainsi que les conditions de 
+La consigne est de reproduire les cycles de concentration de l'estradiol et de la progestérone.
+Car ce sont les hormones suspectées dans l'apparition de l'endométriose. Cela signifie
+recrée les conditions d'homéostasie des cellules ainsi que les conditions de
 concentration de ce cycle et les appliquer à des cellules in vitro.
-Afin de répondre au mieux à cette problématique un état de l'art de la culture 
-cellulaire sera établie ainsi qu'un inventaire des techniques présentent au campus biotech qui 
+Afin de répondre au mieux à cette problématique un état de l'art de la culture
+cellulaire sera établie ainsi qu'un inventaire des techniques présentent au campus biotech qui
 pourraient être utile dans notre projet.
 \newpage
 \subsection{Etat de l'art}
 
 \subsubsection{Incubateur}
-Actuellement la culture cellulaire est un procédé connu et maitriser par l'Homme qui consiste à placer des cellules dans 
+Actuellement la culture cellulaire est un procédé connu et maitriser par l'Homme qui consiste à placer des cellules dans
 un milieu de culture afin de les faire proliférer.
-Cette méthode permet d'avoir des colonies de cellule pouvant aller jusqu'à former des organoïdes pouvant être utilisés 
+Cette méthode permet d'avoir des colonies de cellule pouvant aller jusqu'à former des organoïdes pouvant être utilisés
 à des fins de recherche. Les organoïdes se comportant de manière similaire à l'organe miniaturisé.
-Peu importe l'objectif, la méthode de culture garde toujours un objectif d'homéostasie et un objectif de prolifération. Dans la pratique cela revient 
+Peu importe l'objectif, la méthode de culture garde toujours un objectif d'homéostasie et un objectif de prolifération. Dans la pratique cela revient
 à placer dans un incubateur une colonie de cellules contenue dans un milieu nutritif.
-Pour maintenir de bonnes conditions on place ces échantillons dans l'enceinte d'un incubateur qui permet d'isoler les cellules du milieu extérieur tout 
+Pour maintenir de bonnes conditions on place ces échantillons dans l'enceinte d'un incubateur qui permet d'isoler les cellules du milieu extérieur tout
 en maintenant les constantes de températures, d'humidité et de CO2 de façon optimale.
 Les incubateurs professionnels sont des machines de précision, asservis qui permettent de régler précisément toutes les conditions de leurs enceintes;
 cela permet de chercher l'expression de certains phénotypes au sein des colonies.
@@ -177,8 +177,8 @@ Toutefois même si cela reste compliqué à construire dans sa totalité, il est
 Ces machines permettant de créer une atmosphère apte à la reproduction cellulaire toutefois il nous faut quelque chose qui contient les cellules et leur milieu nutritif.
 il faut des instruments de culture biocompatible.
 \subsubsection{Matériau biocompatible}
-On appelle matériau biocompatible, les matériaux qui ont la capacité à ne pas interférer; 
-ne pas dégrader, le milieu biologique dans lequel ils sont utilisés. Dans notre cas, il faut 
+On appelle matériau biocompatible, les matériaux qui ont la capacité à ne pas interférer;
+ne pas dégrader, le milieu biologique dans lequel ils sont utilisés. Dans notre cas, il faut
 que le lieu d'accueil des cellules ne dégrade en rien leurs fonctionnements.
 Actuellement les zones de culture sont
 \begin{itemize}
@@ -187,7 +187,7 @@ Actuellement les zones de culture sont
     \item La verrerie de chimie.
     \item Dans les labo d'HEPIA à la FCBG des biochip en PMMA, un polymere biocompatible.
 \end{itemize}
-Cette liste n'est pas exaustive, tout comptenant fait d'un matériau biocompatible peut en théorie 
+Cette liste n'est pas exaustive, tout comptenant fait d'un matériau biocompatible peut en théorie
 accueillir des cellules.
 \subsubsection{Fluidique}
 La fluidique est une partie importante dans la survie des cellules, c'est grace à elle que les
@@ -196,7 +196,7 @@ Elle se compose de tous les éléments comprenant du fluide, tel que :
 \begin{itemize}
     \item Les réservoirs.
     \item Les pompes.
-    \item les tuyaux. 
+    \item les tuyaux.
     \item les vannes.
 \end{itemize}
 Les tuyaux utilisés à la FCBG sont de qualités médicales, c'est-à-dire qui sont biocompatibles. Ils ne diffusent pas
@@ -369,34 +369,34 @@ Enfin, le système dans sa globalité devra assurer :
 \subsection{Déroulé du projet}
 insert diagramme de gant
 \subsection{Choix pour le projet}
-Afin de réaliser la culture de cellules de l'endomètre, tout en respectant le cahier 
-des charges, la conception d'un bio-chip sur-mesure devient une . Pour ce faire on va utiliser différents 
+Afin de réaliser la culture de cellules de l'endomètre, tout en respectant le cahier
+des charges, la conception d'un bio-chip sur-mesure devient une . Pour ce faire on va utiliser différents
 outils disponibles dans le laboratoire afin de diminuer les coûts. Certaines pièces devront être
 fabriqués afin de répondre au besoin comme le boitier du bio-chip.
-Pour accueillir les cellules un boitier en PMMA sera conçu et usiner sur 
+Pour accueillir les cellules un boitier en PMMA sera conçu et usiner sur
 place grâce à la découpe laser qui se trouve dans le campus.
-Pour la régulation de l'environnement l'utilisation d'un incubateur présent dans le laboratoire sera 
+Pour la régulation de l'environnement l'utilisation d'un incubateur présent dans le laboratoire sera
 utilisés pour accueillir les cellules afin de diminuer le cout de fabrication.
-Pour la partie commandée, l'utilisation d'un micro-ordinateur type Raspberry pie permettra de contrôler 
-Les constantes du bio-chip. Pouvant contrôler celui-ci à distance et étant plus puissance, le raspberry a 
+Pour la partie commandée, l'utilisation d'un micro-ordinateur type Raspberry pie permettra de contrôler
+Les constantes du bio-chip. Pouvant contrôler celui-ci à distance et étant plus puissance, le raspberry a
 De multiples avantages face à l'ardu ino UNO.
-Pour un apport d'hormones et de nutriment précis les pousses seringues qui sont disponibles 
-dans le laboratoire, vont être incorporer au système, toutefois l'éventualité d'utiliser des pompes à là 
+Pour un apport d'hormones et de nutriment précis les pousses seringues qui sont disponibles
+dans le laboratoire, vont être incorporer au système, toutefois l'éventualité d'utiliser des pompes à là
 place n'est pas écartée.
 Les pompes fournies par HEPIA, pour le projet, permettrons de créer un flux au sein du biochip.
-L'ensemble du bio-chip sera alimenté par le secteur afin de limiter les coûts de fabrication et éviter 
+L'ensemble du bio-chip sera alimenté par le secteur afin de limiter les coûts de fabrication et éviter
 de devoir développer un système avec une batterie.
 
 \newpage
 \section{Conception mécanique}
 \subsection{Mélangeur hydrostatique}
 \subsubsection{Simulation fluidique}
-Dans cette partie porté sur la simulation et de la modélisation d'un mélangeur statique 
+Dans cette partie porté sur la simulation et de la modélisation d'un mélangeur statique
 permettant de rendre le mélange homogène avant de l'envoyer sur les cellules.
 Afin de déterminer la forme du mélangeur une courte recherche a été faite sur la simulation fluide de créo.
-Dans l'industrie, les mélangeurs statiques sont des composants de fluidique en 3 dimensions conçue pour 
+Dans l'industrie, les mélangeurs statiques sont des composants de fluidique en 3 dimensions conçue pour
 perturber l'écoulement et ainsi créé des turbulences.
-Cela a pour but de mélanger le fluide sans utiliser de composant actif tel qu'une pompe, un moteur; 
+Cela a pour but de mélanger le fluide sans utiliser de composant actif tel qu'une pompe, un moteur;
 ou un mélangeur magnétique.
 \begin{figure}[H]
     \centering
@@ -404,14 +404,14 @@ ou un mélangeur magnétique.
     \caption{Schéma montrant comment ce mélange un fluide}
     \label{fig:simulation1}
 \end{figure}
-Une première étape de conception fut donc d'essayer de comprendre à quoi pourrait bien ressembler ce 
+Une première étape de conception fut donc d'essayer de comprendre à quoi pourrait bien ressembler ce
 type de mélangeur en 2D.
-On sait de par la mécanique des fluides que la pression et la vitesse d'écoulement sont liée à la 
+On sait de par la mécanique des fluides que la pression et la vitesse d'écoulement sont liée à la
 géométrie du milieu d'écoulement. Ainsi pour mélanger les fluides il faut "perturber" le flux afin de faire
 varier la vitesse de manière hétérogène.
-Ainsi différents mélangeurs ont été modélisés afin d'observer le comportement du fluide alors 
+Ainsi différents mélangeurs ont été modélisés afin d'observer le comportement du fluide alors
 d'une simulation.
-De plus le mode de fabrication le plus simple étant la découpe LASER il a fallu adapter la forme 
+De plus le mode de fabrication le plus simple étant la découpe LASER il a fallu adapter la forme
 de ceux-ci afin qu'il soit réalisable en entier à la découpeuse LASER du campus.
 \newline
 \begin{multicols}{2}
@@ -425,8 +425,8 @@ de ceux-ci afin qu'il soit réalisable en entier à la découpeuse LASER du camp
         La figure \ref{fig:CAO_prototype_melangeur} montre la première étape de recherche;
         le premier mélangeur était juste composé d'un chemin direct auquel ont été ajoutées
         des cavités latérales.
-        Le flux de liquide assimilé à de l'eau dans la simulation entre par en dessous et sort par au-dessus; 
-        et les conditions de pression sont celles données dans la datasheet de la pompe, étant donné 
+        Le flux de liquide assimilé à de l'eau dans la simulation entre par en dessous et sort par au-dessus;
+        et les conditions de pression sont celles données dans la datasheet de la pompe, étant donné
         que le mélangeur sera placé juste derrière la pompe.
     \end{figure}
 \end{multicols}
@@ -439,8 +439,8 @@ de ceux-ci afin qu'il soit réalisable en entier à la découpeuse LASER du camp
         \label{fig:simulation2}
     \end{figure}
     \begin{figure}[H]
-        La figure \ref{fig:simulation2} montres un résultat de simulation. 
-        Les couleurs représentent la vitesse du flux de liquide, ici la simulation avait juste pour but de 
+        La figure \ref{fig:simulation2} montres un résultat de simulation.
+        Les couleurs représentent la vitesse du flux de liquide, ici la simulation avait juste pour but de
         tester les fonctionnalités de créo. Toutefois il y a des zones (en bleu) ou le liquide est statique
         et des zones (Orange) ou le liquide ses deplace plus rapidement.
         L'idée a ensuite été de séparer le flux en deux et de les recombiner pour créer des turbulences.
@@ -457,7 +457,7 @@ de ceux-ci afin qu'il soit réalisable en entier à la découpeuse LASER du camp
 \end{figure}
 La figure \ref{fig:simulation5} montre l'importance de placer un obstacle au centre du flux, de plus la variation
 de section vient ajouter des perturbations. C'est ce schéma qui est retenu pour la forme du mélangeur.
-Les variations de section vont être accentuées et le bloc central sera en un seul morceau afin de facilité les 
+Les variations de section vont être accentuées et le bloc central sera en un seul morceau afin de facilité les
 découpes.
 Le principe de montage repose sur celui deja utilisé dans les laboratoires de HEPIA. Le melangeur sera composé de 3
 couches;
@@ -465,13 +465,13 @@ couches;
     \item Une première couche servant de socle, dotée de trous dans lesquels des goupilles pourront etres insérées.
     \item Une couche centrale contenant la forme du mélangeur, c'est-à-dire les bords et le centre.
     \item Une dernière couche permettant de refermer le mélangeur et de fixer les raccords de fluidique.
-\end{itemize} 
+\end{itemize}
 \newpage
 
 \subsubsection{CAO du mélangeur}
-Apres plusieurs simulations, les choix se sont tourné vers un mélangeur comportant l'entrée et la sortie de chaque 
-coté du mélangeur. Le flux est séparer en deux par la partie centrale, puis les flux sont accélérés séparément parréduction 
-de la section découlement. Des zones plus vaste, (contenant plus de liquide) sont laiser colontairement afin de profoqué un diférence de vitesse 
+Apres plusieurs simulations, les choix se sont tourné vers un mélangeur comportant l'entrée et la sortie de chaque
+coté du mélangeur. Le flux est séparer en deux par la partie centrale, puis les flux sont accélérés séparément parréduction
+de la section découlement. Des zones plus vaste, (contenant plus de liquide) sont laiser colontairement afin de profoqué un diférence de vitesse
 entre le liquide présent dans ces zones et celui qui arrive. Enfin le chemin fluide n'est composée que de partie de courbe,
 cela permet de limiter l'apparition de bulles.
 \begin{multicols}{2}
@@ -540,13 +540,13 @@ Et enfin la dernière couche contient les trous pour chasser les connecteur Luer
 Les angles devront être arrondit pour éviter d'endommager les cellules.
 \subsection{Support des réservoirs}
 Désormais le rendu physique projet devient très claire,
-celui-ci sera composer d'un boitier auxquelles sera fixé les trois pompe, 
+celui-ci sera composer d'un boitier auxquelles sera fixé les trois pompe,
 les quatre tube comprenant les hormones, le liquide de culture neuf, et usagé.
-Ce boitier sera lui aussi découper au LASER et au besoin renforcé par des pièces 
+Ce boitier sera lui aussi découper au LASER et au besoin renforcé par des pièces
 imprimé en 3D.
-Il ne contiendra pas l'électronique, celui-ci sera placer en dehors de l'incubateur 
+Il ne contiendra pas l'électronique, celui-ci sera placer en dehors de l'incubateur
 et relier au système via un câble.
-Il est à noter qu'il manque les électrovannes, qui ont été modéliser et qui seront 
+Il est à noter qu'il manque les électrovannes, qui ont été modéliser et qui seront
 placer de l'autre côté des pompes.
 \begin{multicols}{2}
     \begin{figure}[H]
@@ -580,9 +580,9 @@ Cela permettrais d'avoir la possibilité d'ouvrir le boitier sans le casser.
     \caption{CAO du boitier à découper au LASER}
     \label{fig:CAO_boitier_decoupe_LASER}
 \end{figure}
-De plus, deux support à imprimer en 3D,ont été ajoutées pour fixer le melangeur et 
+De plus, deux support à imprimer en 3D,ont été ajoutées pour fixer le melangeur et
 la zone de culture.
-Ces support permettrons de fixer la zone de culuture et de pouvoir la retirer pour 
+Ces support permettrons de fixer la zone de culuture et de pouvoir la retirer pour
 faire des observation.
 
 \newpage
@@ -631,10 +631,10 @@ Enfin, les luer-lock sont emboiter dans le boichip avec de la colle époxy.
         \label{fig:reste_cellules}
     \end{figure}
 \end{multicols}
-Après avoir injecté du fluide dans le biochip, celui-ci ne fuit pas. 
-Cependant, le test a montré une mauvaise optimisation de l'espace. 
-En effet, comme le montre la photo de la figure 4, le liquide reste 
-bloqué à certains endroits. Pour optimiser la circulation du fluide, 
+Après avoir injecté du fluide dans le biochip, celui-ci ne fuit pas.
+Cependant, le test a montré une mauvaise optimisation de l'espace.
+En effet, comme le montre la photo de la figure 4, le liquide reste
+bloqué à certains endroits. Pour optimiser la circulation du fluide,
 une nouvelle version de ce biochip a été modélisée.
 \newpage
 \subsubsection{Modelisation biochip cellules version 2}
@@ -686,7 +686,7 @@ Celui-ci a pour but d'être plus solide, d'être encore usinable au LASER, et d'
 L'idée de séparer puis de refusionner le flux est rester
 sauf que le chemin est bien plus simple et les bords sont toujours
 arrondits. Une section reduite permet une accélation du flux.
-Les dimensions on été agrandi afin d'avoir 1cm de chaque coté ce 
+Les dimensions on été agrandi afin d'avoir 1cm de chaque coté ce
 qui est deux fois plus que l'ancien.
 \begin{multicols}{2}
     \begin{figure}[H]
@@ -702,7 +702,7 @@ qui est deux fois plus que l'ancien.
         \label{fig:CAO_melangeur_V2}
     \end{figure}
 \end{multicols}
-Le nouveau mélangeur remplace l'ancien ainsi la piece 
+Le nouveau mélangeur remplace l'ancien ainsi la piece
 permettant la fixation du mélangeur au boitier à donc été ajusté.
 \subsubsection{CAO boitier version 2}
 \begin{figure}[H]
@@ -795,9 +795,15 @@ Cela va permettre de gagner du temps lors du développement de celui-ci.
 \section{Maquette final}
 Cette dernière partie est une présentation du prototype final.
 \subsection{Conception du chassis}
+<<<<<<< HEAD
 Le châssis utilisé ne sera pas celui-ci présenter précédemment car ce projet n'a besoin
 d'une maquette fonctionnelle, il s'agit un projet visant à démontrer que 
 le système fonctionne. La maquette n'ira pas dans l'incubateur, elle n'as pas 
+=======
+Le chassis utilisés ne sera pas celui présenter precedement car ce projet n'a besoins
+d'une maquette fonctionnelle, il s'aggit un projet visant à démontrer que
+le systeme fonctionne. La maquette n'ira pas dans l'incubateur, elle n'as pas
+>>>>>>> 594f034defc10cef3c34aa739ef8e8d495dc2bfc
 besoin d'être étanche.
 Ainsi une CAO d'une maquette plus simple a été réaliser puis usiner.
 \begin{multicols}{2}
@@ -814,10 +820,10 @@ Ainsi une CAO d'une maquette plus simple a été réaliser puis usiner.
         \label{fig:CAO_final_dos}
     \end{figure}
 \end{multicols}
-Le châssis a été pensé pour être imprimable en 3D, la structure est renforcée avec deux 
+Le châssis a été pensé pour être imprimable en 3D, la structure est renforcée avec deux
 plaque de PMMA découper au LASER de 3 mm d'épaisseur. La structure est montée grace à
 des vis M3 et des écrous. Une des Pâques latérales sera usinée afin d'accueillir les pompes.
-Les électrovannes seront fixées sur la partie imprimée en 3D et fixées avec des vis M2. 
+Les électrovannes seront fixées sur la partie imprimée en 3D et fixées avec des vis M2.
 Le plus grand changement réside dans l'abandon du mélangeur découper au LASER, en effet un 5éme réservoir a été ajouté pour servir de mélangeur. Celui-ci sera muni d'une entrée "compte-gouttes" qui
 Consistera en un en bout monté sur le bouchon sans tube venant tomber dans le réservoir.
 Pour la sortie il s'agira d'un tube allant au fond du mélangeur.
@@ -855,7 +861,7 @@ La réalisation de ce projet a permis de mettre à profit nos connaissances afin
 \newline
 Pour accueillir les cellules, nous avons conçu un biochip en PMMA, associé à un circuit fluidique. Ce circuit est composé de pompes et d'électrovannes, permettant de reproduire de manière contrôlée le cycle de concentration d'hormones.
 \newline
-L'ensemble du système est intégré dans un boîtier réalisé en impression 3D et en PMMA. Une version étanche de ce boîtier a été développée pour protéger l'électronique lorsqu'elle est placée dans l'incubateur.
+L'ensemble du système est intégré dans un boîtier réalisé en impression 3D et en PMMA. Une version étanche de ce boîtier a été développée pour protéger les pompes et les électrovannes lorsqu'elle est placée dans l'incubateur, tandis que l'électronique de contrôle est placée en dehors de l'incubateur.
 \newline
 L'électronique est commandée par un Raspberry Pi 4. L'utilisateur peut interagir avec le système depuis son ordinateur grâce à la connexion WiFi. Il a ainsi la possibilité de transmettre un fichier CSV contenant des concentrations spécifiques, ce qui rend le système modulable et adaptable selon ses préférences.
 \newline
