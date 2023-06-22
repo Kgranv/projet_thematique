@@ -583,6 +583,7 @@ De plus, deux support à imprimer en 3D,ont été ajoutées pour fixer le melang
 la zone de culture.
 Ces support permettrons de fixer la zone de culuture et de pouvoir la retirer pour 
 faire des observation.
+
 \newpage
 \subsection{Assemblage des biochips}
 Pour réaliser l’assemblage du mélangeur et du biochip qui contiendra les cellules,
@@ -629,7 +630,11 @@ Enfin, les luer-lock sont emboiter dans le boichip avec de la colle époxy.
         \label{fig:reste_cellules}
     \end{figure}
 \end{multicols}
-Après avoir injecté du fluide dans le biochip, celui-ci ne fuit pas. Cependant, le test a montré une mauvaise optimisation de l'espace. En effet, comme le montre la photo de la figure 4, le liquide reste bloqué à certains endroits. Pour optimiser la circulation du fluide, une nouvelle version de ce biochip a été modélisée.
+Après avoir injecté du fluide dans le biochip, celui-ci ne fuit pas. 
+Cependant, le test a montré une mauvaise optimisation de l'espace. 
+En effet, comme le montre la photo de la figure 4, le liquide reste 
+bloqué à certains endroits. Pour optimiser la circulation du fluide, 
+une nouvelle version de ce biochip a été modélisée.
 \newpage
 \subsubsection{Modelisation biochip cellules version 2}
 \begin{multicols}{2}
@@ -659,10 +664,10 @@ Les premiers tests du mélangeur ont été effectués en faisant circuler du liq
 Comme on peut observer sur la \label{fig:fuite_melangeur} le liquide s'infiltre dans l'intercouche ce qui cause une fuite
 par un trou de fabrication.
 \subsubsection{CAO mélangeur version 2}
-Le premier mélangeur fuyais, cela etait probablement du à une surpression qui causait
-l'infiltration du liquide dans l'intercouche.
-Le temps nous manque, il nous faut un mélangeur fonctionnel même si il est moins performant que l'ancien.
-Nous avons donc conçu une version plus simple et plus robuste qu'il nous reste à tester.
+Le premier mélangeur fuyait, cela était probablement dû à une surpression qui causait
+l'infiltration du liquide dans l'intercouche. Ainsi dans l'optique de pouvoir commencer
+Le test le plus rapidement possible, un nouveau mélangeur, plus simple, a été modéliser.
+Celui-ci a pour but d'être plus solide, d'être encore usinable au LASER, et d'utiliser un volume moindre.
 \begin{multicols}{2}
     \begin{figure}[H]
         \centering
@@ -677,8 +682,11 @@ Nous avons donc conçu une version plus simple et plus robuste qu'il nous reste 
         \label{fig:CAO_melangeur_V2_couche2}
     \end{figure}
 \end{multicols}
-Nous avons garder l'idée de séparer puis de refusionner le flux, sauf que le chemin est bien plus simple.
-Les dimensions on été agrandi afin d'avoir 1cm de chaque coté ce qui est deux fois plus que l'ancien.
+L'idée de séparer puis de refusionner le flux est rester
+sauf que le chemin est bien plus simple et les bords sont toujours
+arrondits. Une section reduite permet une accélation du flux.
+Les dimensions on été agrandi afin d'avoir 1cm de chaque coté ce 
+qui est deux fois plus que l'ancien.
 \begin{multicols}{2}
     \begin{figure}[H]
         \centering
@@ -693,8 +701,8 @@ Les dimensions on été agrandi afin d'avoir 1cm de chaque coté ce qui est deux
         \label{fig:CAO_melangeur_V2}
     \end{figure}
 \end{multicols}
-Nous avons ainsi un nouveau mélangeur de 100 par 50 a placer dans le système. La piece permettant la fixation du mélangeur
-au boitier a donc été ajusté.
+Le nouveau mélangeur remplace l'ancien ainsi la piece 
+permettant la fixation du mélangeur au boitier à donc été ajusté.
 \subsubsection{CAO boitier version 2}
 \begin{figure}[H]
     \centering
@@ -702,7 +710,7 @@ au boitier a donc été ajusté.
     \caption{Boitier modifier pour accueillir le melangeur V2}
     \label{fig:CAO_boitier_V2}
 \end{figure}
-Nous obtenons donc ce rendu, il reste alors a le découper et a l'assembler.
+La figure \ref{fig:CAO_boitier_V2} montre le rendu final du prototype, il reste alors à le découper et à l'assembler.
 \newpage
 \section{Conception électronique et programmation}
 \subsection{Carte d'alimentation version 1}
@@ -777,14 +785,50 @@ Le fichier à préparer doit être présenter sous la forme :
     \end{tabular}
 \end{table}
 \subsubsection{Programme de test des moteurs}
-Nous avons réalisé un code python qui permet de vérifier si le contrôle des moteurs fonctionne bien.
+Un code python permet de vérifier si le contrôle des moteurs fonctionne bien.
 En plus de ça il permet d'effectuer les tests de débits des pompes.
 Normalement il faudrait environ 30 minutes pour pouvoir tester les débits de toutes les pompes sur une plage de tension d'alimentation des pompes de 6 V à 12 V.
 Le code qui permet de contrôler les pompes sera le même que celui dans le programme principal.
-Cela va nous permettre de gagner du temps lors du développement de celui-ci.
+Cela va permettre de gagner du temps lors du développement de celui-ci.
 \newpage
 \section{Maquette final}
-\subsection{Conception}
+Cette dernière partie est une présentation du prototype final.
+\subsection{Conception du chassis}
+Le chassis utilisés ne sera pas celui présenter precedement car ce projet n'a besoins
+d'une maquette fonctionnelle, il s'aggit un projet visant à démontrer que 
+le systeme fonctionne. La maquette n'ira pas dans l'incubateur, elle n'as pas 
+besoin d'être étanche.
+Ainsi une CAO d'une maquette plus simple a été réaliser puis usiner.
+\begin{multicols}{2}
+    \begin{figure}[H]
+        \centering
+        \resizebox{0.95\linewidth}{!}{\includegraphics{CAO_final.png}}
+        \caption{CAO final}
+        \label{fig:CAO_final}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \resizebox{0.95\linewidth}{!}{\includegraphics{CAO_final_dos.png}}
+        \caption{CAO final vue des moteurs}
+        \label{fig:CAO_final_dos}
+    \end{figure}
+\end{multicols}
+Le châssis a été pensé pour être imprimable en 3D, la structure est renforcée avec deux 
+plaque de PMMA découper au LASER de 3 mm d'épaisseur. La structure est montée grace à
+des vis M3 et des écrous. Une des Pâques latérales sera usinée afin d'accueillir les pompes.
+Les électrovannes seront fixées sur la partie imprimée en 3D et fixées avec des vis M2. 
+Le plus grand changement réside dans l'abandon du mélangeur découper au LASER, en effet un 5éme réservoir a été ajouté pour servir de mélangeur. Celui-ci sera muni d'une entrée "compte-gouttes" qui
+Consistera en un en bout monté sur le bouchon sans tube venant tomber dans le réservoir.
+Pour la sortie il s'agira d'un tube allant au fond du mélangeur.
+Le mélangeur fonctionnera comme une perfusion médicale, ce genre de dispositif est très efficace
+mais possède une constante de temps de mélange relativement grande, celle-ci dépendant en
+grande partie du volume engagé dans le système.
+\begin{figure}[H]
+    \centering
+    \resizebox{0.95\linewidth}{!}{\includegraphics{Image_maquette_final.jpg}}
+    \caption{Maquette final}
+    \label{fig:Maquette}
+\end{figure}
 %\section{Conclusion}
 %Pour conclure on peut commencer la découpe du mélangeur et de la zone de culture afin de commencer les tests.
 %Nous devons terminer le montage électrique et tester les pompes.
