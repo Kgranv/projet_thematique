@@ -14,6 +14,7 @@
 \usepackage{caption} % caption
 \usepackage{multicol} % multicolonne
 \usepackage{adjustbox}
+\usepackage{pdfpages}
 
 %Setup bibliographie
 \addbibresource{bibliographie.bib} % utilise bibliographie.bib pour la bibliographie
@@ -829,12 +830,23 @@ grande partie du volume engagé dans le système.
     \caption{Maquette final}
     \label{fig:Maquette}
 \end{figure}
-%\section{Conclusion}
-%Pour conclure on peut commencer la découpe du mélangeur et de la zone de culture afin de commencer les tests.
-%Nous devons terminer le montage électrique et tester les pompes.
-%Si les essais se déroulent comme prévu nous allons pouvoir avancer rapidement sur la programmation et la réalisation d'un prototype fonctionnel.
-%\newpage
-%\section{Annexe}
+\newpage
+\section{Conclusion}
+La réalisation de ce projet a permis de mettre à profit nos connaissances afin de concevoir un système permettant de soumettre des cellules à un cycle de concentration d'hormones spécifique. Ce projet nous a enseigné les outils de gestion de projet, ce qui nous a conduit au développement du prototype final. Tout au long de ce projet en groupe, nous avons tiré des leçons de nos erreurs, améliorant ainsi notre efficacité.
+\newline
+Pour accueillir les cellules, nous avons conçu un biochip en PMMA, associé à un circuit fluidique. Ce circuit est composé de pompes et d'électrovannes, permettant de reproduire de manière contrôlée le cycle de concentration d'hormones.
+\newline
+L'ensemble du système est intégré dans un boîtier réalisé en impression 3D et en PMMA. Une version étanche de ce boîtier a été développée pour protéger l'électronique lorsqu'elle est placée dans l'incubateur.
+\newline
+L'électronique est commandée par un Raspberry Pi 4. L'utilisateur peut interagir avec le système depuis son ordinateur grâce à la connexion WiFi. Il a ainsi la possibilité de transmettre un fichier CSV contenant des concentrations spécifiques, ce qui rend le système modulable et adaptable selon ses préférences.
+\newline
+Le prototype réalisé est fonctionnel, mais des améliorations peuvent être envisagées pour le rendre encore plus performant. Par exemple, la conception d'une carte PCB dédiée et d'un boîtier externe pour l'électronique contribuerait à améliorer la fiabilité et la robustesse du système.
+\newline
+En conclusion, ce système de fluidique offre une solution fonctionnelle pour soumettre des cellules à un cycle de concentration d'hormones spécifique. Des améliorations peuvent être envisagées pour améliorer les performances.
+
+\newpage
+
+\includepdf[pages={1-11}]{../GuideUtilisateur.pdf}
 %
 %\newpage
 \printbibliography
