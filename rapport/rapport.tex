@@ -800,20 +800,20 @@ Le code qui permet de contrôler les pompes sera le même que celui dans le prog
 \subsubsection{Programme pour armer les pompes}
 Ce programme permet d'armer les pompes afin de vider le circuit de toute bulles d'air.
 \subsubsection{Programme de l'expérience}
-Comme le programme devra tourner pendant 28 jours, il a fallut penser le programme pour qu'il puisse tourner en arrière plan. En effet si on coupe la connection SSH avec le Raspberry Pi cela coupe les programmes qui sont liés au terminal.
-L'une des problématiques est que si on lance un programmes en arrière plan on ne peut plus lui passer d'input et on ne peux plus voir les outputs du programmes.
-Pour passer outre ce problème le programme vas lire un fichier CSV afin de recevoir les inputs : controle.csv.
-Ses outputs sont redirigé vers 2 fichiers nohup.out et output.log le premier reçoit tous les outputs du programmes qui peuvent servir lors dévantuelle déboggage tandis que le deuxième uniquement celles liés à l'expérience.
-Le fichier de contrôle doit être modifier par le programme de contrôle afin d'éviter les bugs.
-Dans son fonctionnement le programme va effectuer plusieurs tâche. Sa tâche principale est de lire le fichier de concentration et réguler les pompes afin d'atteindre les concentrations désirés.
-Il va lire le fichier de contrôle en parallèle pour voir si l'utilisateur ne souhaite pas intéragir avec le système.
-Si il reçoit une interuption via le fichier de contrôle il va effectuer en priorité les actions de l'utilisateur comme par exemple couper les pompes et isoler les cellules pour une observation.
+Comme le programme devra tourner pendant 28 jours, il a fallu penser au programme pour qu'il puisse tourner en arrière-plan. En effet, si on coupe la connexion SSH avec le Raspberry Pi, cela coupe les programmes qui sont liés au terminal.
+L'une des problématiques est que si on lance un programme en arrière-plan, on ne peut plus lui passer d'input et on ne peut plus voir les outputs du programme.
+Pour pallier à ce problème, le programme va lire un fichier CSV afin de recevoir les inputs : controle.csv.
+Ses outputs sont redirigés vers 2 fichiers, nohup.out et output.log. Le premier reçoit tous les outputs du programme, qui peuvent servir lors d'éventuels débogages, tandis que le deuxième contient uniquement ceux liés à l'expérience.
+Le fichier de contrôle doit être modifié par le programme de contrôle afin d'éviter les bugs.
+Dans son fonctionnement, le programme va effectuer plusieurs tâches. Sa tâche principale est de lire le fichier de concentration et de réguler les pompes afin d'atteindre les concentrations désirées.
+Il va lire le fichier de contrôle en parallèle pour voir si l'utilisateur ne souhaite pas interagir avec le système.
+S'il reçoit une interruption via le fichier de contrôle, il va effectuer en priorité les actions de l'utilisateur, comme par exemple couper les pompes et isoler les cellules pour une observation.
 \subsubsection{Programme de contrôle}
-Le programme de contrôle permet de contrôler le programme de l'expérience. Il est fait pour fonctionner sur le Raspberry Pi.
-Comme il n'as pas besoin d'être en arrière plan on peut intéragir avec via le terminal.
-Il a pour but de transmettre les ordres de l'utilisateur en écrivant sur le fichier de contrôle : controle.csv.
-Une fois que l'utilisateur à finit de transmettre ses ordres il peut juste fermer la connection SSH avec le Raspberry Pi.
-L'utilisateur peut transmettre un ordre pour stoper imédiatement l'expérience si il y a un problème.
+Le programme de contrôle permet de contrôler le programme de l'expérience. Il est conçu pour fonctionner sur le Raspberry Pi.
+Comme il n'a pas besoin d'être en arrière-plan, on peut interagir avec lui via le terminal.
+Son but est de transmettre les ordres de l'utilisateur en écrivant sur le fichier de contrôle : controle.csv.
+Une fois que l'utilisateur a fini de transmettre ses ordres, il peut simplement fermer la connexion SSH avec le Raspberry Pi.
+L'utilisateur peut transmettre un ordre pour arrêter immédiatement l'expérience s'il y a un problème.
 \subsubsection{Programme pour reset les GPIO}
 Ce programme permet de reset les pins GPIO si elles ont été utilisés par un autre programmes afin d'avoir la bonne configuration.
 \newpage
