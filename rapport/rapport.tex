@@ -750,16 +750,22 @@ En alimentant les amplificateurs via une alimentation de laboratoire stabilisé 
     \label{fig:CAO_electronique_V3}
 \end{figure}
 Nous avons récupéré de nouveau amplificateurs qui sont compatibles en alimentation non-symétrique, pour éviter de devoir alimenter une partie du montage via une alimentation de laboratoire.
-Comme nous avons reçu les nouveaux amplificateurs assez tardivement, nous n'avons pas eu le temps de tester le montage avec les nouveaux amplificateurs.
-Si les amplificateurs ne conviennent pas nous resterons sur l'alimentation de laboratoire pour alimenter les amplificateurs.
+\subsubsection{Carte d'alimentation version 4}
+\begin{figure}[H]
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{carte\_alimentationV4.png}}
+    \caption{Montage électronique pour l'alimentation du Raspberry Pi, des pompes et des électrovannes version 4}
+    \label{fig:CAO_electronique_V4}
+\end{figure}
+Lors des essais, l'électronique ce comportait comme attendu. Voici donc la version final de l'électronique qui comprend le contrôle des électrovannes.
+Le contrôle des électrovannes se fait de la même manière que les pompes.
 \subsection{Programmation}
 \subsubsection{GitHub}
-On a mis en place un GitHub pour se partager les codes de programmation, le "repo" contient aussi une ébauche du guide d'utilisateur.
-Le guide d'utilisateur contient actuellement uniquement les requirements pour le Raspberry pi ainsi que les commandes à utiliser.
+On a mis en place un GitHub pour se partager les codes de programmation, le "repo" contient aussi le guide d'utilisateur.
 \subsubsection{Raspberry Pi}
-On a configuré le Raspberry pi 4 pour qu'on puisse se connecter dessus à distance à l'aide du protocole SSH.
-On peut s'y connecter facilement dessus à partir du moment que l'on se trouve sur le même réseau wifi.
-On peut lui transmettre des fichiers ainsi que récupérer des fichiers qui sont stockées dessus.
+Le Raspberry pi 4 est paramétré pour qu'on puisse se connecter dessus à distance à l'aide du protocole SSH.
+L'utilisateur peut s'y connecter facilement dessus à partir du moment que l'on se trouve sur le même réseau wifi.
+Il peut lui transmettre des fichiers ainsi que récupérer des fichiers qui sont stockées dessus.
 \subsubsection{Préparation des données}
 Ce code permet de préparer les datas afin de pouvoir être utiliser par le logiciel qui contrôle le biochip.
 Il a été conçu pour que l'utilisateur rentre un minimum de donner afin de gagner du temps.
@@ -771,7 +777,7 @@ Sur la figure \ref{fig:dataPreparation} on peut voir une représentation des don
     \caption{Données généré par le programme avec les données rentrées par l'utilisateur}
     \label{fig:dataPreparation}
 \end{figure}
-On peut l'utiliser directement sur un ordinateur puis envoyer le fichier généré sur le Raspberry pi ou bien on peut envoyer le fichier csv sur le Raspberry pi puis le généré directement sur le Raspberry pi.
+L'utilisateur peut l'utiliser directement sur un ordinateur puis envoyer le fichier généré sur le Raspberry pi ou bien on peut envoyer le fichier csv sur le Raspberry pi puis le généré directement sur le Raspberry pi.
 Le fichier généré est un fichier de type ftr il n'est donc pas lisible directement ceci est fait afin de gagner en rapidité d'exécution et gagner du stockage.
 Si on utilisait un fichier csv équivalent il contiendrait tellement de donnés qu'il faudrait plusieurs secondes pour le généré et il prendrait 10 fois plus de stockage.
 Le fichier à préparer doit être présenter sous la forme :
@@ -785,12 +791,32 @@ Le fichier à préparer doit être présenter sous la forme :
         15   & 4     & 2
     \end{tabular}
 \end{table}
+\subsubsection{Programme pour vérifier les fichier ftr}
+Ce programme permet d'avoir une prévisualisation des fichiers converti pour vérifier si cela correspond à ce que l'utilisateur veut. Ce programme est fait pour fonctionner sur l'ordinateur de l'utilisateur.
 \subsubsection{Programme de test des moteurs}
 Un code python permet de vérifier si le contrôle des moteurs fonctionne bien.
 En plus de ça il permet d'effectuer les tests de débits des pompes.
 Normalement il faudrait environ 30 minutes pour pouvoir tester les débits de toutes les pompes sur une plage de tension d'alimentation des pompes de 6 V à 12 V.
 Le code qui permet de contrôler les pompes sera le même que celui dans le programme principal.
-Cela va permettre de gagner du temps lors du développement de celui-ci.
+\subsubsection{Programme pour armer les pompes}
+Ce programme permet d'armer les pompes afin de vider le circuit de toute bulles d'air.
+\subsubsection{Programme de l'expérience}
+Comme le programme devra tourner pendant 28 jours, il a fallut penser le programme pour qu'il puisse tourner en arrière plan. En effet si on coupe la connection SSH avec le Raspberry Pi cela coupe les programmes qui sont liés au terminal.
+L'une des problématiques est que si on lance un programmes en arrière plan on ne peut plus lui passer d'input et on ne peux plus voir les outputs du programmes.
+Pour passer outre ce problème le programme vas lire un fichier CSV afin de recevoir les inputs : controle.csv.
+Ses outputs sont redirigé vers 2 fichiers nohup.out et output.log le premier reçoit tous les outputs du programmes qui peuvent servir lors dévantuelle déboggage tandis que le deuxième uniquement celles liés à l'expérience.
+Le fichier de contrôle doit être modifier par le programme de contrôle afin d'éviter les bugs.
+Dans son fonctionnement le programme va effectuer plusieurs tâche. Sa tâche principale est de lire le fichier de concentration et réguler les pompes afin d'atteindre les concentrations désirés.
+Il va lire le fichier de contrôle en parallèle pour voir si l'utilisateur ne souhaite pas intéragir avec le système.
+Si il reçoit une interuption via le fichier de contrôle il va effectuer en priorité les actions de l'utilisateur comme par exemple couper les pompes et isoler les cellules pour une observation.
+\subsubsection{Programme de contrôle}
+Le programme de contrôle permet de contrôler le programme de l'expérience. Il est fait pour fonctionner sur le Raspberry Pi.
+Comme il n'as pas besoin d'être en arrière plan on peut intéragir avec via le terminal.
+Il a pour but de transmettre les ordres de l'utilisateur en écrivant sur le fichier de contrôle : controle.csv.
+Une fois que l'utilisateur à finit de transmettre ses ordres il peut juste fermer la connection SSH avec le Raspberry Pi.
+L'utilisateur peut transmettre un ordre pour stoper imédiatement l'expérience si il y a un problème.
+\subsubsection{Programme pour reset les GPIO}
+Ce programme permet de reset les pins GPIO si elles ont été utilisés par un autre programmes afin d'avoir la bonne configuration.
 \newpage
 \section{Maquette final}
 Cette dernière partie est une présentation du prototype final.
