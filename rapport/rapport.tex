@@ -13,6 +13,7 @@
 \usepackage{fancyhdr} % footer
 \usepackage{caption} % caption
 \usepackage{multicol} % multicolonne
+\usepackage{adjustbox}
 
 %Setup bibliographie
 \addbibresource{bibliographie.bib} % utilise bibliographie.bib pour la bibliographie
@@ -63,7 +64,7 @@
 %Introduction
 \vspace{-1cm}
 \section*{Introduction}
-Ce rapport detail le projet thématique de deuxième année de bachelier 
+Ce rapport detail le projet thématique de deuxième année de bachelor
 microtechnique de HEPIA option Bio-ingénierie.
 Cette année notre cliente, Mme Loussert-Fonta Céline est une biologiste travaillante 
 sur l'endométriose, une maladie encore 
@@ -82,7 +83,7 @@ D'autre part, ce projet contribue à développer la recherche sur
 l'endométriose et servira de support pour le \\
 "project MOON : endoMetriosis Organoids to vOice up woman paiN".\\
 Le but de notre projet est de créer un bio-chip qui permettrait d'étudier 
-les tissus de l'endomètre in vitro durant un cycle utérin. Cela signifie, imaginer, concevoir, fabriquer; 
+les tissus de l'endomètre in vitro durant un cycle utérin. Cela signifie, imaginer, concevoir, fabriquer, 
 et tester un dispositif capable se recrée 
 les conditions d'un utérus (Température, humidité, concentration d'hormones, etc...)
 \vspace{1cm}
@@ -108,7 +109,7 @@ introduction biologique est nécessaire.
 \subsubsection{L'endomètre}
 \begin{figure}[H]
     \centering
-    \resizebox{\linewidth}{!}{\includegraphics{Schema\_endomètre.jpg}}
+    \resizebox{0.5\linewidth}{!}{\includegraphics{Schema\_endomètre.jpg}}
     \caption{Localisation de l'endomètre dans l'utérus}
     \label{fig:Schema_endomètre}
 \end{figure}
@@ -135,7 +136,7 @@ au corps de réguler la période de croissance de l'endomètre, puis de déclenc
 S'il n'y a pas eu fécondation, de déclencher les menstruations.
 \begin{figure}[H]
     \centering
-    \resizebox{\linewidth}{!}{\includegraphics{cycle\_menstruel.png}}
+    \resizebox{0.5\linewidth}{!}{\includegraphics{cycle\_menstruel.png}}
     \caption{Graphique montrant le cycle menstruel avec ces variation hormonal et ce que 
     cela implique}
     \label{fig:Cycle menstruel}
@@ -397,7 +398,7 @@ Cela a pour but de mélanger le fluide sans utiliser de composant actif tel qu'u
 ou un mélangeur magnétique.
 \begin{figure}[H]
     \centering
-    \resizebox{\linewidth}{!}{\includegraphics{simulation1.png}}
+    \resizebox{0.4\linewidth}{!}{\includegraphics{simulation1.png}}
     \caption{Schéma montrant comment ce mélange un fluide}
     \label{fig:simulation1}
 \end{figure}
@@ -410,66 +411,81 @@ Ainsi différents mélangeurs ont été modélisés afin d'observer le comportem
 d'une simulation.
 De plus le mode de fabrication le plus simple étant la découpe LASER il a fallu adapter la forme 
 de ceux-ci afin qu'il soit réalisable en entier à la découpeuse LASER du campus.
+\newline
+\begin{multicols}{2}
+    \begin{figure}[H]
+        \centering
+        \resizebox{0.95\linewidth}{!}{\includegraphics{CAO_prototype_melangeur.png}}
+        \caption{CAO du mélangeur avec chicanes}
+        \label{fig:CAO_prototype_melangeur}
+    \end{figure}
+    \begin{figure}[H]
+        Comme on peut le voir dans la figure \ref{fig:CAO_prototype_melangeur}, le premier mélangeur était 
+        juste composé d'un chemin direct auquel ont été ajoutées des chicanes droites.
+        Le flux de liquide assimilé à de l'eau entre par en dessous et sort par au-dessus, 
+        et les conditions de pression sont celles données dans la datasheet de la pompe, étant donné 
+        que le mélangeur sera placé juste derrière la pompe.
+    \end{figure}
+\end{multicols}
+\newpage
+\begin{multicols}{2}
+    \begin{figure}[H]
+        \centering
+        \resizebox{0.95\linewidth}{!}{\includegraphics{simulation2.png}}
+        \caption{Simulation fluidique du mélangeur à chicanes}
+        \label{fig:simulation2}
+    \end{figure}
+    \begin{figure}[H]
+        Grâce à la figure \ref{fig:simulation2} on peut voir que les chicanes n'apporte pas
+        de plus value pour mélanger le fluide.
+        En divisant le flux en deux et en réduisant l'espace des chicanes ont remarque qu'il
+        n'y a que peu d'effet.
+        Toutefois la division du flux en deux apporte des turbulences lorsque les deux flux
+        se recombinent ainsi que l'obstacle placer perpendiculairement au flux.
+        Une autre version avait pour idée de détendre et de comprimé le flux afin de crée des
+        turbulences, on voit (zone coloré) que la vitesse augmente mais reste toujours dans
+        le sens du circuit.
+        Il manque une forme pour casser ce flux.
+    \end{figure}
+\end{multicols}
+
 \begin{figure}[H]
     \centering
-    \resizebox{\linewidth}{!}{\includegraphics{CAO\_prototype\_melangeur.png}}
-    \caption{CAO du mélangeur avec chicanes}
-    \label{fig:CAO_prototype_melangeur}
-\end{figure}
-Comme on peut le voir dans la figure \ref{fig:CAO_prototype_melangeur} le premier mélangeur était 
-juste composé d'un chemin direct auquel ont été ajouté des chicanes droites.
-Le flux de liquide assimiler a de l'eau entre par en dessous et sort par au-dessus, 
-et les conditions de pression sont celle donnée dans la datasheet de la pompe étant donné 
-que le mélangeur sera placer juste derrière la pompe.
-\begin{figure}[H]
-    \centering
-    \resizebox{\linewidth}{!}{\includegraphics{simulation2.png}}
-    \caption{Simulation fluidique du mélangeur à chicanes}
-    \label{fig:simulation2}
-\end{figure}
-Grâce à la figure \ref{fig:simulation2} on peut voir que les chicanes n'apporte pas
- de plus value pour mélanger le fluide.
-En divisant le flux en deux et en réduisant l'espace des chicanes ont remarque qu'il
- n'y a que peu d'effet.
-Toutefois la division du flux en deux apporte des turbulences lorsque les deux flux
- se recombinent ainsi que l'obstacle placer perpendiculairement au flux.
-Une autre version avait pour idée de détendre et de comprimé le flux afin de crée des
- turbulences, on voit (zone coloré) que la vitesse augmente mais reste toujours dans
-  le sens du circuit.
-Il manque une forme pour casser ce flux.
-\begin{figure}[H]
-    \centering
-    \resizebox{\linewidth}{!}{\includegraphics{simulation5.png}}
+    \resizebox{0.5\linewidth}{!}{\includegraphics{simulation5.png}}
     \caption{Simulation fluidique avec chicanes et obstacles}
     \label{fig:simulation5}
 \end{figure}
 Lorsque l'on casse le flux et qu'on le dirige vers un obstacle cela crée des turbulences.
 Ce que l'on observe ici c'est une accélération du fluide couplé à des zone de dépression.
 Cela cause des turbulences derrière les obstacles placer au centre.
+
+
 \subsubsection{CAO du mélangeur}
 Nous avons donc choisi de partir sur un mélangeur composé de deux parties, l'une central 
 permet de casser de flux et de le séparer en deux.
 La partie externe est mobilisé afin de crée des zones d'accélération et de décélération.
-\begin{figure}[H]
-    \centering
-    \resizebox{\linewidth}{!}{\includegraphics{CAO\_melangeur\_couche2.png}}
-    \caption{Couche central du mélangeur}
-    \label{fig:CAO_melangeur_couche2}
-\end{figure}
+\begin{multicols}{2}
+    \begin{figure}[H]
+        \centering
+        \resizebox{\linewidth}{!}{\includegraphics{CAO\_melangeur\_couche2.png}}
+        \caption{Couche central du mélangeur}
+        \label{fig:CAO_melangeur_couche2}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \resizebox{\linewidth}{!}{\includegraphics{CAO\_melangeur.png}}
+        \caption{Mélangeur hydrostatique}
+        \label{fig:CAO_melangeur}
+    \end{figure}
+\end{multicols}
 Notre conception est basée sur un principe de sandwich, une première épaisseur permettant l'étanchéité, le support et le guidage des autres couches.
 Une couche centrale munit d'un détrompeur composer d'un élément externe guider par deux goupilles extérieures, et un élément interne guidé par les goupilles intérieures.
 Et enfin une dernière couche permettant de fermer le tout, toujours guider par les deux goupilles externes.
 L'adhésion et l'étanchéité sera assuré par une couche adhésive déposer sur les plaques.
-\begin{figure}[H]
-    \centering
-    \resizebox{\linewidth}{!}{\includegraphics{CAO\_melangeur.png}}
-    \caption{Mélangeur hydrostatique}
-    \label{fig:CAO_melangeur}
-\end{figure}
 \subsection{Zone de culture}
 \begin{figure}[H]
     \centering
-    \resizebox{\linewidth}{!}{\includegraphics{CAO\_cellule.png}}
+    \resizebox{0.5\linewidth}{!}{\includegraphics{CAO\_cellule.png}}
     \caption{bio-chip pour les cellules}
     \label{fig:CAO_cellule}
 \end{figure}
@@ -511,6 +527,10 @@ L'entrée du fluide est plus étroite que la sortie pour éviter des problèmes 
 Et enfin la dernière couche contient les trous pour chasser les connecteur Luer lock, permettant de relier le bio chip contenant les cellules au reste du système par l'intermédiaire de tuyaux.
 Les angles devront être arrondit pour éviter d'endommager les cellules.
 \subsection{Support des réservoirs}
+Désormais nous avons une idée très claire du rendu physique du projet, celui-ci sera composer d'un boitier auxquelles sera fixé les trois pompe, les quatre tube comprenant les hormones, le liquide de culture neuf, et usagé.
+Ce boitier sera lui aussi découper au LASER et au besoin renforcé par des pièces imprimé en 3D.
+Il ne contiendra pas l'électronique, celui-ci sera placer en dehors de l'incubateur et relier au système via un câble.
+Il est à noter qu'il manque les électrovannes, qui ont été modéliser et qui seront placer de l'autre côté des pompes.
 \begin{multicols}{2}
     \begin{figure}[H]
         \centering
@@ -525,13 +545,9 @@ Les angles devront être arrondit pour éviter d'endommager les cellules.
         \label{fig:CAO_reservoir2}
     \end{figure}
 \end{multicols}
-Désormais nous avons une idée très claire du rendu physique du projet, celui-ci sera composer d'un boitier auxquelles sera fixé les trois pompe, les quatre tube comprenant les hormones, le liquide de culture neuf, et usagé.
-Ce boitier sera lui aussi découper au LASER et au besoin renforcé par des pièces imprimé en 3D.
-Il ne contiendra pas l'électronique, celui-ci sera placer en dehors de l'incubateur et relier au système via un câble.
-Il est à noter qu'il manque les électrovannes, qui ont été modéliser et qui seront placer de l'autre côté des pompes.
 \begin{figure}[H]
     \centering
-    \resizebox{\linewidth}{!}{\includegraphics{CAO\_electrovanne.png}}
+    \resizebox{0.4\linewidth}{!}{\includegraphics{CAO\_electrovanne.png}}
     \caption{CAO des électrovannes}
     \label{fig:CAO_electrovanne}
 \end{figure}
